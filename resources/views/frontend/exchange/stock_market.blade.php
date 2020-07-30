@@ -18,6 +18,7 @@
                 </table>
             </div>
 
+        <br>
         <div class="nav-tabs-custom full-in-small" style="cursor: move;">
             <ul class="nav nav-tabs ui-sortable-handle">
                 <li class="active">
@@ -35,9 +36,10 @@
                            style="width:100%">
                         <thead>
                         <tr>
-                            <th class="hide_in_mobile">{{ __('DATE') }}</th>
                             <th class="text-center">{{ __('PRICE') }}</th>
                             <th class="text-center">{{ __('AMOUNT') }}</th>
+                            <th class="hide_in_mobile">{{ __('DATE') }}</th>
+
                             
                         </tr>
                         </thead>
@@ -49,11 +51,10 @@
                                style="width:100%">
                             <thead>
                             <tr>
-                                <th class="hide_in_mobile">{{ __('DATE') }}</th>
-                                <th>{{ __('TYPE') }}</th>
                                 <th class="text-center">{{ __('PRICE') }}</th>
                                 <th class="text-center">{{ __('AMOUNT') }}</th>
-                                <th class="text-center hide_in_mobile_small">{{ __('TOTAL') }}</th>
+                                <th class="hide_in_mobile">{{ __('DATE') }}</th>
+                                
                             </tr>
                             </thead>
                         </table>

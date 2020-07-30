@@ -593,40 +593,44 @@
                 sLoadingRecords: '<span style="width:100%;"><img src="{{ asset('common/images/loader.svg')}}"></span>'
             },
             columns: [
-                {
-                    data: "date",
-                    orderable: false,
-                    className: 'hide_in_mobile'
-                },
+               
                 {
                     data: null,
-                    orderable: false,
+                    orderable: true,
+                    className: 'dt-body-center',
                     render: function (data) {
-                        let html = '<span class="text-red">' + exchangeType[data.exchange_type] + '</span>';
+                        let html = '<td style="color:red;"><a style="color:red">' + data.price + '</a></td>';
+
                         if (data.exchange_type == exchangeTypeBuy) {
-                            html = '<span class="text-green">' + exchangeType[data.exchange_type] + '</span>'
+                        html = '<td style="color:red;"><a style="color:green">' + data.price + '</a></td>';
+                           
                         }
 
                         return html;
                     }
                 },
-                {
-                    data: "price",
-                    orderable: false,
-                    className: 'dt-body-center'
-                },
+                // {
+                //     data: "price",
+                //     orderable: false,
+                //     className: 'dt-body-center'
+                // },
                 {
                     data: "amount",
                     orderable: false,
                     className: 'dt-body-center'
                 },
-                {
-                    data: null,
+                // {
+                //     data: null,
+                //     orderable: false,
+                //     className: 'dt-body-center hide_in_mobile_small',
+                //     render: function (data) {
+                //         return bcmul(data.amount, data.price);
+                //     }
+                // }
+                 {
+                    data: "date",
                     orderable: false,
-                    className: 'dt-body-center hide_in_mobile_small',
-                    render: function (data) {
-                        return bcmul(data.amount, data.price);
-                    }
+                    className: 'hide_in_mobile'
                 }
             ]
         });
@@ -655,19 +659,17 @@
                 sLoadingRecords: '<span style="width:100%;"><img src="{{ asset('common/images/loader.svg')}}"></span>'
             },
             columns: [
+                
                 {
-                    data: "date",
-                    orderable: false,
-                    className: 'hide_in_mobile'
-                },
-                {
-                    data: 'price',
+                    data: null,
                     orderable: false,
                     className: 'dt-body-center',
                     render: function (data) {
-                        let html = '<td class="text-red">' + data + '</td>';
+                        let html = '<td style="color:red;"><a style="color:red">' + data.price + '</a></td>';
                         if (data.exchange_type == exchangeTypeBuy) {
-                            html = '<td class="text-green">' + data + '</td>'
+                        html = '<td style="color:red;"><a style="color:green">' + data.price + '</a></td>';
+                            
+                           
                         }
 
                         return html;
@@ -677,6 +679,12 @@
                     data: "amount",
                     orderable: false,
                     className: 'dt-body-center'
+                },
+                {
+                    data: "date",
+                    orderable: false,
+                    className: 'hide_in_mobile',
+                   
                 }
                
             ]

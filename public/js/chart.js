@@ -89,8 +89,11 @@ function calculateZoom() {
 }
 
 function makeChart(element, data) {
-    let upColor = '#0055cc';
-    let downColor = '#ff5500';
+    // warna chart
+    // up color = ijo
+    let upColor = '#02C076';
+    // down color = merah
+    let downColor = '#D9304E';
     let echartData = splitData(data);
     let zoom = calculateZoom();
     eChart = echarts.init(element);
