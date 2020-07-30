@@ -357,7 +357,7 @@
         @include('frontend.exchange.my_order')
     @endauth
 
-    @include('frontend.exchange.trade_history')
+    
 
 @endsection
 

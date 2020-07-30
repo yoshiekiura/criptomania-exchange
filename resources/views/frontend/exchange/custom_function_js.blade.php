@@ -661,35 +661,24 @@
                     className: 'hide_in_mobile'
                 },
                 {
-                    data: null,
+                    data: 'price',
                     orderable: false,
+                    className: 'dt-body-center',
                     render: function (data) {
-                        let html = '<span class="text-red">' + exchangeType[data.exchange_type] + '</span>';
+                        let html = '<td class="text-red">' + data + '</td>';
                         if (data.exchange_type == exchangeTypeBuy) {
-                            html = '<span class="text-green">' + exchangeType[data.exchange_type] + '</span>'
+                            html = '<td class="text-green">' + data + '</td>'
                         }
 
                         return html;
                     }
                 },
                 {
-                    data: "price",
-                    orderable: false,
-                    className: 'dt-body-center'
-                },
-                {
                     data: "amount",
                     orderable: false,
                     className: 'dt-body-center'
-                },
-                {
-                    data: null,
-                    orderable: false,
-                    className: 'dt-body-center hide_in_mobile_small',
-                    render: function (data) {
-                        return bcmul(data.amount, data.price);
-                    }
                 }
+               
             ]
         });
 
