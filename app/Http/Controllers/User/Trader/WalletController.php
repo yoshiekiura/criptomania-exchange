@@ -25,6 +25,8 @@ use App\Http\Requests\User\Trader\StruckUploadRequest;
 use App\Services\Core\FileUploadService;
 use App\Repositories\User\Admin\Interfaces\StockItemInterface;
 use App\Repositories\User\Trader\Interfaces\DepositBankInterface;
+use App\Events\Exchange\BroadcastNotification;
+
 
 
 class WalletController extends Controller
@@ -33,13 +35,15 @@ class WalletController extends Controller
     private $walletService;
     private $bankAdmin;
     private $depoBankRepo;
+    private $notification;
 
-    public function __construct(WalletInterface $walletRepository, WalletService $walletService, ListBankInterface $bankAdmin, DepositBankInterface $depoBankRepo)
+    public function __construct(WalletInterface $walletRepository, WalletService $walletService, ListBankInterface $bankAdmin, DepositBankInterface $depoBankRepo, NotificationInterface $notification)
     {
         $this->walletRepository = $walletRepository;
         $this->walletService = $walletService;
         $this->bankAdmin = $bankAdmin;
         $this->depoBankRepo = $depoBankRepo;
+        $this->notification = $notification;
     }
 
     public function index()
@@ -141,6 +145,7 @@ class WalletController extends Controller
         }
 
          DB::commit();
+         event(new BroadcastNotification($notification));
 
             return redirect()->route('trader.wallets.invoice',$insert->id)->with(SERVICE_RESPONSE_SUCCESS, __('Your Deposit Transfer has been successfully insert. Please Upload Your Struck Upload'));
 

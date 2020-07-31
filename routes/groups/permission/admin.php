@@ -13,6 +13,9 @@ Route::group(['namespace' => 'User\Admin'], function () {
     Route::post('users/{id}/wallets/{walletId}/update/{depositId}', 'UsersController@updateWalletBalanceBank')->name('admin.users.wallets.updateDepoBank')->where('walletId', '[0-9]+');
 
 
+    Route::put('users/{id}/wallets/{walletId}/update/{depositId}', 'UsersController@declineDepositBank')->name('admin.users.wallets.declineDepositBank')->where('walletId', '[0-9]+');
+
+
     Route::put('coins/{id}/toggle-status', 'StockItemController@toggleActiveStatus')->name('admin.stock-items.toggle-status');
 
     Route::resource('coins', 'StockItemController')->parameter('coins', 'id')->names('admin.stock-items');

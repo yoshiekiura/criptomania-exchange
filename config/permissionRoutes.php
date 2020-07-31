@@ -144,6 +144,7 @@ return [
                     'admin.users.wallets.update',
                     'admin.users.wallets.editBankBalance',
                     'admin.users.wallets.updateDepoBank',
+                    'admin.users.wallets.declineDepositBank',
                 ],
             ],
             'transaction_reports' => [

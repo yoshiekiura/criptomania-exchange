@@ -84,9 +84,11 @@
                                             @if(has_permission('admin.users.wallets.editBankBalance'))
                                                 <li>
                                                     <a href="{{ route('admin.users.wallets.editBankBalance', [$transaction->users_id, $transaction->wallet_id,$transaction->id]) }}"><i
-                                                                class="fa fa-eye"></i> {{ __('Give Amount') }}</a>
+                                                                class="fa fa-eye"></i> {{ __('Reviews') }}</a>
                                                 </li>
                                             @endif
+
+                                          
 
                                           
 

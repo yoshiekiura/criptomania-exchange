@@ -190,6 +190,7 @@ class UsersController extends Controller
         return view('backend.users.wallets.editBankWallet', $data);
     }
 
+
     public function updateWalletBalance(UpdateWalletBalanceRequest $request, $id, $walletId)
     {
         $attributes = ['primary_balance' => DB::raw('primary_balance + ' . $request->amount)];
@@ -257,15 +258,22 @@ class UsersController extends Controller
         }
     }
 
+    /* 
+
+    Developer : Muhammad Rizky Firdaus
+    Date : 20 July 2020
+    Description : This method used for updating the wallet balance user which deposit with bank transfer especially for Indonesian Rupiah or anything else
+
+
+    */
+
     public function updateWalletBalanceBank(UpdateWalletBalanceRequest $request, $userId, $walletId, $depoId)
     {
         $attributes = ['primary_balance' => DB::raw('primary_balance + ' . $request->amount)];
-        // $status = $requestData->only('status');
 
         try { 
             DB::beginTransaction();
 
-            // $depoBankRepo = app(DepositBankInterface::class);
 
             $walletRepository = app(WalletInterface::class);
             // get the wallet
@@ -280,12 +288,6 @@ class UsersController extends Controller
             if ( !$walletRepository->update($attributes, $walletId) ) {
                 throw new \Exception(__('Failed to update the wallet balance.'));
             }
-            // else 
-            // {
-            //   return redirect()->back()->with(SERVICE_RESPONSE_SUCCESS, __('The wallet balance has been updated successfully.'));
-            // }
-
-            // $depositId = $depoBankRepo->getFirstByConditions(['id' => $depoId]);
 
             $date = now();
             // compare the balance with given amount to identify if it's decreased or increased
@@ -305,14 +307,10 @@ class UsersController extends Controller
             ];
 
             $depositBankParameter = [
-                
-                    // 'id' => $depositId,
-                    'status' => PAYMENT_COMPLETED,
-                
-                
+            
+                    'status' => PAYMENT_COMPLETED, 
             ];
 
-            // dd($depositBankParameter);
 
             $notificationParameter = [
                 'user_id' => $wallet->user_id,
@@ -322,7 +320,6 @@ class UsersController extends Controller
                 ]),
             ];
 
-            // app(DepositBankInterface::class)->update($depositBankParameter, $depoId);
             DepositBankTransfer::where('id',$depoId)->update($depositBankParameter);
             app(TransactionInterface::class)->insert($transactionParameters);
             app(NotificationInterface::class)->create($notificationParameter);
@@ -334,6 +331,45 @@ class UsersController extends Controller
             DB::rollBack();
 
             return redirect()->back()->with(SERVICE_RESPONSE_ERROR, __('Failed to update the wallet balance.'));
+        }
+    }
+
+    public function declineDepositBank($userId, $walletId, $depoId)
+    {
+        try {
+            DB::beginTransaction();
+
+             $walletRepository = app(WalletInterface::class);
+            // get the wallet
+            $wallet = $walletRepository->getFirstByConditions(['id' => $walletId, 'user_id' => $userId], ['stockItem']);
+
+            // get the deposit bank id
+
+            $date = now();
+
+             $depositBankParameter = [
+            
+                    'status' => PAYMENT_FAILED, 
+            ];
+
+
+            $notificationParameter = [
+                'user_id' => $wallet->user_id,
+                'data' => __("Your deposit in wallet :currency has been declined by admin.", [
+                    'currency' => $wallet->stockItem->item
+                ]),
+            ];
+
+            DepositBankTransfer::where('id',$depoId)->update($depositBankParameter);
+            app(NotificationInterface::class)->create($notificationParameter);
+
+            DB::commit();
+            return redirect()->back()->withInput()->with(SERVICE_RESPONSE_SUCCESS, __('Deposit was declined successfully.'));
+
+        } catch (Exception $exception){
+            DB::rollBack();
+
+            return redirect()->back()->with(SERVICE_RESPONSE_ERROR, __('Failed to update status.'));     
         }
     }
 }

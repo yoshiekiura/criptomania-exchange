@@ -28,13 +28,13 @@
                                 
                             @endphp
                             <input type="text" class="form-control" value="{{$subtotal}}" readonly name="{{fake_field('amount')}}">
-                            <span class="strong">This withdrawal has been deducted from the amount of the fee {{$wallet->stockItem->withdrawal_fee}}%</span>
+                            <span class="strong">This deposit has been deducted from the amount of the fee {{$wallet->stockItem->withdrawal_fee}}%</span>
                         </div>
                     </div>
 
-                    @if($depositBank->status == PAYMENT_COMPLETED)
+                    @if($depositBank->status == PAYMENT_COMPLETED || $depositBank->status == PAYMENT_FAILED)
 
-                    <span class="strong">You have been withdraw this request</span>
+                    <span class="strong">This Transaction has been completed</span>
 
                     @else
 
@@ -46,6 +46,19 @@
                     </div>
                     @endif
                     {!! Form::close() !!}
+
+                      @if($depositBank->status == PAYMENT_PENDING)
+
+                                                @if(has_permission('admin.users.wallets.declineDepositBank'))
+
+                                                <a href="{{ route('admin.users.wallets.declineDepositBank', [$wallet->user_id, $wallet->id, $depositBank->id]) }}" class="btn btn-sm btn-danger btn-flat btn-sm-block confirmation" data-form-id="decline-{{ $depositBank->id }}" data-form-method="PUT" data-alert="{{__('Do you want to decline this deposit?')}}">{{ __('Decline') }}</a>
+
+                                                @endif
+
+                                            @else
+
+                                            
+                                            @endif
                 </div>
             </div>
         </div>
