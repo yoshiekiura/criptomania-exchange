@@ -28,6 +28,14 @@
                         </thead>
                         <tbody>
                         @foreach($list['query'] as $transaction)
+                        <!-- Modal -->
+    <div class="modal fade" id="modal-insert">
+        <div class="modal-dialog" role="document">
+         <div class="form-group">
+        <img src="{{ get_struck($transaction->payment_prove) }}" alt="{{ __('Profile Image') }}" id="struck" class="img-responsive cm-center">
+      
+        </div>
+<!-- End Modal  -->
                             <tr>
                                 <td>{{ $transaction->ref_id }}</td>
                                 <td>{{ $transaction->item_name }} ({{ $transaction->item }})</td>
@@ -107,17 +115,9 @@
 
 
     {!! $list['pagination'] !!}
-    <!-- Modal -->
-    <div class="modal fade" id="modal-insert">
-        <div class="modal-dialog" role="document">
-         <div class="form-group">
-         <!-- <input type="file" class="form-control" name="struck_foto" id="struck_foto"> -->
-        <!--  <img style="max-width: calc(100% - 20px)" src="{{get_struck($transaction->payment_prove)}}" id="struck" alt="{{ __('Struck Upload') }}"> -->
-        <img src="{{ get_struck($transaction->payment_prove) }}" alt="{{ __('Profile Image') }}" id="struck" class="img-responsive cm-center">
-      
-        </div>
-    <!--  -->
+   
 @endsection
+
 
 @section('script')
     <!-- for datatable and date picker -->

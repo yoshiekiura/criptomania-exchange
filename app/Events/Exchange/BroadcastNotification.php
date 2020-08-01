@@ -2,15 +2,18 @@
 
 namespace App\Events\Exchange;
 
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Broadcasting\PrivateChannel;
+
 
 class BroadcastNotification
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+
     public $notification;
 
     /**
@@ -18,9 +21,9 @@ class BroadcastNotification
      *
      * @return void
      */
-    public function __construct($userId)
+    public function __construct($notification)
     {
-        $this->notification = $userId;
+        $this->notification = $notification;
     }
 
     /**
@@ -30,19 +33,29 @@ class BroadcastNotification
      */
     public function broadcastOn()
     {
-        // return new PrivateChannel('channel-name');
-        return new PrivateChannel(channel_prefix() .'notifications.' . $this->notification->user_id);
+        // return new PrivateChannel('notifications');
+        // return new PrivateChannel(channel_prefix() .'notification.' . $this->notification->user_id);
+        return new PrivateChannel(channel_prefix() .'notification.' . $this->notification->data . '.' . $this->notification->user_id);
+        // return new PrivateChannel(channel_prefix() .'notification.' . $this->notification->user_id . '.' . $this->notification->data);
+
 
     }
 
+     public function broadcastWhen()
+    {
+        return $this->notification->read_at == NULL;
+    }
+
+     /**
+     * Get the data to broadcast.
+     *
+     * @return array
+     */
     public function broadcastWith()
     {
-       return [
-            'id' => $this->notification->id,
+        return [
             'user_id' => $this->notification->user_id,
-            'data' => $this->notification->data,
-            'read_at' => $this->notification->read_at
-            
+            'data' => $this->notification->data
         ];
     }
 }

@@ -109,6 +109,14 @@ class WalletController extends Controller
         return redirect()->back()->with(SERVICE_RESPONSE_ERROR, $response[SERVICE_RESPONSE_MESSAGE]);
 
     }
+    /* 
+        Developer   : Muhammad Rizky Firdaus
+        Date        : 20-02-2020
+        Description : method storeDepositWithBank is used for deposit with bank transfer, especially in IDR Currency
+
+        NOTE :  THIS METHOD CAN USE TO ANOTHER CURRENCY WHICH IS USE BANK TRANSFER TYPE TO DEPOSIT
+
+    */
 
     public function storeDepositWithBank(DepositBankRequest $request, $id)
     {
@@ -139,13 +147,19 @@ class WalletController extends Controller
                                 'email' => Auth::user()->email
                              ]),
                             ];
-            app(NotificationInterface::class)->create($notification);
+            // app(NotificationInterface::class)->create($notification);
 
+                 $notif = $this->notification->create($notification);
             
         }
 
          DB::commit();
-         event(new BroadcastNotification($notification));
+         if($notif)
+         {
+             
+             event(new BroadcastNotification($notification));
+         }
+       
 
             return redirect()->route('trader.wallets.invoice',$insert->id)->with(SERVICE_RESPONSE_SUCCESS, __('Your Deposit Transfer has been successfully insert. Please Upload Your Struck Upload'));
 

@@ -31,8 +31,8 @@
                                 <td>{{ $transaction->amount }} <span class="strong">{{ $transaction->item }}</span></td>
                                 @if(!$status)
                                 <td>
-                                    <span class="label label-{{ config('commonconfig.payment_status.' . $transaction->status . '.color_class') }}">{{ payment_status($transaction->status) }}
-                                    </span>
+                                    <a class="label label-{{ config('commonconfig.payment_status.' . $transaction->status . '.color_class') }}">{{ payment_status($transaction->status) }}
+                                    </a>
                                 </td>
                                 @endif
                                 <td>

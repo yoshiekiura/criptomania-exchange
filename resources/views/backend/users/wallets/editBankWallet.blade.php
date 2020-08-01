@@ -42,14 +42,9 @@
                     <div class="form-group">
                         <div class="col-md-offset-4 col-md-8">
                             {{ Form::submit(__('Give Amount'),['class'=>'btn btn-success form-submission-button']) }}
-                        </div>
-                    </div>
-                    @endif
-                    {!! Form::close() !!}
+                             @if($depositBank->status == PAYMENT_PENDING)
 
-                      @if($depositBank->status == PAYMENT_PENDING)
-
-                                                @if(has_permission('admin.users.wallets.declineDepositBank'))
+                                                 @if(has_permission('admin.users.wallets.declineDepositBank'))
 
                                                 <a href="{{ route('admin.users.wallets.declineDepositBank', [$wallet->user_id, $wallet->id, $depositBank->id]) }}" class="btn btn-sm btn-danger btn-flat btn-sm-block confirmation" data-form-id="decline-{{ $depositBank->id }}" data-form-method="PUT" data-alert="{{__('Do you want to decline this deposit?')}}">{{ __('Decline') }}</a>
 
@@ -59,6 +54,15 @@
 
                                             
                                             @endif
+                        </div>
+                    </div>
+                    @endif
+                    {!! Form::close() !!}
+                   
+                            
+                       
+
+                     
                 </div>
             </div>
         </div>

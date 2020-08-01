@@ -84,7 +84,7 @@
 <div class="modal fade" id="modal-insert">
         <div class="modal-dialog" role="document">
          <div class="form-group">
-        <img src="{{ get_struck($depoBank->payment_prove) }}" alt="{{ __('Profile Image') }}" id="struck" class="img-responsive cm-center">
+        <img src="{{ get_struck($depoBank->payment_prove) }}"  id="struck" class="img-responsive cm-center">
       
         </div>
 

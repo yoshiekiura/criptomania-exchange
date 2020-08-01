@@ -23,4 +23,7 @@ Broadcast::channel(channel_prefix() .'exchange.{stockPairId}.{userId}', function
     return (int) $user->id === (int) $userId;
 });
 
+Broadcast::channel(channel_prefix() .'notifications.{data}.{userId}', function ($user, $userId,$data){
+    return (int) $user->id === (int) $userId;
+});
 

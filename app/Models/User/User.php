@@ -7,10 +7,10 @@ use App\Models\User\DepositBankTransfer;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableInterface;
-
+use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable implements AuditableInterface
 {
-    use Auditable;
+    use Auditable, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -58,5 +58,10 @@ class User extends Authenticatable implements AuditableInterface
     public function depositBank()
     {
         return $this->belongsTo(DepositBankTransfer::class);
+    }
+
+    public function receivesBroadcastNotificationsOn()
+    {
+        return 'users.'.$this->id;
     }
 }

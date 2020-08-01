@@ -39,7 +39,12 @@
                                 <td>{{ $transaction->bank_name }}</td>
                                 <td>{{ $transaction->account_number }}</td>
                                 <td>
-                                    @if($transaction->payment_prove == NULL)
+                                    <!-- if paymeny prove is NULL open form to upload payment prove -->
+                                    @if($transaction->payment_prove == NULL)  
+                                    <!-- and if status payment is Pending, open form -->
+                                        @if($transaction->status == PAYMENT_PENDING)
+
+                                        <!-- after if payment prove is null and status payment is Pending, check permission if active then open form-->
                                          @if(has_permission('trader.wallets.deposit.struckUpload'))
                                                
                                             
@@ -51,10 +56,20 @@
 
                                         {{ Form::close() }}
                                             @endif
+                                            <!-- end if permisson -->
+
+                                        <!-- and if status payment is complete or failed then show the label transaction has been completed  -->
+                                        @elseif($transaction->status == PAYMENT_COMPLETED || $transaction->status == PAYMENT_FAILED)
+
+                                        <span class="label" style="color:black;">This transaction has been completed and your payment prove is invalid</span>
+                                        @endif
+                                        <!-- end if check status payment -->
 
                                     @else
+                                    <!-- if all condition is false then show the payment prove document -->
                                     {{$transaction->payment_prove}}
                                     @endif
+                                    <!-- end if -->
 
 
                                         
