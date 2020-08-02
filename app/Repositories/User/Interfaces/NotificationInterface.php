@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: rana
@@ -12,6 +13,8 @@ namespace App\Repositories\User\Interfaces;
 interface NotificationInterface
 {
     public function read($id);
+
+    public function readAll();
 
     public function unread($id);
 

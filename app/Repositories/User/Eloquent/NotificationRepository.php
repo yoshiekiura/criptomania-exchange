@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: rana
@@ -10,9 +11,11 @@ namespace App\Repositories\User\Eloquent;
 
 
 use App\Models\User\Notification;
+use App\Models\User\User;
 use App\Repositories\BaseRepository;
 use App\Repositories\User\Interfaces\NotificationInterface;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class NotificationRepository extends BaseRepository implements NotificationInterface
 {
@@ -28,12 +31,12 @@ class NotificationRepository extends BaseRepository implements NotificationInter
 
     public function getLastFive($userId)
     {
-       return $this->model->where('user_id',$userId)->whereNull('read_at')->orderBy('id','desc')->take(5)->get();
+        return $this->model->where('user_id', $userId)->whereNull('read_at')->orderBy('id', 'desc')->take(5)->get();
     }
 
     public function countUnread($userId)
     {
-        return $this->model->where('user_id',$userId)->whereNull('read_at')->count();
+        return $this->model->where('user_id', $userId)->whereNull('read_at')->count();
     }
 
     public function read($id)
@@ -44,6 +47,13 @@ class NotificationRepository extends BaseRepository implements NotificationInter
             return $notice->update();
         }
         return false;
+    }
+
+    public function readAll()
+    {
+        $id = User::where('id', Auth::id())->first()->id;
+        $this->model->where('user_id', $id)->update(['read_at' => Carbon::now()]);
+        return true;
     }
 
     public function unread($id)
