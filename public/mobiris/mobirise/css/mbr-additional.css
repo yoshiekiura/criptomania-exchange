@@ -2211,11 +2211,15 @@ body {
   background-size: cover;
 }
 
-.cid-qyprheMI5x {
-  padding-top: 30px;
-  padding-bottom: 30px;
+.cid-qyprheMI5x {}
+
+/* footer container */
+/* .footer-container {
+  padding-top: -px;
+  padding-bottom: 0px;
   background-color: #2e2e2e;
-}
+
+} */
 
 .section-space {
   padding: 80px 0;
