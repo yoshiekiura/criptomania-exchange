@@ -2211,7 +2211,9 @@ body {
   background-size: cover;
 }
 
-.cid-qyprheMI5x {}
+.cid-qyprheMI5x {
+  background-color: #2e2e2e;
+}
 
 /* footer container */
 /* .footer-container {
