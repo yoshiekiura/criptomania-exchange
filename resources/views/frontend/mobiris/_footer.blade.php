@@ -2,7 +2,7 @@
     <div class="media-container-row mbr-white">
         <div class="col-12">
             <p class="mbr-text mb-0 mbr-fonts-style display-7" style="font-size: 10px">
-                © Copyright 2019 <a href="https://mobirisethemes.com/" class="text-white">Free Boostrap Template</a>
+                © Copyright 2019 <a href="#" class="text-white">Free Boostrap Template</a>
                 - All Rights Reserved
             </p>
         </div>

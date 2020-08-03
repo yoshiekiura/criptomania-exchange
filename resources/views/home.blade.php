@@ -4,13 +4,10 @@
 
   <section class="menu cid-qynYwP0rAw" once="menu" id="menu1-3" data-rv-view="1014">
     @include('frontend.mobiris._top_navbar')
-
-
   </section>
 
   <section class="header4 cid-qyk0Y195zN" id="header4-1" data-rv-view="993">
     @include('frontend.mobiris._banner')
-
   </section>
 
   <section class="mbr-section info2 cid-qypuIzB65Z" id="info2-h" data-rv-view="1002">
@@ -79,6 +76,13 @@
   <script src="{{ asset('backend/assets/js/adminlte.min.js') }}"></script>
   <script src="{{ asset('backend/assets/js/custom.js') }}"></script>
 
+  {{-- bootstrap script --}}
+
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+  </script>
+
+
   <script>
     var glide = new Glide('.glide', {
   type: 'carousel',
@@ -99,6 +103,34 @@
 glide.mount()
   </script>
 
+  @auth
+  {{-- Device Screen --}}
+  <script>
+    var auth = window.matchMedia("(max-width: 700px)")
+      console.log(auth)
+      myFunction(auth) // Call listener function at run time
+      auth.addListener(myFunction) // Attach listener function on state changes
+  
+      function myFunction(auth) {
+        var username = '{{ Auth::user()->userInfo->full_name }}';
+      if (auth.matches) { // If media query matches
+          console.log('ini mobile');
+          $('.fa-sign-out-alt').remove();
+          $('.txt-profile').remove();
+          $('.text-logout').text('Log Out');
+          $('.text-profile').text(username);
+      } else {
+        if(!$('i').hasClass('fa-sign-out-alt'))
+        {
+          $('.text-logout').text('');
+          $('.text-logout').prepend('<i class="fas fa-sign-out-alt"></i>');
+          $('.text-profile').text(username + '|');
+        }
+      }
+      }
+  </script>
+  {{-- End Device Screen --}}
+  @endauth
 
 
 

@@ -3,15 +3,16 @@
         <div class="container-fluid">
             <div class="navbar-header">
                 @if(admin_settings('company_logo'))
-                    <a href="{{ route('home') }}" class="navbar-brand"><img
-                                style="width: 40px;height: 40px; margin-top: -10px"
-                                src="{{ get_image(admin_settings('company_logo')) }}"></a>
+                <a href="{{ route('home') }}" class="navbar-brand"><img
+                        style="width: 40px;height: 40px; margin-top: -10px"
+                        src="{{ get_image(admin_settings('company_logo')) }}"></a>
                 @else
-                    <a style="text-transform: uppercase" href="{{ route('home') }}" class="navbar-brand"><b>{{ env('APP_NAME') }}</b></a>
+                <a style="text-transform: uppercase" href="{{ route('home') }}"
+                    class="navbar-brand"><b>{{ env('APP_NAME') }}</b></a>
                 @endif
 
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                        data-target="#navbar-collapse">
+                    data-target="#navbar-collapse">
                     <i class="fa fa-bars"></i>
                 </button>
             </div>
@@ -20,67 +21,89 @@
                 <ul class="nav navbar-nav">
                     <li class="{{ is_current_route('home') }}"><a href="{{ route('home') }}">{{ __('Home') }}</a></li>
                     <li class="{{ is_current_route('exchange.index') }}"><a
-                                href="{{ route('exchange.index') }}">{{ __('Exchange') }}</a></li>
+                            href="{{ route('exchange.index') }}">{{ __('Exchange') }}</a></li>
                     <li class="{{ is_current_route('exchange.ico.index') }}"><a
-                                href="{{ route('exchange.ico.index') }}">{{ __('ICO') }}</a></li>
-                    
+                            href="{{ route('exchange.ico.index') }}">{{ __('ICO') }}</a></li>
+                    @auth
+                    <li class="logout-mobile"></li>
+                    @endauth
                 </ul>
             </div>
 
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
-                @auth
+                    @auth
                     <!-- User Account: style can be found in dropdown.less -->
-                        @php
-                            $userNotifications = get_user_specific_notice();
-                        @endphp
-                        <li class="dropdown notifications-menu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-bell-o"></i>
-                                <span class="label label-warning">{{ $userNotifications['count_unread'] }}</span>
-                            </a>
-                            @if(!$userNotifications['list']->isEmpty())
-                                <ul class="dropdown-menu">
-                                    <li class="header text-bold">{{ __('You have :count notifications',['count' => $userNotifications['count_unread']]) }}</li>
+                    @php
+                    $userNotifications = get_user_specific_notice();
+                    @endphp
+                    <li class="dropdown notifications-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-bell-o"></i>
+                            <span class="label label-warning">{{ $userNotifications['count_unread'] }}</span>
+                        </a>
+                        @if(!$userNotifications['list']->isEmpty())
+                        <ul class="dropdown-menu">
+                            <li class="header text-bold">
+                                {{ __('You have :count notifications',['count' => $userNotifications['count_unread']]) }}
+                            </li>
+                            <li>
+                                <!-- inner menu: contains the actual data -->
+                                <ul class="menu">
+                                    @foreach($userNotifications['list'] as $notification)
                                     <li>
-                                        <!-- inner menu: contains the actual data -->
-                                        <ul class="menu">
-                                            @foreach($userNotifications['list'] as $notification)
-                                                <li>
-                                                    <a><i class="fa fa-bell text-orange"></i><span
-                                                                style="color: #000000">{{ str_limit($notification->data, 50) }}</span></a>
-                                                </li>
-                                            @endforeach
-                                        </ul>
+                                        <a><i class="fa fa-bell text-orange"></i><span
+                                                style="color: #000000">{{ str_limit($notification->data, 50) }}</span></a>
                                     </li>
-                                    <li class="footer"><a class="bg-green-active" style="color: #FFFFFF !important"
-                                                          href="{{ route('notices.index') }}">View all</a></li>
+                                    @endforeach
                                 </ul>
-                            @endif
-                        </li>
-                        <li class="user user-menu">
-                            <a href="{{ route('profile.index') }}">
-                                <img src="{{ get_avatar(Auth::user()->avatar) }}" class="user-image img-circle"
-                                     alt="User Image">
-                                <span class="hidden-xs cm-ml-5">{{ Auth::user()->userInfo->full_name }}</span>
-                            </a>
-                        </li>
-                        <!-- Control Sidebar Toggle Button -->
-                        <li>
-                            <a href="{{ route('logout') }}"><i class="fa fa-sign-out"></i></a>
-                        </li>
+                            </li>
+                            <li class="footer"><a class="bg-green-active" style="color: #FFFFFF !important"
+                                    href="{{ route('notices.index') }}">View all</a></li>
+                        </ul>
+                        @endif
+                    </li>
+                    <li class="user user-menu">
+                        <a href="{{ route('profile.index') }}">
+                            {{-- <img src="{{ get_avatar(Auth::user()->avatar) }}" class="user-image img-circle"
+                            alt="User Image"> --}}
+                            <span class="hidden-xs cm-ml-5">{{ Auth::user()->userInfo->full_name }}</span>
+                        </a>
+                    </li>
+                    <!-- Control Sidebar Toggle Button -->
+                    <li class="logout-desktop"></li>
                     @endauth
                     @guest
-                        <li>
-                            <a href="{{ route('login') }}">{{__('Login')}}</a>
-                        </li>
+                    <li>
+                        <a href="{{ route('login') }}">{{__('Login')}}</a>
+                    </li>
 
-                        <li>
-                            <a href="{{ route('register.index') }}">{{ __('Register') }}</a>
-                        </li>
+                    <li>
+                        <a href="{{ route('register.index') }}">{{ __('Register') }}</a>
+                    </li>
                     @endguest
                 </ul>
             </div>
         </div>
     </nav>
 </header>
+
+<script>
+    var logout = window.matchMedia("(max-width: 700px)")
+    myFunction(logout) // Call listener function at run time
+    logout.addListener(myFunction) // Attach listener function on state changes
+
+    function myFunction(logout) {
+    if (logout.matches) { // If media query matches
+        $('.icon-logout').remove();
+        $('.logout-mobile').prepend('<a class="icon-logout" href="{{ route('logout') }}">Log Out <i class="fa fa-sign-out"></i></a>')
+
+    } else {
+        if($('li').hasClass('logout-desktop'))
+        {
+            $('.icon-logout').remove();
+            $('.logout-desktop').prepend('<a class="icon-logout" href="{{ route('logout') }}"><i class="fa fa-sign-out"></i></a>')
+        }
+    }
+    }
+</script>
