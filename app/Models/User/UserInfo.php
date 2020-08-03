@@ -11,9 +11,9 @@ class UserInfo extends Model implements AuditableInterface
 {
     use Auditable;
 
-    protected $fillable = ['user_id', 'first_name', 'last_name', 'address', 'phone', 'is_id_verified', 'id_type', 'id_card_front', 'id_card_back'];
+    protected $fillable = ['user_id', 'first_name', 'last_name', 'address', 'phone', 'is_id_verified', 'id_type', 'id_card_front', 'id_card_back','kyc_upload'];
 
-    protected $fakeFields = ['user_id','first_name','last_name', 'country_id', 'address', 'phone', 'is_id_verified', 'id_type', 'id_card_front', 'id_card_back'];
+    protected $fakeFields = ['user_id','first_name','last_name', 'country_id', 'address', 'phone', 'is_id_verified', 'id_type', 'id_card_front', 'id_card_back','kyc_upload'];
 
     public function getFullNameAttribute()
     {

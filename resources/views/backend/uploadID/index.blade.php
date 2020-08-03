@@ -74,4 +74,13 @@
             }
         });
     </script>
+    <script>
+
+    $(document).ready(function(){
+        $('.kyc').on('click', function(){
+            $('#kycModal').modal('show');
+        });
+    });
+    
+</script>
 @endsection
