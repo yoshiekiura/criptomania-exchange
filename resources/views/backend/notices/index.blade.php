@@ -42,6 +42,14 @@
                         @endforeach
                         </tbody>
                     </table>
+                    @if(count($notice->read_at > 0))
+
+                            @if( has_permission('notices.mark-all-as-read') )
+                                    <a href="{{ route('notices.mark-all-as-read')}}" class="btn btn-sm btn-primary btn-flat" data-alert="{{__('Read All Notifications?')}}">{{ __('Read All') }}</a>
+                            @endif
+                   
+
+                    @endif
                 </div>
             </div>
         </div>

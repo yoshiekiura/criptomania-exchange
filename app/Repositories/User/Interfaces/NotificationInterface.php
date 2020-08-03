@@ -14,6 +14,7 @@ interface NotificationInterface
     public function read($id);
 
     public function unread($id);
+    public function readAll();
 
     public function countUnread($userId);
 

@@ -13,6 +13,8 @@ use App\Models\User\Notification;
 use App\Repositories\BaseRepository;
 use App\Repositories\User\Interfaces\NotificationInterface;
 use Carbon\Carbon;
+use App\Models\User\User;
+use Illuminate\Support\Facades\Auth;
 
 class NotificationRepository extends BaseRepository implements NotificationInterface
 {
@@ -54,5 +56,12 @@ class NotificationRepository extends BaseRepository implements NotificationInter
             return $notice->update();
         }
         return false;
+    }
+
+    public function readAll()
+    {
+        $id = User::where('id', Auth::id())->first()->id;
+        $this->model->where('user_id', $id)->update(['read_at' => Carbon::now()]);
+        return true;
     }
 }
