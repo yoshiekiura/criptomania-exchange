@@ -77,15 +77,11 @@
   <script src="{{ asset('backend/assets/js/custom.js') }}"></script>
 
   {{-- bootstrap script --}}
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
-  </script>
+
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
     integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
   </script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous">
-  </script>
+
 
   <script>
     var glide = new Glide('.glide', {
@@ -107,11 +103,34 @@
 glide.mount()
   </script>
 
+  @auth
+  {{-- Device Screen --}}
   <script>
-    $(function () {
-      $('[data-toggle="tooltip"]').tooltip();
-    })
+    var auth = window.matchMedia("(max-width: 700px)")
+      console.log(auth)
+      myFunction(auth) // Call listener function at run time
+      auth.addListener(myFunction) // Attach listener function on state changes
+  
+      function myFunction(auth) {
+        var username = '{{ Auth::user()->userInfo->full_name }}';
+      if (auth.matches) { // If media query matches
+          console.log('ini mobile');
+          $('.fa-sign-out-alt').remove();
+          $('.txt-profile').remove();
+          $('.text-logout').text('Log Out');
+          $('.text-profile').text(username);
+      } else {
+        if(!$('i').hasClass('fa-sign-out-alt'))
+        {
+          $('.text-logout').text('');
+          $('.text-logout').prepend('<i class="fas fa-sign-out-alt"></i>');
+          $('.text-profile').text(username + '|');
+        }
+      }
+      }
   </script>
+  {{-- End Device Screen --}}
+  @endauth
 
 
 
