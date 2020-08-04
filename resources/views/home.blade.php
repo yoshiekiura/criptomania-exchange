@@ -124,7 +124,7 @@ glide.mount()
         {
           $('.text-logout').text('');
           $('.text-logout').prepend('<i class="fas fa-sign-out-alt"></i>');
-          $('.text-profile').text(username + '|');
+          $('.text-profile').text(username + ' | ');
         }
       }
       }
