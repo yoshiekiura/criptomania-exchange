@@ -65,8 +65,8 @@
                     </li>
                     <li class="user user-menu">
                         <a href="{{ route('profile.index') }}">
-                            {{-- <img src="{{ get_avatar(Auth::user()->avatar) }}" class="user-image img-circle"
-                            alt="User Image"> --}}
+                            <img src="{{ get_avatar(Auth::user()->avatar) }}" class="user-image img-circle"
+                                alt="User Image">
                             <span class="hidden-xs cm-ml-5">{{ Auth::user()->userInfo->full_name }}</span>
                         </a>
                     </li>
