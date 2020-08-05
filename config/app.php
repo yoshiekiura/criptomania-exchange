@@ -147,7 +147,6 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
-        Denpa\Bitcoin\Providers\ServiceProvider::class,
 
 
         /*
@@ -223,7 +222,6 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'NoCaptcha' => Anhskohbo\NoCaptcha\Facades\NoCaptcha::class,
         'Pusher' => Pusher\Pusher::class,
-        'Bitcoind' => Denpa\Bitcoin\Facades\Bitcoind::class,
     ],
 
 ];
