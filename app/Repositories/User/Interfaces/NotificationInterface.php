@@ -14,6 +14,10 @@ interface NotificationInterface
 {
     public function read($id);
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 81fb0a94a09ce55ba0e67b2b308309b3e13aee50
 
     public function unread($id);
     public function readAll();
