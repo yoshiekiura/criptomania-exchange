@@ -65,8 +65,5 @@ class NotificationRepository extends BaseRepository implements NotificationInter
         }
         return false;
     }
-<<<<<<< HEAD
+
 }
-=======
-}
->>>>>>> 81fb0a94a09ce55ba0e67b2b308309b3e13aee50
