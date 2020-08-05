@@ -149,6 +149,8 @@ $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
     radioClass: 'iradio_flat-green'
 });
 
+
+
 $(function () {
     $('[data-toggle="tooltip"]').tooltip()
 });

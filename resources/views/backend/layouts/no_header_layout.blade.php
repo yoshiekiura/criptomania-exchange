@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{ asset('common/vendors/font-awesome/css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/assets/css/admin_lte.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/assets/css/template_color.css') }}">
+    <link rel="stylesheet" href="{{ asset('common/vendors/iCheck/flat/red.css') }}" />
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -40,6 +41,7 @@
 <script src="{{ asset('common/vendors/jquery-ui/jquery-ui.min.js') }}"></script>
 <script src="{{ asset('common/vendors/bootstrap/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('backend/assets/js/adminlte.min.js') }}"></script>
+<script src="{{ asset('common/vendors/iCheck/icheck.min.js') }}"></script>
 <script src="{{ asset('backend/assets/js/custom.js') }}"></script>
 @yield('script')
 </body>

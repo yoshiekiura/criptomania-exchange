@@ -42,6 +42,13 @@
                         
                     </div>
 
+                    <div class="checkbox">
+                        <label>
+                            {{ Form::checkbox(fake_field('remember_me'), 1, false) }}
+                            {{ __('Remember Me') }}
+                        </label>
+                    </div>
+
                     @if( env('APP_ENV') != 'local' && admin_settings('display_google_captcha') == ACTIVE_STATUS_ACTIVE )
                         <div class="wrap-input100 validate-input { $errors->has('g-recaptcha-response') ? 'has-error' : '' }}">
                             <div>
@@ -50,7 +57,8 @@
                             <span class="validation-message cval-error">{{ $errors->first('g-recaptcha-response') }}</span>
                         </div>
                     @endif
-            
+                
+
                     <div class="container-login100-form-btn">
                         <!-- /.col -->
                         

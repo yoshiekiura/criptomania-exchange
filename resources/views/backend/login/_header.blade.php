@@ -19,6 +19,8 @@
 	<link rel="stylesheet" type="text/css" href="{{asset('logincss/vendor/css-hamburgers/hamburgers.min.css')}}">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{{asset('logincss/vendor/select2/select2.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('common/vendors/iCheck/flat/red.css') }}" />
+	
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{{asset('logincss/css/util.css')}}">
 	 <link rel="stylesheet" href="{{ asset('backend/assets/css/admin_lte.css') }}">
@@ -27,6 +29,7 @@
         {!! NoCaptcha::renderJs() !!}
     @endif
 	<link rel="stylesheet" type="text/css" href="{{asset('logincss/css/main.css')}}">
+	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <!--===============================================================================================-->
     @yield('after-style')
 
@@ -56,6 +59,8 @@
 	<script src="{{asset('logincss/vendor/select2/select2.min.js')}}"></script>
 <!--===============================================================================================-->
 	<script src="{{asset('logincss/vendor/tilt/tilt.jquery.min.js')}}"></script>
+<script src="{{ asset('common/vendors/iCheck/icheck.min.js') }}"></script>
+
 
 
 <script src="{{ asset('backend/assets/js/custom.js') }}"></script>

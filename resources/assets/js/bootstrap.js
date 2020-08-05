@@ -24,8 +24,9 @@ try {
 
     // require('bootstrap');
 } catch (e) {}
-
 require('icheck/icheck.min.js');
+
+
 AOS.init();
 
 // You can also pass an optional settings object
