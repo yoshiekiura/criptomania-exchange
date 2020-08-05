@@ -48,14 +48,7 @@ class NotificationController extends Controller
         return redirect()->back()->with(SERVICE_RESPONSE_ERROR, __('Failed to mark as read.'));
     }
 
-    public function markAllAsRead()
-    {
-        if ($this->notification->readAll()) {
-            return redirect()->back()->with(SERVICE_RESPONSE_SUCCESS, __('The notice has been marked all as read.'));
-        }
-
-        return redirect()->back()->with(SERVICE_RESPONSE_ERROR, __('Failed to mark as read.'));
-    }
+   
 
     public function markAsUnread($id)
     {
