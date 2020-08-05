@@ -83,6 +83,7 @@
     <script>
         $(document).ready(function () {
             $('.validate-form').cValidate({});
+
         });
-    </script>
+</script>
 @endsection

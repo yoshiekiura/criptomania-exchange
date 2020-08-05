@@ -175,7 +175,7 @@ return [
                 ],
             ],
 
-            
+
             'menu_manager' => [
                 ROUTE_GROUP_FULL_ACCESS => [
                     'menu-manager.index',
@@ -276,7 +276,7 @@ return [
             'wallets' => [
                 ROUTE_GROUP_READER_ACCESS => [
                     'trader.wallets.index',
-                    
+
                 ],
                 'deposit_access' => [
                     'trader.wallets.deposit',
@@ -339,12 +339,8 @@ return [
     ROUTE_TYPE_AVOIDABLE_MAINTENANCE => [
         'login',
     ],
-    ROUTE_TYPE_AVOIDABLE_UNVERIFIED => [
-
-    ],
-    ROUTE_TYPE_AVOIDABLE_SUSPENDED => [
-
-    ],
+    ROUTE_TYPE_AVOIDABLE_UNVERIFIED => [],
+    ROUTE_TYPE_AVOIDABLE_SUSPENDED => [],
     ROUTE_TYPE_FINANCIAL => [
         'trader.exchange.store',
         'trader.exchange.destroy',
@@ -373,6 +369,7 @@ return [
         'account.logout',
         'notices.index',
         'notices.mark-as-read',
+        'notices.mark-all-as-read',
         'notices.mark-as-unread',
         'notices.mark-all-as-read',
         'user_setting.change_password',

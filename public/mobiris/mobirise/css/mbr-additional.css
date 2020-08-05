@@ -2029,7 +2029,7 @@ body {
   }
 
   .cid-qynYwP0rAw img {
-    height: 3.8rem !important;
+    /* height: 3.8rem !important; */
   }
 
   .cid-qynYwP0rAw .btn {
@@ -2212,10 +2212,16 @@ body {
 }
 
 .cid-qyprheMI5x {
-  padding-top: 30px;
-  padding-bottom: 30px;
   background-color: #2e2e2e;
 }
+
+/* footer container */
+/* .footer-container {
+  padding-top: 1000px;
+  padding-bottom: 0px;
+  background-color: #2e2e2e;
+
+} */
 
 .section-space {
   padding: 80px 0;

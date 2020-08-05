@@ -41,20 +41,29 @@ class NotificationController extends Controller
 
     public function markAsRead($id)
     {
-        if($this->notification->read($id)){
-            return redirect()->back()->with(SERVICE_RESPONSE_SUCCESS,__('The notice has been marked as read.'));
+        if ($this->notification->read($id)) {
+            return redirect()->back()->with(SERVICE_RESPONSE_SUCCESS, __('The notice has been marked as read.'));
         }
 
-        return redirect()->back()->with(SERVICE_RESPONSE_ERROR,__('Failed to mark as read.'));
+        return redirect()->back()->with(SERVICE_RESPONSE_ERROR, __('Failed to mark as read.'));
+    }
+
+    public function markAllAsRead()
+    {
+        if ($this->notification->readAll()) {
+            return redirect()->back()->with(SERVICE_RESPONSE_SUCCESS, __('The notice has been marked all as read.'));
+        }
+
+        return redirect()->back()->with(SERVICE_RESPONSE_ERROR, __('Failed to mark as read.'));
     }
 
     public function markAsUnread($id)
     {
-        if($this->notification->unread($id)){
-            return redirect()->back()->with(SERVICE_RESPONSE_SUCCESS,__('The notice has been marked as unread.'));
+        if ($this->notification->unread($id)) {
+            return redirect()->back()->with(SERVICE_RESPONSE_SUCCESS, __('The notice has been marked as unread.'));
         }
 
-        return redirect()->back()->with(SERVICE_RESPONSE_ERROR,__('Failed to mark as unread.'));
+        return redirect()->back()->with(SERVICE_RESPONSE_ERROR, __('Failed to mark as unread.'));
     }
 
      public function markAllAsRead()

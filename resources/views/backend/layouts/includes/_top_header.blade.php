@@ -17,7 +17,7 @@
             <ul class="nav navbar-nav">
                 <!-- User Account: style can be found in dropdown.less -->
                 @php
-                    $userNotifications = get_user_specific_notice();
+                $userNotifications = get_user_specific_notice();
                 @endphp
                 <li class="dropdown notifications-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -25,25 +25,30 @@
                         <span class="label label-warning">{{ $userNotifications['count_unread'] }}</span>
                     </a>
                     @if(!$userNotifications['list']->isEmpty())
-                        <ul class="dropdown-menu">
-                            <li class="header text-bold">{{ __('You have :count notifications',['count' => $userNotifications['count_unread']]) }}</li>
-                            <li>
-                                <!-- inner menu: contains the actual data -->
-                                <ul class="menu">
-                                    @foreach($userNotifications['list'] as $notification)
-                                    <li>
-                                        <a><i class="fa fa-bell text-orange"></i><span style="color: #000000">{{ str_limit($notification->data, 50) }}</span></a>
-                                    </li>
-                                        @endforeach
-                                </ul>
-                            </li>
-                            <li class="footer"><a class="bg-green-active" style="color: #FFFFFF !important" href="{{ route('notices.index') }}">View all</a></li>
-                        </ul>
+                    <ul class="dropdown-menu">
+                        <li class="header text-bold">
+                            {{ __('You have :count notifications',['count' => $userNotifications['count_unread']]) }}
+                        </li>
+                        <li>
+                            <!-- inner menu: contains the actual data -->
+                            <ul class="menu">
+                                @foreach($userNotifications['list'] as $notification)
+                                <li>
+                                    <a><i class="fa fa-bell text-orange"></i><span
+                                            style="color: #000000">{{ str_limit($notification->data, 50) }}</span></a>
+                                </li>
+                                @endforeach
+                            </ul>
+                        </li>
+                        <li class="footer"><a class="bg-green-active" style="color: #FFFFFF !important"
+                                href="{{ route('notices.index') }}">View all</a></li>
+                    </ul>
                     @endif
                 </li>
                 <li class="user user-menu">
                     <a href="{{ route('profile.index') }}">
-                        <img src="{{ get_avatar(Auth::user()->avatar) }}" class="user-image img-circle" alt="User Image">
+                        <img src="{{ get_avatar(Auth::user()->avatar) }}" class="user-image img-circle"
+                            alt="User Image">
                         <span class="hidden-xs cm-ml-5">{{ Auth::user()->userInfo->full_name }}</span>
                     </a>
                 </li>

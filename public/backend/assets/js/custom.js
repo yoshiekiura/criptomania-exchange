@@ -1,7 +1,7 @@
 (function ($) {
     'use strict';
 
-    function footerFixer(){
+    function footerFixer() {
         /*if($(window).height() >= $('.content-wrapper').height()){
             $('.content-wrapper').css({
                 paddingBottom: $('.main-footer').height()
@@ -118,13 +118,12 @@
         }
 
         var dropdown = $this.children('ul');
-        if(dropdown.length>0){
+        if (dropdown.length > 0) {
             $this.addClass('treeview');
             $this.children('a').append('<i class="fa fa-angle-left pull-right"></i>');
-            if(dropdown.find('li.active').length > 0){
+            if (dropdown.find('li.active').length > 0) {
                 $this.addClass('treeview menu-open');
-            }
-            else{
+            } else {
                 $this.addClass('treeview');
             }
         }
@@ -132,8 +131,8 @@
     });
 })(jQuery);
 
-function flashBox(warnType, message){
-    $('.flash-message').find('.centralize-content').addClass('flash-'+warnType).find('p').text(message);
+function flashBox(warnType, message) {
+    $('.flash-message').find('.centralize-content').addClass('flash-' + warnType).find('p').text(message);
     $('.flash-message').addClass('flash-message-active flash-message-window');
 }
 
@@ -149,9 +148,6 @@ $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
     radioClass: 'iradio_flat-green'
 });
 
-
-
 $(function () {
     $('[data-toggle="tooltip"]').tooltip()
 });
-
