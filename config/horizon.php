@@ -27,7 +27,7 @@ return [
     |
     */
 
-    'prefix' => env('HORIZON_PREFIX', str_slug(env('APP_NAME', 'laravel'), '_').'_horizon:'),
+    'prefix' => env('HORIZON_PREFIX', str_slug(env('APP_NAME', 'laravel'), '_') . '_horizon:'),
 
     /*
     |--------------------------------------------------------------------------
@@ -125,6 +125,30 @@ return [
         ],
 
         'local' => [
+            'non-financial' => [
+                'connection' => 'redis',
+                'queue' => ['default'],
+                'balance' => 'auto',
+                'processes' => 3,
+                'tries' => 1,
+            ],
+            'exchange' => [
+                'connection' => 'redis',
+                'queue' => ['cancel', 'stop-limit-order', 'exchange'],
+                'balance' => false,
+                'processes' => 1,
+                'tries' => 1,
+            ],
+            'single-worker' => [
+                'connection' => 'redis',
+                'queue' => ['withdrawal', 'stop-limit', 'bonus-coin'],
+                'balance' => 'simple',
+                'processes' => 1,
+                'tries' => 1,
+            ]
+        ],
+
+        'development' => [
             'non-financial' => [
                 'connection' => 'redis',
                 'queue' => ['default'],
