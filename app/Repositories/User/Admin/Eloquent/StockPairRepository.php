@@ -46,6 +46,7 @@ class StockPairRepository extends BaseRepository implements StockPairInterface
                 'stock_item.item as stock_item_abbr',
                 'stock_item.item_name as stock_item_name',
                 'stock_item.item_type as stock_item_type',
+                'stock_item.item_emoji',
                 // base item
                 'base_item.id as base_item_id',
                 'base_item.item as base_item_abbr',
