@@ -14,6 +14,8 @@
     }
 
     .exchange-loader {
+            background: url({{asset('common/images/progress-bar.gif')}}) no-repeat center;
+        
         background-size: 150px;
     }
 
