@@ -5362,8 +5362,8 @@ try {
 
   // require('bootstrap');
 } catch (e) {}
-
 __webpack_require__(26);
+
 __WEBPACK_IMPORTED_MODULE_0_aos___default.a.init();
 
 // You can also pass an optional settings object

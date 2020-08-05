@@ -29,10 +29,10 @@ Route::put('admin-settings/{admin_setting_type}/update', 'Core\AdminSettingContr
 Route::resource('system-notices', 'Core\SystemNoticeController')->except(['show'])->parameter('system-notices', 'id');
 
 //User Specific Notice
-Route::get('notices', 'User\NotificationController@index')->name('notices.index');
-Route::get('notices/{id}/read', 'User\NotificationController@markAsRead')->name('notices.mark-as-read');
+Route::get('notices','User\NotificationController@index')->name('notices.index');
+Route::get('notices/{id}/read','User\NotificationController@markAsRead')->name('notices.mark-as-read');
+Route::get('notices/{id}/unread','User\NotificationController@markAsUnread')->name('notices.mark-as-unread');
 Route::get('notices/read', 'User\NotificationController@markAllAsRead')->name('notices.mark-all-as-read');
-Route::get('notices/{id}/unread', 'User\NotificationController@markAsUnread')->name('notices.mark-as-unread');
 
 //Laravel Log Viewer
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('logs.index');

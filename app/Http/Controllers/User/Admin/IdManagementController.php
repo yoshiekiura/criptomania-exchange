@@ -103,6 +103,7 @@ class IdManagementController extends Controller
                 'id_type' => null,
                 'id_card_front' => null,
                 'id_card_back' => null,
+                'kyc_upload' => null,
             ];
 
             $conditions = ['user_id'=> $id, 'is_id_verified' => ID_STATUS_PENDING];

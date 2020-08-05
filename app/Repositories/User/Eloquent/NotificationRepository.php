@@ -15,6 +15,7 @@ use App\Models\User\User;
 use App\Repositories\BaseRepository;
 use App\Repositories\User\Interfaces\NotificationInterface;
 use Carbon\Carbon;
+use App\Models\User\User;
 use Illuminate\Support\Facades\Auth;
 
 class NotificationRepository extends BaseRepository implements NotificationInterface
@@ -65,4 +66,3 @@ class NotificationRepository extends BaseRepository implements NotificationInter
         }
         return false;
     }
-}

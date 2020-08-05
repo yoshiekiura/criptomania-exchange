@@ -17,18 +17,18 @@
   <!-- iCheck -->
   <link rel="stylesheet" href="{{ asset('common/vendors/iCheck/all.css') }}">
 
-  <!-- for datatable and date picker -->
-  <link rel="stylesheet" href="{{ asset('common/vendors/datepicker/datepicker.css') }}">
-  <link rel="stylesheet"
-    href="{{ asset('common/vendors/datatable_responsive/datatables/plugins/bootstrap/datatables.bootstrap.css') }}">
-  <link rel="stylesheet" href="{{ asset('common/vendors/datatable_responsive/datatables/datatables.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('backend/assets/style.css') }}">
-  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-  <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/all.min.js"></script> -->
-  <!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> -->
-  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/ScrollMagic.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/plugins/debug.addIndicators.min.js"></script>
+    <!-- for datatable and date picker -->
+    <link rel="stylesheet" href="{{ asset('common/vendors/datepicker/datepicker.css') }}">
+    <link rel="stylesheet" href="{{ asset('common/vendors/datatable_responsive/datatables/plugins/bootstrap/datatables.bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('common/vendors/datatable_responsive/datatables/datatables.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('backend/assets/style.css') }}">
+      <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+      
+    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/all.min.js"></script> -->
+    <!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/ScrollMagic.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.7/plugins/debug.addIndicators.min.js"></script>
 
 
   @yield('after-style')

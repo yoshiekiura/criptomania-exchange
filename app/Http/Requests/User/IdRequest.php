@@ -27,7 +27,7 @@ class IdRequest extends Request
         return [
             'id_type' => 'required|in:' . array_to_string(id_type()),
             'id_card_front' => 'required|image|max:2048',
-            'id_card_back' => 'required_unless:id_type,' . ID_PASSPORT . '|image|max:2048',
+            'kyc_upload' => 'required|image|max:2048',
         ];
     }
 }

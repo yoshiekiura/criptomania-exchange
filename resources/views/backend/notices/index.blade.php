@@ -48,8 +48,18 @@
                             </td>
                         </tr>
                         @endforeach
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                    @if(!$notice->read_at == NULL)
+
+                           
+                                    <a href="{{ route('notices.mark-all-as-read')}}" class="btn btn-sm btn-primary btn-flat" data-alert="{{__('Read All Notifications?')}}">{{ __('Read All') }}</a>
+                           
+                   
+
+                    @endif
+                </div>
+
             </div>
         </div>
     </div>

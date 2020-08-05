@@ -371,6 +371,7 @@ return [
         'notices.mark-as-read',
         'notices.mark-all-as-read',
         'notices.mark-as-unread',
+        'notices.mark-all-as-read',
         'user_setting.change_password',
         'user_setting.update_password',
         'user_setting.change_pin',

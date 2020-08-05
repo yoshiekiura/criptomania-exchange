@@ -148,11 +148,6 @@ $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
     radioClass: 'iradio_flat-green'
 });
 
-// $('input').iCheck({
-//     checkedCheckboxClass: 'icheckbox_flat-red',
-//     radioClass: 'iradiobox_flat-red',
-// });
-
 $(function () {
     $('[data-toggle="tooltip"]').tooltip()
 });
