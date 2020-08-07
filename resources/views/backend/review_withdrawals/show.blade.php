@@ -5,9 +5,12 @@
         <div class="col-md-3">
             <!-- Profile Image -->
             @include('backend.profile.avatar', ['profileRouteInfo' => profileRoutes('admin', $user->id)])
+
+            @if($withdrawal->payment_method == BANK_TRANSFER)
             @php
                 $bankName = \App\Models\User\BankName::select('bank_name')->where('account_number', $withdrawal->address)->first()->bank_name;
             @endphp
+            @endif
         </div>
         <div class="col-md-9">
             <div class="box box-primary">

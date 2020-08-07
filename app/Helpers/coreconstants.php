@@ -111,6 +111,7 @@ const API_PAYPAL = 1;
 const API_COINPAYMENT = 2;
 const API_BITCOIN = 3;
 const BANK_TRANSFER = 4;
+const API_EDC = 5;
 // id status
 const ID_STATUS_UNVERIFIED = 0;
 const ID_STATUS_PENDING = 1;
