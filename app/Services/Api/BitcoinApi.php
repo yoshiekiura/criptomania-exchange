@@ -18,17 +18,15 @@ class BitcoinApi extends Bitcoind
         $this->currency = $currency;
         $configuration = config(strtolower($currency));
 
-    
-
         $this->bitcoind = new BitcoinClient([
 
-            'scheme' => env('BTC_API_SCHEME', 'http'),
-            'host' => env('BTC_API_HOST', '127.0.0.1'),
-            'port' => env('BTC_API_PORT', 48210),
-            'user' => env('BTC_API_RPCUSER','daus'),
-            'password' => env('BTC_API_RPCPASSWORD', 'user'),
-            'network_fee' => env('BTC_API_NETWORK_FEE', 0.00001),
-            'ca' => env('BTC_API_SSL_CERT'),
+            'scheme' => 'http',
+            'host' => '127.0.0.1',
+            'port' => 48210,
+            'user' => 'uus',
+            'password' => 'daus',
+            'network_fee' => null,
+            'ca' => null,
 
         ]);
     }
