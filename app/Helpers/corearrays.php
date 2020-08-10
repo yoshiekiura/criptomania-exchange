@@ -88,7 +88,7 @@ if (!function_exists('crypto_currency_api_services')) {
     function crypto_currency_api_services($input = null) {
         $output = [
             API_COINPAYMENT => __('Coinpayments API'),
-            API_BITCOIN => __('BTC API'),
+            API_BITCOIN => __('Bitcoin API'),
         ];
 
         return is_null($input) ? $output : $output[$input];

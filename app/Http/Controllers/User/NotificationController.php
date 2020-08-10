@@ -52,7 +52,7 @@ class NotificationController extends Controller
 
     public function markAsUnread($id)
     {
-        if ($this->notification->unread($id)) {
+        if ($this->notification->unread($id)) { 
             return redirect()->back()->with(SERVICE_RESPONSE_SUCCESS, __('The notice has been marked as unread.'));
         }
 

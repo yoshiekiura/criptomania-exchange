@@ -6,7 +6,7 @@ abstract class Bitcoind implements CryptoStockApiInterface
 {
     public function generateAddress()
     {
-        try{
+       
             $response = $this->bitcoind->getnewaddress("");
 
             if(!empty( $response ) && is_null( $response->error() ))
@@ -19,12 +19,9 @@ abstract class Bitcoind implements CryptoStockApiInterface
                 ];
             }
 
-            return ['error' => 'Failed to generate address.'];
-        }
-        catch (\Exception $exception)
-        {
-            return ['error' => $exception->getMessage()];
-        }
+            // return ['error' => 'Failed to generate address.'];
+        
+       
     }
 
     public function getTxnInfoByAddress($address)
@@ -88,7 +85,7 @@ abstract class Bitcoind implements CryptoStockApiInterface
             $estimatedFee = $this->networkFee;
             $spendableAmount = (float) bcsub($amount, $estimatedFee);
 
-            if( bccomp( $this->getBalance(), $amount ) == -1 )
+            if( bccomp( $this->getbalance(), $amount ) == -1 )
             {
                 logs()->info('start withdrawal');
                 logs()->info('logs: amount: ' . $amount);

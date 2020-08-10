@@ -18,19 +18,18 @@ class BitcoinApi extends Bitcoind
         $this->currency = $currency;
         $configuration = config(strtolower($currency));
 
-        if( empty($configuration) )
-        {
-            return ['error' => __('Configuration not found for this :currency.', ['currency' => $currency])];
-        }
+    
 
-        $this->networkFee = bcmul($configuration['network_fee'], "1");
-        $configuration = array_except($configuration, 'network_fee');
+        $this->bitcoind = new BitcoinClient([
 
-        if( empty($configuration['user']) || empty($configuration['password']) )
-        {
-            return ['error' => __('Deposit / Withdrawal is currently disabled for this stock item.')];
-        }
+            'scheme' => env('BTC_API_SCHEME', 'http'),
+            'host' => env('BTC_API_HOST', '127.0.0.1'),
+            'port' => env('BTC_API_PORT', 48210),
+            'user' => env('BTC_API_RPCUSER','daus'),
+            'password' => env('BTC_API_RPCPASSWORD', 'user'),
+            'network_fee' => env('BTC_API_NETWORK_FEE', 0.00001),
+            'ca' => env('BTC_API_SSL_CERT'),
 
-        $this->bitcoind = new BitcoinClient($configuration);
+        ]);
     }
 }

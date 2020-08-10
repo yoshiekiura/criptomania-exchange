@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b888d15cfbd201b58ed72eeae5f21be9",
+    "content-hash": "59915190b919468e3cec71a5cef436ef",
     "packages": [
         {
             "name": "anhskohbo/no-captcha",
@@ -5676,6 +5676,59 @@
             "description": "CssToInlineStyles is a class that enables you to convert HTML-pages/files into HTML-pages/files with inline styles. This is very useful when you're sending emails.",
             "homepage": "https://github.com/tijsverkoyen/CssToInlineStyles",
             "time": "2019-10-24T08:53:34+00:00"
+        },
+        {
+            "name": "upgate/laravel-jsonrpc",
+            "version": "0.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/upgate/laravel-jsonrpc.git",
+                "reference": "4fdace42eccf39f07abc72c8aa67c9d07bf4bcaa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/upgate/laravel-jsonrpc/zipball/4fdace42eccf39f07abc72c8aa67c9d07bf4bcaa",
+                "reference": "4fdace42eccf39f07abc72c8aa67c9d07bf4bcaa",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "illuminate/contracts": "^5.1 || ^6 || ^7",
+                "illuminate/http": "^5.1 || ^6 || ^7",
+                "illuminate/pipeline": "^5.1 || ^6 || ^7",
+                "illuminate/support": "^5.1 || ^6 || ^7",
+                "php": ">=7.2",
+                "psr/log": "^1.0"
+            },
+            "require-dev": {
+                "illuminate/container": "^5.1 || ^6 || ^7",
+                "illuminate/translation": "^5.1 || ^6 || ^7",
+                "illuminate/validation": "^5.1 || ^6 || ^7",
+                "phpunit/phpunit": "~8.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Upgate\\LaravelJsonRpc\\ServiceProvider\\JsonRpcServerServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Upgate\\LaravelJsonRpc\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "description": "Laravel JSON-RPC 2.0 Server",
+            "keywords": [
+                "json-rpc",
+                "laravel"
+            ],
+            "time": "2020-06-17T01:25:48+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

@@ -38,18 +38,24 @@
                                                         </li>
                                                     @endif
 
+
+
+                                                    <!--  -->
+                                            @if($wallet->api_service == BANK_TRANSFER)
                                                     @if( has_permission('reports.trader.deposits-bank'))
                                                         <li>
-                                                            <a href="{{ route('reports.trader.deposits-bank', $wallet->id) }}"><i class="fa fa-magic"></i> {{ __('Deposit Bank Transfer History') }}</a>
+                                                            <a href="{{ route('reports.trader.deposits-bank', $wallet->id) }}"><i class="fa fa-magic"></i> {{ __('Deposit History') }}</a>
                                                         </li>
                                                     @endif
+                                            @else
 
                                                       @if( has_permission('reports.trader.deposits'))
                                                         <li>
                                                             <a href="{{ route('reports.trader.deposits', $wallet->id) }}"><i class="fa fa-magic"></i> {{ __('Deposit History') }}</a>
                                                         </li>
                                                     @endif
-
+                                            @endif
+                                                    <!--  -->
                                                     @if( has_permission('trader.wallets.withdrawal') )
                                                         <li>
                                                             <a href="{{ route('trader.wallets.withdrawal', $wallet->id) }}"><i class="fa fa-external-link"></i> {{ __('Withdrawal') }}</a>

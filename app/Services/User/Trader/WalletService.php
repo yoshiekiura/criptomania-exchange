@@ -11,6 +11,7 @@ use App\Repositories\User\Trader\Interfaces\DepositInterface;
 use App\Repositories\User\Trader\Interfaces\WalletInterface;
 use App\Repositories\User\Trader\Interfaces\WithdrawalInterface;
 use App\Services\Api\PaypalRestApi;
+use App\Services\Api\BitcoinApi;
 use App\Services\Core\DataListService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
