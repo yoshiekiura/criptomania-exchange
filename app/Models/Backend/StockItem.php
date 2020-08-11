@@ -5,6 +5,7 @@ namespace App\Models\Backend;
 use App\Models\User\DepositBankTransfer;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
+use App\Models\Core\Rpcport;
 
 class StockItem extends Model implements Auditable
 {
@@ -31,5 +32,9 @@ class StockItem extends Model implements Auditable
     {
         return $this->belongsTo(DepositBankTransfer::class);
         
+    }
+
+    public function rpcPort(){
+        return $this->belongsTo(Rpcport::class);
     }
 }

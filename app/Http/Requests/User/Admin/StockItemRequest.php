@@ -5,6 +5,7 @@ namespace App\Http\Requests\User\Admin;
 use App\Http\Requests\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use App\Rules\Uppercase;
 
 class StockItemRequest extends Request
 {
@@ -41,7 +42,7 @@ class StockItemRequest extends Request
                 'required',
                 'alpha',
                 Rule::unique('stock_items')->ignore($this->route()->parameter('id')),
-                'max:255'
+                'max:255',new Uppercase //Modified BY : Muhammad Rizky Firdaus, Date : 11-08-2020
             ],
             'item_name' => [
                 'required',
@@ -93,6 +94,7 @@ class StockItemRequest extends Request
             'api_service.in' => __('The api service is invalid or not available for this stock item.'),
             'minimum_withdrawal_amount.required_if' => __('The minimum withdrawal amount field is required when withdrawal is active and the currency is real or crypto.'),
             'daily_withdrawal_limit.required_if' => __('The daily withdrawal limit field is required when withdrawal is active and the currency is real or crypto.'),
+
         ];
     }
 

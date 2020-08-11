@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Services\User\ProfileService;
 
+/*
+    Developer   : Muhammad Rizky Firdaus
+    Date        : 20-07-2020
+    Description : Controller for superadmin bank account CRUD
+
+*/
 
 
 class BankNameController extends Controller

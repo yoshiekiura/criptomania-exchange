@@ -262,7 +262,8 @@ class UsersController extends Controller
 
     Developer : Muhammad Rizky Firdaus
     Date : 20 July 2020
-    Description : This method used for updating the wallet balance user which deposit with bank transfer especially for Indonesian Rupiah or anything else
+    Description : This method used for updating or decline the wallet balance user which deposit with bank transfer especially for Indonesian Rupiah or anything else
+    Method   : updateWalletBalanceBank() and declineDepositBank()
 
 
     */

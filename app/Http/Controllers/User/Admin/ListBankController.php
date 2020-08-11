@@ -12,6 +12,13 @@ use App\Services\Core\DataListService;
 use App\Services\Core\FileUploadService;
 use Illuminate\Support\Facades\DB;
 
+/*
+    Developer   : Muhammad Rizky Firdaus
+    Date        : 20-07-2020
+    Description : Controller for trader bank account CRUD
+
+*/
+
 class ListBankController extends Controller
 {
 	public $listBank;

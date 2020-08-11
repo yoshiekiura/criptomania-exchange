@@ -217,6 +217,11 @@ class WalletController extends Controller
 
         return redirect()->back()->withInput()->with(SERVICE_RESPONSE_ERROR, __('Failed to update.'));
     }
+        /*
+            
+            This is end method bank transfer deposit
+
+        */
 
 
     // paypal return url
@@ -247,6 +252,15 @@ class WalletController extends Controller
 
         return view('frontend.wallets.withdrawal_form', $data);
     }
+
+
+    /*
+        Modified by : Muhammad Rizky Firdaus
+        Date        : 21-07-2020
+        Description : Update method withdraw for bank transfer from line 309 to End Line
+        Method      : storeWithdrawal()
+
+    */
 
     public function storeWithdrawal(WithdrawalRequest $request, $id)
     {
@@ -292,9 +306,6 @@ class WalletController extends Controller
 
             $withdrawalRepositoryBank = app(WithdrawalInterface::class);
 
-          
-               
-
             
                  $withdrawalBankAtr = [
 
@@ -334,12 +345,7 @@ class WalletController extends Controller
 
             }
 
-            // dd($withdrawal);
 
-            
-
-            
-            //create transaction
             $date = now();
             $transactionParameters = [
                 [
