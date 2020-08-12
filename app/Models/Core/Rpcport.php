@@ -5,6 +5,12 @@ namespace App\Models\Core;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Backend\StockItem;
 
+/*
+	Developer   : Muhammad Rizky Firdaus
+	Date        : 11-08-2020
+	Description : Model RPC Port for stock item api service
+*/
+
 class Rpcport extends Model
 {
     protected $table = 'rpc_port';
