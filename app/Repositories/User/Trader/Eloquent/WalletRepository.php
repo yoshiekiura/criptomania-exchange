@@ -18,6 +18,12 @@ class WalletRepository extends BaseRepository implements WalletInterface
         $this->model = $model;
     }
 
+    
+    public function all()
+    {
+        return $this->model->all();
+    }
+
     public function findStockItem(int $id)
     {
         return $this->model->where('stock_item_id', $id)->first();

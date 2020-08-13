@@ -89,6 +89,7 @@ if (!function_exists('crypto_currency_api_services')) {
         $output = [
             API_COINPAYMENT => __('Coinpayments API'),
             API_BITCOIN => __('Bitcoin API'),
+            API_EDC => __('EDCcash API'),
         ];
 
         return is_null($input) ? $output : $output[$input];
@@ -123,6 +124,7 @@ if (!function_exists('api_classes')) {
             API_PAYPAL => 'PaypalRestApi',
             API_COINPAYMENT => 'CoinPaymentApi',
             API_BITCOIN => 'BitcoinApi',
+            API_EDC => 'BitcoinApi',
             BANK_TRANSFER => 'Bank Transfer',
         ];
 

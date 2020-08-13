@@ -15,4 +15,6 @@ interface CryptoStockApiInterface
     public function sendToAddress($address, $amount);
 
     public function validateIPN($post_data, $server_data);
+    
+    // public function validateTransaction($txid);
 }

@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use App\Models\User\Deposit;
-use App\Models\User\DepositBankTransfer;
+use App\Models\Backend\StockItem;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use App\Http\Requests\User\Trader\StruckUploadRequest;
@@ -26,7 +26,7 @@ use App\Services\Core\FileUploadService;
 use App\Repositories\User\Admin\Interfaces\StockItemInterface;
 use App\Repositories\User\Trader\Interfaces\DepositBankInterface;
 use App\Events\Exchange\BroadcastNotification;
-
+use \Illuminate\Support\Facades\Route;
 
 
 class WalletController extends Controller
@@ -49,8 +49,20 @@ class WalletController extends Controller
     public function index()
     {
         $this->walletRepository->createUnavailableWallet(Auth::id());
+        $stock = StockItem::all()->pluck('item');
+        foreach ($stock as $stockItem) {
+            $request = Request::create('http://homestead.test/api/bitcoin/ipn/'.$stockItem, 'GET');
+            $response = Route::dispatch($request);
+            // var_dump($request);
+        }
+        // die;
+        // dd($stock);
         $data['list'] = $this->walletService->getWallets(Auth::id());
+        // $test = $this->walletRepository->findOrFailByConditions(['id' => $stock->id, 'user_id' => Auth::id()], 'stockItem');
+        // dd($test);
         $data['title'] = __('Wallets');
+        
+        // dd($response);
 
         return view('frontend.wallets.index', $data);
     }

@@ -53,7 +53,7 @@ abstract class Bitcoind implements CryptoStockApiInterface
                     'error' => 'ok',
                     'result' => [
                         'txn_status' => $txnStatus,
-                        'payment_method' => API_PAYPAL,
+                        'payment_method' => API_BITCOIN,
                         'ipn_type' => $result['details'][0]['category'] == 'send' ? 'withdrawal' : 'deposit',
                         'address' => $result['details'][0]['address'],
                         'txn_id' => $result['txid'],
@@ -156,7 +156,26 @@ abstract class Bitcoind implements CryptoStockApiInterface
         }
     }
 
-    public function validateIPN($post_data, $server_data)
+    public function getListTransactions()
+    {
+        try{
+            $response = $this->bitcoind->listtransactions(); 
+              if( !empty( $response ) && is_null( $response->error()) )
+            {
+
+                $result = json_decode($response, true);
+
+                return $result;
+                
+            }
+
+            return ['error' => 'No transaction found.'];
+            // return $result;
+        }catch(\Exception $exception){
+            return 0;
+        }
+    }
+     public function validateIPN($post_data, $server_data)
     {
         if ( !isset($post_data['txn_id']) )
         {

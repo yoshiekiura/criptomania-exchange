@@ -11,6 +11,6 @@
 |
 */
 
-Route::any('/ipn', 'Api\IpnController@ipn');
-Route::any('/bitcoin/ipn/{currency}', 'Api\IpnController@bitcoinIpn');
+Route::any('/ipn', 'Api\IpnController@ipn')->name('ipn.api');
+Route::any('/bitcoin/ipn/{currency}', 'Api\IpnController@bitcoinIpn')->name('ipn.btc.api');
 Route::get('/public', 'Api\PublicApiController@command');

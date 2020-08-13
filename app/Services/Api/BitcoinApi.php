@@ -7,7 +7,9 @@ namespace App\Services\Api;
 use Denpa\Bitcoin\Client as BitcoinClient;
 use App\Models\Core\Rpcport;
 use App\Models\Backend\StockItem;
-
+use App\Models\User\Wallet;
+use Illuminate\Support\Facades\Auth;
+use App\Repositories\User\Trader\Interfaces\WalletInterface;
 
 
 class BitcoinApi extends Bitcoind
@@ -35,16 +37,17 @@ class BitcoinApi extends Bitcoind
                ->first();
 
 
-        $this->bitcoind = new BitcoinClient([
+        $this->bitcoind = new BitcoinClient("http://".$rpc->rpc_user.":".$rpc->rpc_password."@".$rpc->host.":".$rpc->port."/");
+        // [
 
-            'scheme' => $rpc->scheme,
-            'host' => $rpc->host,
-            'port' => $rpc->port,
-            'user' => $rpc->rpc_user,
-            'password' => $rpc->rpc_password,
-            'network_fee' => $rpc->network_fee,
-            'ca' => $rpc->cert_ca,
+        //     'scheme' => $rpc->scheme,
+        //     'host' => $rpc->host,
+        //     'port' => $rpc->port,
+        //     'user' => $rpc->rpc_user,
+        //     'password' => $rpc->rpc_password,
+        //     'network_fee' => $rpc->network_fee,
+        //     'ca' => $rpc->cert_ca,
 
-        ]);
+        // ]);
     }
 }
