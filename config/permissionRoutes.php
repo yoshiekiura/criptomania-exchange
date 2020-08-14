@@ -120,6 +120,27 @@ return [
                     'admin.list-bank.destroy',
                 ]
             ],
+
+            'rpc_list' =>[
+
+                ROUTE_GROUP_READER_ACCESS => [
+                    'rpcport.index',
+                ],
+
+                 ROUTE_GROUP_CREATION_ACCESS => [
+                    'rpcport.create',
+                    'rpcport.store',
+                ],
+                  ROUTE_GROUP_MODIFIER_ACCESS => [
+                    'rpcport.edit',
+                    'rpcport.update',
+                ],
+
+                ROUTE_GROUP_DELETION_ACCESS => [
+                    'rpcport.destroy',
+                ]
+
+            ],
             'bonus_management' => [
                 ROUTE_GROUP_CREATION_ACCESS => [
                     'admin.bonuses.create',

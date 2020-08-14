@@ -46,24 +46,23 @@ class WalletController extends Controller
         $this->notification = $notification;
     }
 
+    /*
+        Modified by : Muhammad Rizky Firdaus & Muhammad Fatur Prayuda
+        Date        : 13-08-2020
+        Description : Adding new statement in index() method to calling bitcoin IPN
+
+        NOTE: This method may not work for other cryptocurrencies, this method is still under development.
+    */
     public function index()
     {
         $this->walletRepository->createUnavailableWallet(Auth::id());
         $stock = StockItem::all()->pluck('item');
         foreach ($stock as $stockItem) {
-            $request = Request::create('http://homestead.test/api/bitcoin/ipn/'.$stockItem, 'GET');
+            $request = Request::create('api/bitcoin/ipn/'.$stockItem, 'GET');
             $response = Route::dispatch($request);
-            // var_dump($request);
         }
-        // die;
-        // dd($stock);
         $data['list'] = $this->walletService->getWallets(Auth::id());
-        // $test = $this->walletRepository->findOrFailByConditions(['id' => $stock->id, 'user_id' => Auth::id()], 'stockItem');
-        // dd($test);
         $data['title'] = __('Wallets');
-        
-        // dd($response);
-
         return view('frontend.wallets.index', $data);
     }
 

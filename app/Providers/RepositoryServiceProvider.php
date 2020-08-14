@@ -54,6 +54,8 @@ use App\Repositories\User\Trader\Interfaces\StockOrderInterface;
 use App\Repositories\User\Trader\Interfaces\WalletInterface;
 use App\Repositories\User\Trader\Interfaces\WithdrawalInterface;
 use App\Repositories\User\Trader\Interfaces\DepositBankInterface;
+use App\Repositories\Core\Interfaces\RpcInterface;
+use App\Repositories\Core\Eloquent\RpcSettingRepository;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -92,6 +94,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(ListBankInterface::class, ListBankRepository::class);
         $this->app->bind(BankNameInterface::class, BankNameRepository::class);
         $this->app->bind(DepositBankInterface::class, DepositBankRepository::class);
+        $this->app->bind(RpcInterface::class, RpcSettingRepository::class);
 
 
     }

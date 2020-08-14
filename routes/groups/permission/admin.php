@@ -47,6 +47,7 @@ Route::group(['namespace' => 'User\Admin'], function () {
     Route::put('wallets/{id}/deposit/changeStatusBank', 'WalletController@updateStatusBankTransfer')->name('complete-bank-deposit');
 
 
+
     // Route::get('list-bank', 'ListBankController@index')->name('admin.list-bank.index');
     // Route::get('list-bank/create', 'ListBankController@create')->name('admin.list-bank.create');
     // Route::post('list-bank/create/post', 'ListBankController@store')->name('admin.list-bank.store');

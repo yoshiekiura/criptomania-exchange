@@ -23,7 +23,9 @@ class Rpcport extends Model
     	'rpc_user',
     	'rpc_password',
     	'network_fee',
-    	'cert_ca'
+    	'cert_ca',
+        'created_at',
+        'updated_at'
     ];
 
     protected $primaryKey = 'id';

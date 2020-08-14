@@ -40,6 +40,14 @@ Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->n
 //Laravel Audits
 Route::get('audits', 'Core\AuditsController@index')->name('audits.index');
 
+// Route::get('rpcport','Core\RpcController@index')->name('rpc.index.list');
+// Route::get('rpcport/create','Core\RpcController@create')->name('rpc.port.create');
+// Route::post('rpcport/store','Core\RpcController@store')->name('rpc.port.store');
+
+// rpc port
+Route::resource('rpcport', 'Core\RpcController')->except(['show'])->parameter('rpcport', 'id');
+
+
 //Ajax route
 //Route::post('get-modules', 'Core\DropdownController@getModules');
 Route::get('logout', 'Guest\AuthController@logout')->name('logout');
