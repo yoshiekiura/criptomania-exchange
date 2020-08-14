@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         //
+           \App\Console\Commands\Core\IpnApi::class
     ];
 
     /**
@@ -24,8 +25,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $filepath = storage_path('logs/laravel.log');
+        $schedule->command('ipn:call')
+                 ->everyMinute()->sendOutputTo($filepath);
     }
 
     /**

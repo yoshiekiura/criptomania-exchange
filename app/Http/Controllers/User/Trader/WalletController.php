@@ -56,11 +56,6 @@ class WalletController extends Controller
     public function index()
     {
         $this->walletRepository->createUnavailableWallet(Auth::id());
-        $stock = StockItem::all()->pluck('item');
-        foreach ($stock as $stockItem) {
-            $request = Request::create('api/bitcoin/ipn/'.$stockItem, 'GET');
-            $response = Route::dispatch($request);
-        }
         $data['list'] = $this->walletService->getWallets(Auth::id());
         $data['title'] = __('Wallets');
         return view('frontend.wallets.index', $data);
