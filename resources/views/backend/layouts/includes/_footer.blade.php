@@ -1,5 +1,6 @@
 <footer class="main-footer">
-    Copyright &copy; {{ date("Y",strtotime("-1 year")).'-'.date('Y') }} <a href="{{ url('/') }}">{{ env('APP_NAME','Cryptomania') }}</a>. All rights reserved.
+  Copyright &copy; {{ date("Y",strtotime("-1 year")).'-'.date('Y') }} <a
+    href="{{ url('/') }}">{{ env('APP_NAME','Cryptomania') }}</a>. All rights reserved.
 </footer>
 
 <!-- /.control-sidebar -->
@@ -15,9 +16,16 @@
 @yield('extraScript')
 <script src="{{ asset('backend/assets/js/custom.js') }}"></script>
 <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-  <script>
-    AOS.init();
-  </script>
+<script>
+  AOS.init();
+</script>
+{{-- new twmplate --}}
+<script src="{{asset('newAssets/js/popper.min.js')}}"></script>
+<script src="{{(asset('newAssets/js/amcharts-core.min.js'))}}"></script>
+<script src="{{asset('newAssets/js/amcharts.min.js')}}"></script>
+<script src="{{asset('newAssets/js/custom.js')}}"></script>
+<script src="{{asset('newAssets/js/jquery.mCustomScrollbar.js')}}"></script>
 @yield('script')
 </body>
+
 </html>

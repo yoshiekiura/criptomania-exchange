@@ -1,38 +1,48 @@
-<aside class="main-sidebar">
-    <div class="sidebar-inside">
-        <!-- <div class="menu-text show-in-nav-expanded">Back Panel</div> -->
-        <div class="logo-panel">
-            <div class="image">
-                @if(admin_settings('company_logo'))
-                    <img src="{{ get_image(admin_settings('company_logo')) }}" class="img-responsive logo-big show-in-nav-expanded">
-                @else
-                    <a style="color: #fefefe;text-transform: uppercase" href="{{ route('dashboard') }}" class="navbar-brand "><b>{{ env('APP_NAME') }}</b></a>
-                @endif
+<div class="col-md-12 col-lg-3">
+    {{-- <a class="nav-link active" id="settings-profile-tab" data-toggle="pill" href="#settings-profile" role="tab"
+            aria-controls="settings-profile" aria-selected="true"><i class="icon ion-md-person"></i> Profile</a>
+        <a class="nav-link" id="settings-wallet-tab" data-toggle="pill" href="#settings-wallet" role="tab"
+            aria-controls="settings-wallet" aria-selected="false"><i class="icon ion-md-wallet"></i> Wallet</a>
+        <a class="nav-link" id="settings-tab" data-toggle="pill" href="#settings" role="tab" aria-controls="settings"
+            aria-selected="false"><i class="icon ion-md-settings"></i> Settings</a> --}}
+    {!! get_nav('back-end') !!}
+</div>
 
-            <!-- <img src="assets/images/logo-small.png" alt="User Image" class="img-responsive logo-small show-in-nav-collapsed"> -->
-            </div>
-        </div>
-        <a href="javascript:" class="sidebar-toggle" data-toggle="push-menu" role="button"></a>
-    </div>
-    <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar">
-        <!-- sidebar menu: : style can be found in sidebar.less -->
-        {!! get_nav('back-end') !!}
-        {{--<ul class="sidebar-menu" data-widget="tree">
-            <li class="active treeview">
-                <a href="javascript:;">
-                    <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-                    <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li class="active"><a href="index.html"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
-                    <li><a href="index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
-                </ul>
-            </li>
-
-        </ul>--}}
-    </section>
-    <!-- /.sidebar -->
-</aside>
+{{-- new template --}}
+<script type="application/javascript" src="{{asset('newAssets/js/jquery-3.4.1.min.js')}}"></script>
+<script type="application/javascript" src="{{asset('newAssets/js/popper.min.js')}}"></script>
+<script type="application/javascript" src="{{asset('newAssets/js/bootstrap.min.js')}}"></script>
+<script type="application/javascript" src="{{asset('newAssets/js/amcharts-core.min.js')}}"></script>
+<script type="application/javascript" src="{{asset('newAssets/js/amcharts.min.js')}}"></script>
+<script type="application/javascript" src="{{asset('newAssets/js/custom.js')}}"></script>
+<script type="application/javascript">
+    //active button
+    $('.active').find('a').addClass('active');
+    
+    // dropdown submenu
+    // $("a[href$='javascript:;']").addClass('sub-menu');
+    // $('.sub-menu').append('<i class="fa fa-caret-down" aria-hidden="true"></i>');
+    // $('.fa-caret-down').addClass('drop-icon');
+    // bug main content
+    // var drop_show = $('.active').parents();
+    // $(drop_show).toggleClass('show');
+    
+    var dropdown = $('.sub-menu');
+    var i;
+    for (i = 0; i < dropdown.length; i++) {
+        dropdown[i].addEventListener("click", function() {
+            // $(this).find('.drop-icon').toggleClass('rotate');
+            var dropdownContent = this.nextElementSibling;
+            $(dropdownContent).each(function(){
+                if (dropdownContent.style.display === "block") {
+                dropdownContent.style.display = "none";
+                } else {
+                dropdownContent.style.display = "block";
+                }
+            })
+        });
+    }
+    
+    
+    
+</script>

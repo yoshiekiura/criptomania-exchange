@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: zahid
@@ -35,7 +36,9 @@ class NavService
         if (!isset($navConfig['navigation_template'][$template])) {
             $template = 'default_nav';
         }
+
         $navConfig = config('navigation');
+        // dd($navConfig);
         $navTemplate = $this->_template_builder($navConfig['navigation_template'][$template]);
         return $this->_navigationBuilder($navData, $navTemplate);
     }
@@ -89,15 +92,17 @@ class NavService
                 $allAvailableRoutes[] = $routeData->getName();
             } elseif ($isMenuable && !Auth::user() && in_array('guest.permission', $middleware)) {
                 $allAvailableRoutes[] = $routeData->getName();
-            } elseif ($isMenuable && in_array('verification.permission', $middleware) &&
+            } elseif (
+                $isMenuable && in_array('verification.permission', $middleware) &&
                 (
-                    (!Auth::user() || (Auth::user() && Auth::user()->is_email_verified == EMAIL_VERIFICATION_STATUS_INACTIVE) )  &&
-                    admin_settings('require_email_verification') == ACTIVE_STATUS_ACTIVE
-                )
+                    (!Auth::user() || (Auth::user() && Auth::user()->is_email_verified == EMAIL_VERIFICATION_STATUS_INACTIVE))  &&
+                    admin_settings('require_email_verification') == ACTIVE_STATUS_ACTIVE)
             ) {
                 $allAvailableRoutes[] = $routeData->getName();
-            } elseif ($isMenuable && !empty($middleware) && !in_array('permission', $middleware) && !in_array('guest.permission', $middleware) &&
-                !in_array('verification.permission', $middleware) && in_array('web', $middleware) && !in_array('Barryvdh\Debugbar\Middleware\DebugbarEnabled', $middleware)) {
+            } elseif (
+                $isMenuable && !empty($middleware) && !in_array('permission', $middleware) && !in_array('guest.permission', $middleware) &&
+                !in_array('verification.permission', $middleware) && in_array('web', $middleware) && !in_array('Barryvdh\Debugbar\Middleware\DebugbarEnabled', $middleware)
+            ) {
                 $allAvailableRoutes[] = $routeData->getName();
             } else {
                 continue;
@@ -107,6 +112,7 @@ class NavService
         $arrayColumn = array_column($navData, 'parent_id');
         $output = $this->_tagBuilder($navTemplate['navigation_wrapper_start']);
         $output .= $this->_navigationInside($navData, $allAvailableRoutes, $navTemplate, $arrayColumn);
+        // dd($output);
         $output .= $navTemplate['navigation_wrapper_end'];
         return $output;
     }
@@ -193,7 +199,8 @@ class NavService
         // full-left/full-right/top-left/top-right/bottom-left/bottom-right/text-left/text-right
         if ($data['beginning_text'] != null) {
             $beginningPart .= $navTemplate['navigation_item_beginning_wrapper_start'];
-            if ($navTemplate['navigation_item_icon_position'] == 'top-left' &&
+            if (
+                $navTemplate['navigation_item_icon_position'] == 'top-left' &&
                 $navTemplate['navigation_item_icon_wrapper_start'] != null &&
                 $data['icon'] != null
             ) {
@@ -201,7 +208,8 @@ class NavService
             }
             $beginningPart .= $data['beginning_text'];
             $beginningPart .= $navTemplate['navigation_item_beginning_wrapper_end'];
-            if ($navTemplate['navigation_item_icon_position'] == 'top-right' &&
+            if (
+                $navTemplate['navigation_item_icon_position'] == 'top-right' &&
                 $navTemplate['navigation_item_icon_wrapper_start'] != null &&
                 $data['icon'] != null
             ) {
@@ -210,7 +218,8 @@ class NavService
         }
         if ($data['ending_text'] != null) {
             $endingPart .= $navTemplate['navigation_item_ending_wrapper_start'];
-            if ($navTemplate['navigation_item_icon_position'] == 'bottom-left' &&
+            if (
+                $navTemplate['navigation_item_icon_position'] == 'bottom-left' &&
                 $navTemplate['navigation_item_icon_wrapper_start'] != null &&
                 $data['icon'] != null
             ) {
@@ -218,7 +227,8 @@ class NavService
             }
             $endingPart .= $data['ending_text'];
             $endingPart .= $navTemplate['navigation_item_ending_wrapper_end'];
-            if ($navTemplate['navigation_item_icon_position'] == 'bottom-right' &&
+            if (
+                $navTemplate['navigation_item_icon_position'] == 'bottom-right' &&
                 $navTemplate['navigation_item_icon_wrapper_start'] != null &&
                 $data['icon'] != null
             ) {
@@ -246,6 +256,7 @@ class NavService
             $navTemplate['navigation_item_icon_wrapper_start'] != null &&
             $data['icon'] != null
         ) {
+            //this
             $output = $mainTag . $linkBeginning . $beginningPart . $this->_tagBuilder($navTemplate['navigation_item_icon_wrapper_start'], $data['icon']) . $navTemplate['navigation_item_icon_wrapper_end'] . $navTemplate['navigation_item_text_wrapper_start'] . $data['name'] . $navTemplate['navigation_item_text_wrapper_end'] . $endingPart . $linkEnding . $megamenu_ending;
         } elseif (
             $navTemplate['navigation_item_icon_position'] == 'full-right' &&
@@ -269,6 +280,7 @@ class NavService
 
     protected function _linkBuilder($dbData, $navTemplate)
     {
+        $id = strtolower($dbData['name']);
         $path = $navTemplate['navigation_item_no_link_text'];
         if ($dbData['route'] != '') {
             $path = route($dbData['route']);
@@ -299,7 +311,7 @@ class NavService
         }
 
         $blank = $dbData['new_tab'] == 1 ? ' target="_blank"' : '';
-        $linkBeginning = '<a href ="' . $path . '" class="' . $class . '"' . $blank . '>';
+        $linkBeginning = '<a href ="' . $path . '" class="' . $class . '"id="' . $id . '"' . $blank . 'role="tab">';
         $linkEnding = '</a>';
         if ($navTemplate['navigation_item_active_class_on_anchor_tag'] === true) {
             $activeClass = '';
