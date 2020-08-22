@@ -5,7 +5,7 @@ return [
     ],
     'navigation_template' => [
         'default_nav' => [
-            'navigation_wrapper_start' => '<div class="sidebar-menu nav flex-column nav-pills settings-nav" id="v-pills-tab" role="tablist"
+            'navigation_wrapper_start' => '<div class="sidebar-menu nav flex-column nav-pills settings-nav" data-widget="tree" id="v-pills-tab" role="tablist"
             aria-orientation="vertical">',
             'navigation_wrapper_end' => '</div>',
             'navigation_item_wrapper_start' => '<li>',
@@ -20,7 +20,7 @@ return [
             'navigation_item_icon_wrapper_start' => '<i>',
             'navigation_item_icon_wrapper_end' => '</i>',
 
-            'navigation_sub_menu_wrapper_start' => '<ul class="treeview-menu">', //submenu binder like <ul>
+            'navigation_sub_menu_wrapper_start' => '<ul class="treeview-menu" style="display:none;">', //submenu binder like <ul>
             'navigation_sub_menu_wrapper_end' => '</ul>',  // submenu binder like </ul>
             //            'navigation_item_wrapper_in_sub_menu_start'=> '<li>',
             //            'navigation_item_wrapper_in_sub_menu_end'=> '</li>',
@@ -29,7 +29,7 @@ return [
 
             'navigation_item_link_class' => 'nav-link',
             'navigation_item_link_active_class' => 'active',
-            'navigation_item_active_class_on_anchor_tag' => false,   // true/false
+            'navigation_item_active_class_on_anchor_tag' => true,   // true/false
             'navigation_item_no_link_text' => '',                // either # or javascript:;
 
             'mega_menu_wrapper_start' => '<div class="megamenu-container">',

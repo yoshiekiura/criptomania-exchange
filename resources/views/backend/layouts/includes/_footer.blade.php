@@ -6,7 +6,7 @@
 <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
-@include('errors.flash_message')
+{{-- @include('errors.flash_message') --}}
 <!-- jQuery 3 -->
 <script src="{{ asset('js/app.js') }}?t={{ random_string() }}"></script>
 <script src="{{ asset('common/vendors/jquery-ui/jquery-ui.min.js') }}"></script>
@@ -18,6 +18,27 @@
 <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 <script>
   AOS.init();
+</script>
+<script type="application/javascript">
+  var btn_toggler = window.matchMedia("(max-width: 700px)")
+  myFunction(btn_toggler) // Call listener function at run time
+  btn_toggler.addListener(myFunction) // Attach listener function on state changes
+  function myFunction(btn_toggler) {
+      if (btn_toggler.matches) { // If media query matches
+          $('.dot-sidebar').css({display: "block"});
+          $('.sidebar-menu').css('display', 'none');
+          $('.dot-sidebar').click(function(){
+          // $('.sidebar-menu').toggle('slow', 'swing');
+          $('.sidebar-menu').css({position: "absolute", background: "#ffffff"}).animate({width: 'toggle'}, 'slow', function(){
+              $(this).css({zIndex: "1"}).siblings().css({zIndex: "0"});
+          });
+  });
+      } 
+      else {
+          $('.dot-sidebar').css('display', 'none');
+          $('.sidebar-menu').css('display', 'block');
+      }
+  }
 </script>
 {{-- new twmplate --}}
 <script src="{{asset('newAssets/js/popper.min.js')}}"></script>
