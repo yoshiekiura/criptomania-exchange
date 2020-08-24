@@ -22,7 +22,7 @@
   <link rel="stylesheet"
     href="{{ asset('common/vendors/datatable_responsive/datatables/plugins/bootstrap/datatables.bootstrap.css') }}">
   <link rel="stylesheet" href="{{ asset('common/vendors/datatable_responsive/datatables/datatables.min.css') }}">
-  {{-- <link rel="stylesheet" href="{{ asset('backend/assets/style.css') }}"> --}}
+  <link rel="stylesheet" href="{{ asset('backend/assets/style.css') }}">
   <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
   {{-- new Template --}}
   <link rel="stylesheet" href="{{ asset('newAssets/css/style.css') }}">

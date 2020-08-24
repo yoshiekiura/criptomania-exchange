@@ -1,43 +1,50 @@
 @extends('backend.layouts.main_layout')
 @section('title', $title)
 @section('content')
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="box box-primary box-borderless">
-                <div class="box-body">
-                    <div class="row">
-                        <div class="col-sm-8 col-sm-offset-2">
-                            {{ Form::open(['route'=>'trade-analyst.posts.store', 'method' => 'post', 'class'=>'form-horizontal validator','files'=> true]) }}
-                            @include('backend.posts._form',['buttonText' => __('Create')])
-                            {{ Form::close() }}
+<div class="card">
+    <div class="card-body">
+        <div class="">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="box box-primary box-borderless">
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-sm-8 col-sm-offset-2">
+                                    {{ Form::open(['route'=>'trade-analyst.posts.store', 'method' => 'post', 'class'=>'form-horizontal validator','files'=> true]) }}
+                                    @include('backend.posts._form',['buttonText' => __('Create')])
+                                    {{ Form::close() }}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 @endsection
 
 @section('before-style')
-    <link rel="stylesheet" href="{{ asset('common/vendors/bootstrap-fileinput/css/jasny-bootstrap.css') }}">
-    <style>
-        .thumbnail {
-            width: 100px; height: 100px; line-height:100px;
-        }
+<link rel="stylesheet" href="{{ asset('common/vendors/bootstrap-fileinput/css/jasny-bootstrap.css') }}">
+<style>
+    .thumbnail {
+        width: 100px;
+        height: 100px;
+        line-height: 100px;
+    }
 
-        .thumbnail i{
-            font-size: 50px;
-        }
-    </style>
+    .thumbnail i {
+        font-size: 50px;
+    }
+</style>
 @endsection
 
 @section('script')
-    <script src="{{ asset('common/vendors/tinymce/tinymce.min.js') }}"></script>
-    <script src="{{ asset('common/vendors/cvalidator/cvalidator.js') }}"></script>
-    <script src="{{ asset('common/vendors/bootstrap-fileinput/js/jasny-bootstrap.js') }}"></script>
-    <script>
-
-        tinymce.init({
+<script src="{{ asset('common/vendors/tinymce/tinymce.min.js') }}"></script>
+<script src="{{ asset('common/vendors/cvalidator/cvalidator.js') }}"></script>
+<script src="{{ asset('common/vendors/bootstrap-fileinput/js/jasny-bootstrap.js') }}"></script>
+<script>
+    tinymce.init({
             selector: "#content_textarea",
             menubar: false,
             theme: "modern",
@@ -74,6 +81,5 @@
             $('.validator').cValidate();
 
         });
-    </script>
+</script>
 @endsection
-

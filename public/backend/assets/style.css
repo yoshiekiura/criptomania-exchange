@@ -131,8 +131,23 @@ table.dataTable>tbody>tr.child {
 }
 
 table.dataTable thead {
-    background-color: #157582 !important;
-    color: #fff !important;
+    background-color: #fff !important;
+    color: #000000 !important;
+}
+
+/* *my CSS */
+.dropdown-menu-action {
+    min-width: auto !important;
+    margin: 40px 0 0 -14px !important;
+}
+
+.dropdown-menu-action-user {
+    min-width: auto !important;
+    margin: 40px 0 0 -104px !important;
+}
+
+.text-green {
+    color: #26a69a !important;
 }
 
 table.dataTable thead tr th {
@@ -185,8 +200,8 @@ table.dataTable.display tbody td {
 }
 
 .cm-action button {
-    background: red !important;
-    border: 1px solid red !important;
+    background: #6bd4cc !important;
+    border: 1px solid #6bd4cc !important;
 }
 
 .cm-center {
