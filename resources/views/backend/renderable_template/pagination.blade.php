@@ -8,40 +8,41 @@
                         <ul class="pagination small">
                             {{-- Previous Page Link --}}
                             @if ($query->onFirstPage())
-                            <li class="disabled"><span>&lsaquo;</span></li>
+                            <li class="disabled"><a class="page-link"><span>&lsaquo;</span></a></li>
                             @else
-                            <li><a href="{{ $query->previousPageUrl() }}" rel="prev">&lsaquo;</a></li>
+                            <li><a href="{{ $query->previousPageUrl() }}" rel="prev" class="page-link">&lsaquo;</a></li>
                             @endif
 
                             @if($query->currentPage() > 3)
-                            <li class="hidden-xs"><a href="{{ $query->url(1) }}">1</a></li>
+                            <li class="hidden-xs"><a href="{{ $query->url(1) }}" class="page-link">1</a></li>
                             @endif
                             @if($query->currentPage() > 4)
-                            <li><span>...</span></li>
+                            <li><a class="page-link"><span>...</span></a></li>
                             @endif
                             @foreach(range(1, $query->lastPage()) as $i)
                             @if($i >= $query->currentPage() - 2 && $i <= $query->currentPage() + 2)
                                 @if ($i == $query->currentPage())
-                                <li class="active"><span>{{ $i }}</span></li>
+                                <li class="active"><a class="page-link"><span>{{ $i }}</span></a></li>
                                 @else
-                                <li><a href="{{ $query->url($i) }}">{{ $i }}</a></li>
+                                <li><a href="{{ $query->url($i) }}" class="page-link">{{ $i }}</a></li>
                                 @endif
                                 @endif
                                 @endforeach
                                 @if($query->currentPage() < $query->lastPage() - 3)
-                                    <li><span>...</span></li>
+                                    <li><a class="page-link"><span>...</span></a></li>
                                     @endif
                                     @if($query->currentPage() < $query->lastPage() - 2)
-                                        <li class="hidden-xs"><a
-                                                href="{{ $query->url($query->lastPage()) }}">{{ $query->lastPage() }}</a>
+                                        <li class="hidden-xs"><a href="{{ $query->url($query->lastPage()) }}"
+                                                class="page-link">{{ $query->lastPage() }}</a>
                                         </li>
                                         @endif
 
                                         {{-- Next Page Link --}}
                                         @if ($query->hasMorePages())
-                                        <li><a href="{{ $query->nextPageUrl() }}" rel="next">&rsaquo;</a></li>
+                                        <li><a href="{{ $query->nextPageUrl() }}" rel="next"
+                                                class="page-link">&rsaquo;</a></li>
                                         @else
-                                        <li class="disabled"><span>&rsaquo;</span></li>
+                                        <li class="disabled"><a class="page-link"><span>&rsaquo;</span></a></li>
                                         @endif
                         </ul>
                         @endif

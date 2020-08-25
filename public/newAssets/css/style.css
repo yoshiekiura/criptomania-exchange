@@ -2,6 +2,7 @@
 @import url("bootstrap.min.css");
 @import url("ionicons.min.css");
 @import url("jquery.mCustomScrollbar.min.css");
+
 body {
   font-family: "Overpass", sans-serif;
   font-size: 14px;
@@ -95,7 +96,7 @@ tbody tr:hover {
   border-radius: 5px;
 }
 
-.table tbody + tbody {
+.table tbody+tbody {
   border: none;
 }
 
@@ -141,8 +142,8 @@ tbody tr:hover {
   padding-right: 7.5px;
 }
 
-.sm-gutters > .col,
-.sm-gutters > [class*=col-] {
+.sm-gutters>.col,
+.sm-gutters>[class*=col-] {
   padding-right: 7.5px;
   padding-left: 7.5px;
 }
@@ -167,7 +168,7 @@ tbody tr:hover {
   color: #18214d59;
 }
 
-.custom-control-input:focus ~ .custom-control-label::before {
+.custom-control-input:focus~.custom-control-label::before {
   box-shadow: none;
 }
 
@@ -179,6 +180,7 @@ tbody tr:hover {
     left: 0;
     top: 0;
   }
+
   95% {
     opacity: 0.1;
     left: -10.5px;
@@ -186,6 +188,7 @@ tbody tr:hover {
     width: 28px;
     height: 28px;
   }
+
   100% {
     opacity: 0;
     width: 7px;
@@ -194,20 +197,24 @@ tbody tr:hover {
     top: 0;
   }
 }
+
 @keyframes slideIn {
   0% {
     transform: translateY(1rem);
     opacity: 0;
   }
+
   100% {
     transform: translateY(0rem);
     opacity: 1;
   }
+
   0% {
     transform: translateY(1rem);
     opacity: 0;
   }
 }
+
 header nav a {
   color: #18214d;
 }
@@ -985,7 +992,7 @@ tbody.ob-heading {
   border-radius: 2px;
 }
 
-.markets-chart > div {
+.markets-chart>div {
   width: 110%;
   margin-left: -16px;
 }
@@ -1794,7 +1801,7 @@ tbody.ob-heading {
   color: #fff;
 }
 
-#dark .custom-control-input:checked ~ .custom-control-label::before {
+#dark .custom-control-input:checked~.custom-control-label::before {
   color: #fff;
   border-color: #007bff;
   background-color: #007bff;
@@ -1977,6 +1984,7 @@ tbody.ob-heading {
     width: 25%;
   }
 }
+
 @media only screen and (max-width: 1300px) {
   .market-pairs tbody {
     height: 740px;
@@ -1986,11 +1994,13 @@ tbody.ob-heading {
     height: 755px;
   }
 }
+
 @media only screen and (max-width: 1200px) {
   .markets-capital-item {
     height: 289px;
   }
 }
+
 @media only screen and (max-width: 991px) {
   .settings-nav {
     margin-bottom: 15px;
@@ -2000,16 +2010,19 @@ tbody.ob-heading {
     width: 35%;
   }
 }
+
 @media only screen and (max-width: 918px) {
   .market-history tbody {
     height: 274px;
   }
 }
+
 @media only screen and (max-width: 792px) {
   .market-pairs tbody {
     height: 699px;
   }
 }
+
 @media only screen and (max-width: 768px) {
   .settings-profile .custom-file {
     width: 45%;
@@ -2071,6 +2084,7 @@ tbody.ob-heading {
     height: 304px;
   }
 }
+
 @media only screen and (max-width: 576px) {
   .markets-capital-item {
     height: 91.4%;

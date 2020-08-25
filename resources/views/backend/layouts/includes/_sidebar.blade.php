@@ -8,7 +8,7 @@
 
 {{-- new template --}}
 @section('extraScript')
-<script type="application/javascript" src="{{asset('newAssets/js/jquery-3.4.1.min.js')}}"></script>
+{{-- <script type="application/javascript" src="{{asset('newAssets/js/jquery-3.4.1.min.js')}}"></script> --}}
 <script type="application/javascript" src="{{asset('newAssets/js/popper.min.js')}}"></script>
 <script type="application/javascript" src="{{asset('newAssets/js/bootstrap.min.js')}}"></script>
 <script type="application/javascript" src="{{asset('newAssets/js/amcharts-core.min.js')}}"></script>

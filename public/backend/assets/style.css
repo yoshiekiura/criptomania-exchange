@@ -146,6 +146,16 @@ table.dataTable thead {
     margin: 40px 0 0 -104px !important;
 }
 
+.dropdown-menu-notice {
+    min-width: auto !important;
+    margin: 40px 0 0 -65px !important;
+}
+
+.dropdown-menu-sys-notice {
+    min-width: auto !important;
+    margin: 40px 0 0 -25px !important;
+}
+
 .text-green {
     color: #26a69a !important;
 }

@@ -42,7 +42,7 @@
 </script>
 {{-- new twmplate --}}
 <script src="{{asset('newAssets/js/popper.min.js')}}"></script>
-<script src="{{(asset('newAssets/js/amcharts-core.min.js'))}}"></script>
+<script src="{{asset('newAssets/js/amcharts-core.min.js')}}"></script>
 <script src="{{asset('newAssets/js/amcharts.min.js')}}"></script>
 <script src="{{asset('newAssets/js/custom.js')}}"></script>
 <script src="{{asset('newAssets/js/jquery.mCustomScrollbar.js')}}"></script>

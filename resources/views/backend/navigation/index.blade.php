@@ -9,86 +9,106 @@
         <div class="">
             <div class="row">
                 <div class="col-md-3">
-                    <div class="box box-primary">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Select Nav</h3>
-                        </div><!-- /.box-header -->
-                        <!-- form start -->
-                        <div class="box-body">
-                            <div class="form-group">
-                                <ul class="list-unstyled" style="overflow-y: scroll; max-height: 150px;">
-                                    @foreach($navigationPlaces as $navigationPlace)
-                                    <li><a
-                                            href="{{route('menu-manager.index',$navigationPlace)}}">{{ucfirst(str_replace('-',' ',$navigationPlace))}}</a>
-                                    </li>
-                                    @endforeach
-                                </ul>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="">
+                                <div class="box box-primary">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">Select Nav</h3>
+                                    </div><!-- /.box-header -->
+                                    <!-- form start -->
+                                    <div class="box-body">
+                                        <div class="form-group">
+                                            <ul class="list-unstyled" style="overflow-y: scroll; max-height: 150px;">
+                                                @foreach($navigationPlaces as $navigationPlace)
+                                                <li><a
+                                                        href="{{route('menu-manager.index',$navigationPlace)}}">{{ucfirst(str_replace('-',' ',$navigationPlace))}}</a>
+                                                </li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="box box-primary">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Add Routes</h3>
-                        </div><!-- /.box-header -->
-                        <!-- form start -->
-                        <div id="all-routes" class="box-body" style="overflow-y: scroll; max-height: 150px;"
-                            data-name="Unnamed">
-                            @foreach($allRoutes as $routeName => $routeData)
-                            @php
-                            $middleware = $routeData->middleware();
-                            $parameters = $routeData->signatureParameters();
-                            $isMenuable = true;
-                            @endphp
-                            @foreach($parameters as $parameter)
-                            @if(!$parameter->isOptional())
-                            @php($isMenuable = false)
-                            @break
-                            @endif
-                            @endforeach
-                            @if($isMenuable && !empty($middleware) && !in_array('api', $middleware) &&
-                            !in_array('Barryvdh\Debugbar\Middleware\DebugbarEnabled',$middleware))
-                            <?php
-                                $route = explode('/{', $routeName)[0];
-                                if ($route == '/' || $route == '' || strlen($route) == 2) {
-                                    $route = 'Home';
-                                } else {
-                                    if (strpos($route, '/') == 2) {
-                                        $route = substr($route, 3);
-                                    }
-                                    $route = ucfirst(str_replace('/', ' - ', str_replace('-', ' ', $route)));
-                                }
-                                ?>
-                            <div class="checkbox" style="margin:3px 0;">
-                                <label>
-                                    <input type="checkbox" class="route-check-box" value="{{$routeData->getName()}}">
-                                    <span>{{$route}}</span>
-                                </label>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="">
+                                <div class="box box-primary">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">Add Routes</h3>
+                                    </div><!-- /.box-header -->
+                                    <!-- form start -->
+                                    <div id="all-routes" class="box-body" style="overflow-y: scroll; max-height: 150px;"
+                                        data-name="Unnamed">
+                                        @foreach($allRoutes as $routeName => $routeData)
+                                        @php
+                                        $middleware = $routeData->middleware();
+                                        $parameters = $routeData->signatureParameters();
+                                        $isMenuable = true;
+                                        @endphp
+                                        @foreach($parameters as $parameter)
+                                        @if(!$parameter->isOptional())
+                                        @php($isMenuable = false)
+                                        @break
+                                        @endif
+                                        @endforeach
+                                        @if($isMenuable && !empty($middleware) && !in_array('api', $middleware) &&
+                                        !in_array('Barryvdh\Debugbar\Middleware\DebugbarEnabled',$middleware))
+                                        <?php
+                                        $route = explode('/{', $routeName)[0];
+                                        if ($route == '/' || $route == '' || strlen($route) == 2) {
+                                            $route = 'Home';
+                                        } else {
+                                            if (strpos($route, '/') == 2) {
+                                                $route = substr($route, 3);
+                                            }
+                                            $route = ucfirst(str_replace('/', ' - ', str_replace('-', ' ', $route)));
+                                        }
+                                        ?>
+                                        <div class="checkbox" style="margin:3px 0;">
+                                            <label>
+                                                <input type="checkbox" class="route-check-box"
+                                                    value="{{$routeData->getName()}}">
+                                                <span>{{$route}}</span>
+                                            </label>
+                                        </div>
+                                        @endif
+                                        @endforeach
+                                    </div>
+                                    <div class="box-footer">
+                                        <button class="btn btn-primary" id="add-route">Add Route</button>
+                                    </div>
+                                </div>
                             </div>
-                            @endif
-                            @endforeach
-                        </div>
-                        <div class="box-footer">
-                            <button class="btn btn-primary" id="add-route">Add Route</button>
                         </div>
                     </div>
 
-                    <div class="box box-primary">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Add LINK</h3>
-                        </div><!-- /.box-header -->
-                        <!-- form start -->
-                        <div class="box-body">
-                            <div class="form-group">
-                                <input type="text" id="link-data" placeholder="Enter url" class="form-control">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="">
+                                <div class="box box-primary">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">Add LINK</h3>
+                                    </div><!-- /.box-header -->
+                                    <!-- form start -->
+                                    <div class="box-body">
+                                        <div class="form-group">
+                                            <input type="text" id="link-data" placeholder="Enter url"
+                                                class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" data-name="Unnamed" id="link-name"
+                                                placeholder="Enter Menu Item Name" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="box-footer">
+                                        <button class="btn btn-primary" id="add-link">Add A custom Link</button>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <input type="text" data-name="Unnamed" id="link-name" placeholder="Enter Menu Item Name"
-                                    class="form-control">
-                            </div>
-                        </div>
-                        <div class="box-footer">
-                            <button class="btn btn-primary" id="add-link">Add A custom Link</button>
                         </div>
                     </div>
                 </div>
