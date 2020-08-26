@@ -5,13 +5,13 @@
     <div class="card-body">
         <div class="">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-0">
                     <!-- Profile Image -->
-                    @include('backend.profile.avatar', ['profileRouteInfo' => profileRoutes('user', $user->id)])
+                    {{-- @include('backend.profile.avatar', ['profileRouteInfo' => profileRoutes('user', $user->id)]) --}}
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-12">
                     <div class="nav-tabs-custom">
-                        @include('backend.profile.profile_nav')
+                        {{-- @include('backend.profile.profile_nav') --}}
                         <div class="box box-solid">
                             <div class="box-body">
                                 @if(!empty(Auth::user()->google2fa_secret))

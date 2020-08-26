@@ -1,67 +1,899 @@
-<div id="fixed-stock-market">
-    <div>
-        <div class="box box-borderless">
-            <button id="fixed-stock-market-toggler" class="btn btn-primary"><i class="fa fa-bars"></i> <span class="stock_item"></span><span>/</span><span class="base_item"></span></button>
-            <div class="box-header">
-                <h3 class="box-title text-uppercase">{{ __('Markets') }}</h3>
+<div class="col-md-3">
+    <div class="market-pairs">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-sm"><i class="icon ion-md-search"></i></span>
             </div>
-            <div class="box-body" id="stock-market-section">
-                <table id="stock_market_table" class="table table-hover table-responsive small exchange-table">
+            <input type="text" class="form-control fc-search" placeholder="Search"
+                aria-describedby="inputGroup-sizing-sm">
+        </div>
+        <ul class="nav nav-pills" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="pill" href="#STAR" role="tab" aria-selected="true"><i
+                        class="icon ion-md-star"></i></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="pill" href="#BTC" role="tab" aria-selected="true">BTC</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="pill" href="#ETH" role="tab" aria-selected="false">ETH</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="pill" href="#NEO" role="tab" aria-selected="false">NEO</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="pill" href="#USDT" role="tab" aria-selected="false">USDT</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="pill" href="#DAI" role="tab" aria-selected="false">DAI</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="pill" href="#PAX" role="tab" aria-selected="false">PAX</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade show" id="STAR" role="tabpanel">
+                <table class="table">
                     <thead>
-                    <tr>
-                        <th>{{ __('STOCK') }}</th>
-                        <th>{{ __('PRICE') }}</th>
-                        <th>{{ __('VOLUME') }}</th>
-                        <th>{{ __('CHANGE') }}</th>
-                    </tr>
+                        <tr>
+                            <th>Pairs</th>
+                            <th>Last Price</th>
+                            <th>Change</th>
+                        </tr>
                     </thead>
+                    <tbody>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> ETH/BTC</td>
+                            <td>0.00020255</td>
+                            <td class="red">-2.58%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> KCS/BTC</td>
+                            <td>0.00013192</td>
+                            <td class="green">+5.6%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> XRP/BTC</td>
+                            <td>0.00002996</td>
+                            <td class="red">-1.55%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> VET/BTC</td>
+                            <td>0.00000103</td>
+                            <td class="green">+1.8%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane fade show active" id="BTC" role="tabpanel">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Pairs</th>
+                            <th>Last Price</th>
+                            <th>Change</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> ETH/BTC</td>
+                            <td>0.00020255</td>
+                            <td class="red">-2.58%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> KCS/BTC</td>
+                            <td>0.00013192</td>
+                            <td class="green">+5.6%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> XRP/BTC</td>
+                            <td>0.00002996</td>
+                            <td class="red">-1.55%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> VET/BTC</td>
+                            <td>0.00000103</td>
+                            <td class="green">+1.8%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> EOS/BTC</td>
+                            <td>0.00000103</td>
+                            <td class="red">-2.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> BTT/BTC</td>
+                            <td>0.00002303</td>
+                            <td class="red">-1.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> LTC/BTC</td>
+                            <td>0.03520103</td>
+                            <td class="green">+1.5%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> TRX/BTC</td>
+                            <td>0.00330103</td>
+                            <td class="red">-3.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> BSV/BTC</td>
+                            <td>0.00300103</td>
+                            <td class="green">+2.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> COTI/BTC</td>
+                            <td>0.003500103</td>
+                            <td class="green">+2.85%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> XYT/BTC</td>
+                            <td>0.00003103</td>
+                            <td class="green">+3.55%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> BNB/BTC</td>
+                            <td>0.003500103</td>
+                            <td class="red">-2.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> XMR/BTC</td>
+                            <td>0.003500103</td>
+                            <td class="red">-1.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> TRY/BTC</td>
+                            <td>0.00000123</td>
+                            <td class="red">-2.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> ADA/BTC</td>
+                            <td>0.00050103</td>
+                            <td class="green">+5.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> NEO/BTC</td>
+                            <td>0.00340103</td>
+                            <td class="red">-1.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> XLM/BTC</td>
+                            <td>0.00035103</td>
+                            <td class="green">+5.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> ENQ/BTC</td>
+                            <td>0.00354103</td>
+                            <td class="green">+2.02%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> AVA/BTC</td>
+                            <td>0.02535103</td>
+                            <td class="green">+3.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> AMB/BTC</td>
+                            <td>0.05335103</td>
+                            <td class="green">+1.0%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> MAP/BTC</td>
+                            <td>0.00234103</td>
+                            <td class="red">-2.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> GO/BTC</td>
+                            <td>0.00354103</td>
+                            <td class="red">-6.50%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> KICK/BTC</td>
+                            <td>0.02053103</td>
+                            <td class="red">-6.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> DBC/BTC</td>
+                            <td>0.02535103</td>
+                            <td class="green">+7.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> GGC/BTC</td>
+                            <td>0.00353103</td>
+                            <td class="red">-4.05%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane fade show" id="ETH" role="tabpanel">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Pairs</th>
+                            <th>Last Price</th>
+                            <th>Change</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> BTC/ETH</td>
+                            <td>0.00020255</td>
+                            <td class="green">+1.58%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> KCS/ETH</td>
+                            <td>0.00013192</td>
+                            <td class="red">-0.6%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> XRP/ETH</td>
+                            <td>0.00002996</td>
+                            <td class="red">-0.55%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> VET/ETH</td>
+                            <td>0.00000103</td>
+                            <td class="green">+1.8%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> EOS/ETH</td>
+                            <td>0.00000103</td>
+                            <td class="red">-2.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> BTT/ETH</td>
+                            <td>0.00002303</td>
+                            <td class="red">-1.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> LTC/ETH</td>
+                            <td>0.03520103</td>
+                            <td class="green">+1.5%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> TRX/ETH</td>
+                            <td>0.00330103</td>
+                            <td class="red">-3.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> BSV/ETH</td>
+                            <td>0.00300103</td>
+                            <td class="green">+2.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> COTI/ETH</td>
+                            <td>0.003500103</td>
+                            <td class="green">+2.85%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> XYT/ETH</td>
+                            <td>0.00003103</td>
+                            <td class="green">+3.55%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> BNB/ETH</td>
+                            <td>0.003500103</td>
+                            <td class="red">-2.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> XMR/ETH</td>
+                            <td>0.003500103</td>
+                            <td class="red">-1.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> TRY/ETH</td>
+                            <td>0.00000123</td>
+                            <td class="red">-2.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> ADA/ETH</td>
+                            <td>0.00050103</td>
+                            <td class="green">+5.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> NEO/ETH</td>
+                            <td>0.00340103</td>
+                            <td class="red">-1.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> XLM/ETH</td>
+                            <td>0.00035103</td>
+                            <td class="green">+5.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> ENQ/ETH</td>
+                            <td>0.00354103</td>
+                            <td class="green">+2.02%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> AVA/ETH</td>
+                            <td>0.02535103</td>
+                            <td class="green">+3.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> AMB/ETH</td>
+                            <td>0.05335103</td>
+                            <td class="green">+1.0%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> MAP/ETH</td>
+                            <td>0.00234103</td>
+                            <td class="red">-2.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> GO/ETH</td>
+                            <td>0.00354103</td>
+                            <td class="red">-6.50%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> KICK/ETH</td>
+                            <td>0.02053103</td>
+                            <td class="red">-6.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> DBC/ETH</td>
+                            <td>0.02535103</td>
+                            <td class="green">+7.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> GGC/ETH</td>
+                            <td>0.00353103</td>
+                            <td class="red">-4.05%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane fade show" id="NEO" role="tabpanel">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Pairs</th>
+                            <th>Last Price</th>
+                            <th>Change</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> ETH/NEO</td>
+                            <td>0.00350255</td>
+                            <td class="red">-6.58%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> KCS/NEO</td>
+                            <td>0.00013192</td>
+                            <td class="green">+0.6%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> XRP/NEO</td>
+                            <td>0.00002996</td>
+                            <td class="red">-0.55%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> VET/NEO</td>
+                            <td>0.00000103</td>
+                            <td class="green">+1.8%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> EOS/NEO</td>
+                            <td>0.00000103</td>
+                            <td class="red">-2.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> BTT/NEO</td>
+                            <td>0.00002303</td>
+                            <td class="red">-1.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> LTC/NEO</td>
+                            <td>0.03520103</td>
+                            <td class="green">+1.5%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> TRX/NEO</td>
+                            <td>0.00330103</td>
+                            <td class="red">-3.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> BSV/NEO</td>
+                            <td>0.00300103</td>
+                            <td class="green">+2.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> COTI/NEO</td>
+                            <td>0.003500103</td>
+                            <td class="green">+2.85%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> XYT/NEO</td>
+                            <td>0.00003103</td>
+                            <td class="green">+3.55%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> BNB/NEO</td>
+                            <td>0.003500103</td>
+                            <td class="red">-2.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> XMR/NEO</td>
+                            <td>0.003500103</td>
+                            <td class="red">-1.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> TRY/NEO</td>
+                            <td>0.00000123</td>
+                            <td class="red">-2.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> ADA/NEO</td>
+                            <td>0.00050103</td>
+                            <td class="green">+5.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> NEO/NEO</td>
+                            <td>0.00340103</td>
+                            <td class="red">-1.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> XLM/NEO</td>
+                            <td>0.00035103</td>
+                            <td class="green">+5.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> ENQ/NEO</td>
+                            <td>0.00354103</td>
+                            <td class="green">+2.02%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> AVA/NEO</td>
+                            <td>0.02535103</td>
+                            <td class="green">+3.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> AMB/NEO</td>
+                            <td>0.05335103</td>
+                            <td class="green">+1.0%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> MAP/NEO</td>
+                            <td>0.00234103</td>
+                            <td class="red">-2.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> GO/NEO</td>
+                            <td>0.00354103</td>
+                            <td class="red">-6.50%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> KICK/NEO</td>
+                            <td>0.02053103</td>
+                            <td class="red">-6.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> DBC/NEO</td>
+                            <td>0.02535103</td>
+                            <td class="green">+7.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> GGC/NEO</td>
+                            <td>0.00353103</td>
+                            <td class="red">-4.05%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane fade show" id="USDT" role="tabpanel">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Pairs</th>
+                            <th>Last Price</th>
+                            <th>Change</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> ETH/USDT</td>
+                            <td>0.00350255</td>
+                            <td class="red">-2.58%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> KCS/USDT</td>
+                            <td>0.00013192</td>
+                            <td class="green">+6.6%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> XRP/USDT</td>
+                            <td>0.00002996</td>
+                            <td class="red">-0.55%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> VET/USDT</td>
+                            <td>0.00000103</td>
+                            <td class="green">+1.8%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> EOS/USDT</td>
+                            <td>0.00000103</td>
+                            <td class="red">-2.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> BTT/USDT</td>
+                            <td>0.00002303</td>
+                            <td class="red">-1.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> LTC/USDT</td>
+                            <td>0.03520103</td>
+                            <td class="green">+1.5%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> TRX/USDT</td>
+                            <td>0.00330103</td>
+                            <td class="red">-3.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> BSV/USDT</td>
+                            <td>0.00300103</td>
+                            <td class="green">+2.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> COTI/USDT</td>
+                            <td>0.003500103</td>
+                            <td class="green">+2.85%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> XYT/USDT</td>
+                            <td>0.00003103</td>
+                            <td class="green">+3.55%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> BNB/USDT</td>
+                            <td>0.003500103</td>
+                            <td class="red">-2.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> XMR/USDT</td>
+                            <td>0.003500103</td>
+                            <td class="red">-1.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> TRY/USDT</td>
+                            <td>0.00000123</td>
+                            <td class="red">-2.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> ADA/USDT</td>
+                            <td>0.00050103</td>
+                            <td class="green">+5.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> USDT/USDT</td>
+                            <td>0.00340103</td>
+                            <td class="red">-1.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> XLM/USDT</td>
+                            <td>0.00035103</td>
+                            <td class="green">+5.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> ENQ/USDT</td>
+                            <td>0.00354103</td>
+                            <td class="green">+2.02%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> AVA/USDT</td>
+                            <td>0.02535103</td>
+                            <td class="green">+3.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> AMB/USDT</td>
+                            <td>0.05335103</td>
+                            <td class="green">+1.0%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> MAP/USDT</td>
+                            <td>0.00234103</td>
+                            <td class="red">-2.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> GO/USDT</td>
+                            <td>0.00354103</td>
+                            <td class="red">-6.50%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> KICK/USDT</td>
+                            <td>0.02053103</td>
+                            <td class="red">-6.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> DBC/USDT</td>
+                            <td>0.02535103</td>
+                            <td class="green">+7.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> GGC/USDT</td>
+                            <td>0.00353103</td>
+                            <td class="red">-4.05%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane fade show" id="DAI" role="tabpanel">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Pairs</th>
+                            <th>Last Price</th>
+                            <th>Change</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> ETH/DAI</td>
+                            <td>0.05320255</td>
+                            <td class="green">+6.58%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> KCS/DAI</td>
+                            <td>0.00013192</td>
+                            <td class="green">+0.6%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> XRP/DAI</td>
+                            <td>0.00002996</td>
+                            <td class="red">-0.55%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> VET/DAI</td>
+                            <td>0.00000103</td>
+                            <td class="green">+1.8%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> EOS/DAI</td>
+                            <td>0.00000103</td>
+                            <td class="red">-2.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> BTT/DAI</td>
+                            <td>0.00002303</td>
+                            <td class="red">-1.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> LTC/DAI</td>
+                            <td>0.03520103</td>
+                            <td class="green">+1.5%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> TRX/DAI</td>
+                            <td>0.00330103</td>
+                            <td class="red">-3.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> BSV/DAI</td>
+                            <td>0.00300103</td>
+                            <td class="green">+2.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> COTI/DAI</td>
+                            <td>0.003500103</td>
+                            <td class="green">+2.85%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> XYT/DAI</td>
+                            <td>0.00003103</td>
+                            <td class="green">+3.55%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> BNB/DAI</td>
+                            <td>0.003500103</td>
+                            <td class="red">-2.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> XMR/DAI</td>
+                            <td>0.003500103</td>
+                            <td class="red">-1.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> TRY/DAI</td>
+                            <td>0.00000123</td>
+                            <td class="red">-2.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> ADA/DAI</td>
+                            <td>0.00050103</td>
+                            <td class="green">+5.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> DAI/DAI</td>
+                            <td>0.00340103</td>
+                            <td class="red">-1.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> XLM/DAI</td>
+                            <td>0.00035103</td>
+                            <td class="green">+5.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> ENQ/DAI</td>
+                            <td>0.00354103</td>
+                            <td class="green">+2.02%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> AVA/DAI</td>
+                            <td>0.02535103</td>
+                            <td class="green">+3.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> AMB/DAI</td>
+                            <td>0.05335103</td>
+                            <td class="green">+1.0%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> MAP/DAI</td>
+                            <td>0.00234103</td>
+                            <td class="red">-2.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> GO/DAI</td>
+                            <td>0.00354103</td>
+                            <td class="red">-6.50%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> KICK/DAI</td>
+                            <td>0.02053103</td>
+                            <td class="red">-6.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> DBC/DAI</td>
+                            <td>0.02535103</td>
+                            <td class="green">+7.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> GGC/DAI</td>
+                            <td>0.00353103</td>
+                            <td class="red">-4.05%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane fade show" id="PAX" role="tabpanel">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Pairs</th>
+                            <th>Last Price</th>
+                            <th>Change</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> ETH/PAX</td>
+                            <td>0.00330255</td>
+                            <td class="red">-9.58%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> KCS/PAX</td>
+                            <td>0.00055192</td>
+                            <td class="red">-0.6%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> XRP/PAX</td>
+                            <td>0.00002996</td>
+                            <td class="red">-0.55%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> VET/PAX</td>
+                            <td>0.00000103</td>
+                            <td class="green">+1.8%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> EOS/PAX</td>
+                            <td>0.00000103</td>
+                            <td class="red">-2.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> BTT/PAX</td>
+                            <td>0.00002303</td>
+                            <td class="red">-1.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> LTC/PAX</td>
+                            <td>0.03520103</td>
+                            <td class="green">+1.5%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> TRX/PAX</td>
+                            <td>0.00330103</td>
+                            <td class="red">-3.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> BSV/PAX</td>
+                            <td>0.00300103</td>
+                            <td class="green">+2.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> COTI/PAX</td>
+                            <td>0.003500103</td>
+                            <td class="green">+2.85%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> XYT/PAX</td>
+                            <td>0.00003103</td>
+                            <td class="green">+3.55%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> BNB/PAX</td>
+                            <td>0.003500103</td>
+                            <td class="red">-2.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> XMR/PAX</td>
+                            <td>0.003500103</td>
+                            <td class="red">-1.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> TRY/PAX</td>
+                            <td>0.00000123</td>
+                            <td class="red">-2.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> ADA/PAX</td>
+                            <td>0.00050103</td>
+                            <td class="green">+5.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> PAX/PAX</td>
+                            <td>0.00340103</td>
+                            <td class="red">-1.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> XLM/PAX</td>
+                            <td>0.00035103</td>
+                            <td class="green">+5.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> ENQ/PAX</td>
+                            <td>0.00354103</td>
+                            <td class="green">+2.02%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> AVA/PAX</td>
+                            <td>0.02535103</td>
+                            <td class="green">+3.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> AMB/PAX</td>
+                            <td>0.05335103</td>
+                            <td class="green">+1.0%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> MAP/PAX</td>
+                            <td>0.00234103</td>
+                            <td class="red">-2.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> GO/PAX</td>
+                            <td>0.00354103</td>
+                            <td class="red">-6.50%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> KICK/PAX</td>
+                            <td>0.02053103</td>
+                            <td class="red">-6.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> DBC/PAX</td>
+                            <td>0.02535103</td>
+                            <td class="green">+7.05%</td>
+                        </tr>
+                        <tr>
+                            <td><i class="icon ion-md-star"></i> GGC/PAX</td>
+                            <td>0.00353103</td>
+                            <td class="red">-4.05%</td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
 
-        <br>
-        <div class="nav-tabs-custom full-in-small" style="cursor: move;">
-            <ul class="nav nav-tabs ui-sortable-handle">
-                <li class="active">
-                    <a href="#market_trade" data-toggle="tab" aria-expanded="false">{{ __('MARKET TRADES') }}</a>
-                </li>
-                @auth
-                    <li class="">
-                        <a href="#my_trade" data-toggle="tab" aria-expanded="true">{{ __('MY TRADES') }}</a>
-                    </li>
-                @endauth
-            </ul>
-            <div class="tab-content">
-                <div class="tab-pane active" id="market_trade">
-                    <table id="trade_history_table" class="table table-hover table-responsive small exchange-table"
-                           style="width:100%">
-                        <thead>
-                        <tr>
-                            <th class="text-center">{{ __('PRICE') }}</th>
-                            <th class="text-center">{{ __('AMOUNT') }}</th>
-                            <th class="hide_in_mobile">{{ __('DATE') }}</th>
-
-                            
-                        </tr>
-                        </thead>
-                    </table>
-                </div>
-                @auth
-                    <div class="tab-pane" id="my_trade">
-                        <table id="my_trade_table" class="table table-hover table-responsive small exchange-table"
-                               style="width:100%">
-                            <thead>
-                            <tr>
-                                <th class="text-center">{{ __('PRICE') }}</th>
-                                <th class="text-center">{{ __('AMOUNT') }}</th>
-                                <th class="hide_in_mobile">{{ __('DATE') }}</th>
-                                
-                            </tr>
-                            </thead>
-                        </table>
-                    </div>
-                @endauth
-            </div>
-        </div>
         </div>
     </div>
 </div>

@@ -2,11 +2,11 @@
 @section('title', $title)
 
 @section('after-style')
-    <link rel="stylesheet" href="{{asset('frontend/style.css')}}">
+<link rel="stylesheet" href="{{asset('frontend/style.css')}}">
 @endsection
 
 @section('content')
-<div class="fullwidth" style="background: #fff">
+<div class="fullwidth" style="background: #fff; margin-top: 10px">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -15,39 +15,45 @@
                         <h3 class="box-title">{{ __('Current ICO') }}</h3>
                     </div>
                     <div class="box-body">
-                        <table class="table datatable dt-responsive display nowrap dc-table" style="width:100% !important;">
+                        <table class="table datatable dt-responsive display nowrap dc-table"
+                            style="width:100% !important;">
                             <thead>
-                            <tr>
-                                <th class="all">{{ __('Stock Name') }}</th>
-                                <th  class="min-phone-l">{{ __('Market') }}</th>
-                                <th  class="min-phone-l">{{ __('Price') }}</th>
-                                <th  class="min-phone-l">{{ __('Volume') }}</th>
-                                <th class="text-center all no-sort">{{ __('Action') }}</th>
-                            </tr>
+                                <tr>
+                                    <th class="all">{{ __('Stock Name') }}</th>
+                                    <th class="min-phone-l">{{ __('Market') }}</th>
+                                    <th class="min-phone-l">{{ __('Price') }}</th>
+                                    <th class="min-phone-l">{{ __('Volume') }}</th>
+                                    <th class="text-center all no-sort">{{ __('Action') }}</th>
+                                </tr>
                             </thead>
                             <tbody>
-                            @foreach($list['query'] as $stockItem)
+                                @foreach($list['query'] as $stockItem)
                                 @if($stockItem->stock_pair_id)
                                 <tr>
                                     <td>{{ $stockItem->item_name }} ({{ $stockItem->item }})</td>
                                     <td>{{ $stockItem->item }}/{{ $stockItem->base_item }}</td>
                                     <td>{{ $stockItem->last_price }} {{ $stockItem->base_item }}</td>
-                                    <td>{{ $stockItem->ico_total_sold }} <span class="strong">{{ $stockItem->item }}</span> / {{ $stockItem->ico_total_earned }} <span class="strong">{{ $stockItem->base_item }}</span></td>
+                                    <td>{{ $stockItem->ico_total_sold }} <span
+                                            class="strong">{{ $stockItem->item }}</span> /
+                                        {{ $stockItem->ico_total_earned }} <span
+                                            class="strong">{{ $stockItem->base_item }}</span></td>
                                     <td class="cm-action text-center">
                                         @auth
-                                            @if(has_permission('exchange.ico.buy'))
-                                                <a href="{{ route('exchange.ico.buy', ['id' => $stockItem->stock_pair_id])}}"><i class="fa fa-google-wallet"></i> {{ __('Buy now') }}</a>
-                                            @endif
+                                        @if(has_permission('exchange.ico.buy'))
+                                        <a href="{{ route('exchange.ico.buy', ['id' => $stockItem->stock_pair_id])}}"><i
+                                                class="fa fa-google-wallet"></i> {{ __('Buy now') }}</a>
+                                        @endif
                                         @endauth
 
                                         @guest
-                                            <a href="{{ route('login') }}">{{__('Login')}}</a> {{ __('or') }}
-                                            <a href="{{ route('register.index') }}">{{ __('Register') }}</a> {{ __('to buy') }}
+                                        <a href="{{ route('login') }}">{{__('Login')}}</a> {{ __('or') }}
+                                        <a href="{{ route('register.index') }}">{{ __('Register') }}</a>
+                                        {{ __('to buy') }}
                                         @endguest
                                     </td>
                                 </tr>
                                 @endif
-                            @endforeach
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -80,18 +86,26 @@
 @endsection
 
 @section('script')
-    <!-- for datatable and date picker -->
-    <script src="{{ asset('common/vendors/datepicker/datepicker.js') }}"></script>
-    <script src="{{asset('common/vendors/datatable_responsive/datatables/datatables.min.js')}}"></script>
-    <script src="{{asset('common/vendors/datatable_responsive/datatables/plugins/bootstrap/datatables.bootstrap.js')}}"></script>
-    <script src="{{asset('common/vendors/datatable_responsive/table-datatables-responsive.js')}}"></script>
-    <script type="text/javascript">
-        //Init jquery Date Picker
+<!-- for datatable and date picker -->
+<script src="{{ asset('common/vendors/datepicker/datepicker.js') }}"></script>
+<script src="{{asset('common/vendors/datatable_responsive/datatables/datatables.min.js')}}"></script>
+<script src="{{asset('common/vendors/datatable_responsive/datatables/plugins/bootstrap/datatables.bootstrap.js')}}">
+</script>
+<script src="{{asset('common/vendors/datatable_responsive/table-datatables-responsive.js')}}"></script>
+<script type="text/javascript">
+    //Init jquery Date Picker
         $('.datepicker').datepicker({
             format: 'yyyy-mm-dd',
             autoclose: true,
             orientation: 'bottom',
             todayHighlight: true,
         });
-    </script>
+</script>
+{{-- new Template --}}
+{{-- <script src="{{ asset('newAssets/js/jquery-3.4.1.min.js') }}"></script> --}}
+<script src="{{ asset('newAssets/js/popper.min.js') }}"></script>
+<script src="{{ asset('newAssets/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('newAssets/js/amcharts-core.min.js') }}"></script>
+<script src="{{ asset('newAssets/js/amcharts.min.js') }}"></script>
+<script src="{{ asset('newAssets/js/custom.js') }}"></script>
 @endsection
