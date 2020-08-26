@@ -36,7 +36,7 @@
                                                     data-toggle="dropdown">
                                                     <i class="fa fa-gear"></i>
                                                 </button>
-                                                <ul class="dropdown-menu pull-right">
+                                                <ul class="dropdown-menu dropdown-menu-stock-pair pull-right">
                                                     @if( has_permission('trader.wallets.deposit'))
                                                     <li>
                                                         <a href="{{ route('trader.wallets.deposit', $wallet->id) }}"><i

@@ -17,7 +17,7 @@
 
                     <div class="row">
                         <div class="col-sm-8">
-                            <h4>Create Multiple Coin Pair</h4>
+                            {{-- <h4>Create Multiple Coin Pair</h4> --}}
                             @if (count($errors) > 0)
                             <div class="alert alert-danger">
                                 <ul>

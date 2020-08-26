@@ -48,7 +48,7 @@
                                                     data-toggle="dropdown">
                                                     <i class="fa fa-gear"></i>
                                                 </button>
-                                                <ul class="dropdown-menu pull-right">
+                                                <ul class="dropdown-menu dropdown-menu-stock-pair pull-right">
                                                     @if(has_permission('admin.stock-items.show'))
                                                     <li>
                                                         <a href="{{ route('admin.stock-items.show', $stockItem->id) }}"><i
@@ -62,6 +62,8 @@
                                                                 class="fa fa-pencil"></i> {{ __('Edit') }}</a>
                                                     </li>
                                                     @endif
+
+                                                    {{-- toogle status and delete error because flash message in comment in footer blade --}}
 
                                                     @if(has_permission('admin.stock-items.toggle-status'))
                                                     <li>

@@ -39,7 +39,7 @@
                                                     data-toggle="dropdown">
                                                     <i class="fa fa-gear"></i>
                                                 </button>
-                                                <ul class="dropdown-menu dropdown-menu-sys-notice pull-right">
+                                                <ul class="dropdown-menu dropdown-menu-stock-pair pull-right">
                                                     <li>
                                                         <a href="{{ route('system-notices.edit',$notice->id) }}"><i
                                                                 class="fa fa-pencil"></i> {{ __('Edit') }}</a>

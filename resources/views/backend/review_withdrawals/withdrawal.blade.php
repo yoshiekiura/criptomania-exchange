@@ -17,7 +17,7 @@
                                         <th class="min-desktop">{{ __('Ref ID') }}</th>
                                         <th class="all">{{ __('Stock Item Name') }}</th>
                                         <th class="all">{{ __('Amount') }}</th>
-                                        <th class="min-desktop">{{ __('Address') }}</th>
+                                        <th class="none">{{ __('Address') }}</th>
                                         <th class="none">{{ __('Status') }}</th>
                                         <th class="none">{{ __('Withdrawn by') }}</th>
                                         <th class="none">{{ __('Txn Id') }}</th>
@@ -53,7 +53,7 @@
                                                     data-toggle="dropdown">
                                                     <i class="fa fa-gear"></i>
                                                 </button>
-                                                <ul class="dropdown-menu pull-right">
+                                                <ul class="dropdown-menu dropdown-menu-stock-pair pull-right">
                                                     <li><a
                                                             href="{{ route('admin.review-withdrawals.show', $reviewWithdrawal->id)}}"><i
                                                                 class="fa fa-eye"></i> {{ __('Show') }}</a></li>

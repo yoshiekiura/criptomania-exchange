@@ -35,7 +35,7 @@
                                                     data-toggle="dropdown">
                                                     <i class="fa fa-gear"></i>
                                                 </button>
-                                                <ul class="dropdown-menu pull-right dropdown-menu-action">
+                                                <ul class="dropdown-menu pull-right dropdown-menu-stock-pair">
                                                     <li>
                                                         <a
                                                             href="{{ route('user-role-managements.edit',$userRoleManagement->id) }}"><i

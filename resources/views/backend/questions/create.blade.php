@@ -9,7 +9,7 @@
                     <div class="box box-primary box-borderless">
                         <div class="box-body">
                             <div class="row">
-                                <div class="col-sm-8 col-sm-offset-2">
+                                <div class="col-sm-12 col-sm-offset-2">
                                     {{ Form::open(['route'=>'trader.questions.store', 'method' => 'post', 'class'=>'form-horizontal validator','files'=> true]) }}
                                     @include('backend.questions._form',['buttonText' => __('Create')])
                                     {{ Form::close() }}

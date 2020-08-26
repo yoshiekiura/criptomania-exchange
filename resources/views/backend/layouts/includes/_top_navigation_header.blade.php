@@ -1,8 +1,8 @@
 <header class="light-bb main-header">
     <nav class="navbar navbar-expand-lg">
         @if(admin_settings('company_logo'))
-        <a class="navbar-brand" href="{{ route('home') }}"><img src=" {{ asset('newAssets/img/logo-dark.png') }} "
-                alt="logo"></a>
+        <a class="navbar-brand" href="{{ route('home') }}"><img src="{{ get_image(admin_settings('company_logo')) }}"
+                style="border-radius:50%;" alt="logo"></a>
         @else
         <a style="text-transform: uppercase" href="{{ route('home') }}"
             class="navbar-brand"><b>{{ env('APP_NAME') }}</b></a>

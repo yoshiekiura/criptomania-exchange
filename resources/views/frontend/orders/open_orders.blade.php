@@ -17,9 +17,9 @@
                                         <th class="all">{{ __('Market') }}</th>
                                         <th class="min-desktop">{{ __('Type') }}</th>
                                         <th class="min-desktop">{{ __('Category') }}</th>
-                                        <th class="all">{{ __('Price') }}</th>
-                                        <th class="min-desktop">{{ __('Amount') }}</th>
-                                        <th class="min-desktop">{{ __('Total') }}</th>
+                                        <th class="none">{{ __('Price') }}</th>
+                                        <th class="none">{{ __('Amount') }}</th>
+                                        <th class="none">{{ __('Total') }}</th>
                                         <th class="min-desktop">{{ __('Stop/Rate') }}</th>
                                         <th class="min-desktop">{{ __('Date') }}</th>
                                         @if(has_permission('trader.orders.destroy'))
@@ -71,9 +71,15 @@
 @section('script')
 <!-- for datatable and date picker -->
 <script src="{{ asset('common/vendors/datepicker/datepicker.js') }}"></script>
-<script src="{{asset('common/vendors/datatable_responsive/datatables/datatables.min.js')}}"></script>
+{{-- <script src="{{asset('common/vendors/datatable_responsive/datatables/datatables.min.js')}}"></script>
 <script src="{{asset('common/vendors/datatable_responsive/datatables/plugins/bootstrap/datatables.bootstrap.js')}}">
-</script>
+</script> --}}
+
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js"></script>
+
 <script src="{{asset('common/vendors/datatable_responsive/table-datatables-responsive.js')}}"></script>
 <script type="text/javascript">
     //Init jquery Date Picker

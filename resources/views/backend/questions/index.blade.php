@@ -34,7 +34,7 @@
                                                     data-toggle="dropdown">
                                                     <i class="fa fa-gear"></i>
                                                 </button>
-                                                <ul class="dropdown-menu pull-right">
+                                                <ul class="dropdown-menu dropdown-menu-stock-pair pull-right">
                                                     <li>
                                                         <a href="{{ route('faq.show', $question->id) }}"><i
                                                                 class="fa fa-commenting"></i> {{ __('Show') }}</a>
@@ -76,9 +76,15 @@
 @section('script')
 <!-- for datatable and date picker -->
 <script src="{{ asset('common/vendors/datepicker/datepicker.js') }}"></script>
-<script src="{{asset('common/vendors/datatable_responsive/datatables/datatables.min.js')}}"></script>
+{{-- <script src="{{asset('common/vendors/datatable_responsive/datatables/datatables.min.js')}}"></script>
 <script src="{{asset('common/vendors/datatable_responsive/datatables/plugins/bootstrap/datatables.bootstrap.js')}}">
-</script>
+</script> --}}
+
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js"></script>
+
 <script src="{{asset('common/vendors/datatable_responsive/table-datatables-responsive.js')}}"></script>
 <script type="text/javascript">
     //Init jquery Date Picker

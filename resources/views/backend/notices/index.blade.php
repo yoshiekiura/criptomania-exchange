@@ -32,7 +32,7 @@
                                                     data-toggle="dropdown">
                                                     <i class="fa fa-gear"></i>
                                                 </button>
-                                                <ul class="dropdown-menu dropdown-menu-notice pull-right">
+                                                <ul class="dropdown-menu dropdown-menu-stock-pair pull-right">
                                                     <li>
                                                         @if($notice->read_at)
                                                         <a href="{{ route('notices.mark-as-unread',$notice->id) }}"><i

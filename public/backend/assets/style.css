@@ -137,27 +137,176 @@ table.dataTable thead {
 
 /* *my CSS */
 .dropdown-menu-action {
-    min-width: auto !important;
+    /* min-width: auto !important; */
     margin: 40px 0 0 -14px !important;
+}
+
+.dropdown-menu-sys-notice {
+    /* min-width: auto !important; */
+    margin: 40px 0 0 -25px !important;
+}
+
+.dropdown-menu-deposit-bank {
+    /* min-width: auto !important; */
+    margin: 40px 0 0 -40px !important;
+}
+
+.dropdown-menu-notice {
+    /* min-width: auto !important; */
+    margin: 40px 0 0 -65px !important;
+}
+
+.dropdown-menu-coins {
+    /* min-width: auto !important; */
+    margin: 40px 0 0 -75px !important;
+}
+
+.dropdown-menu-stock-pair {
+    /* min-width: auto !important; */
+    margin: 40px 0 0 -100px !important;
 }
 
 .dropdown-menu-action-user {
     min-width: auto !important;
-    margin: 40px 0 0 -104px !important;
+    margin: 40px 0 0 -124px !important;
 }
 
-.dropdown-menu-notice {
-    min-width: auto !important;
-    margin: 40px 0 0 -65px !important;
+.flash-message {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 999999999999;
+    background: rgba(0, 20, 15, 0.8);
+    display: none;
+    top: 0;
+    left: 0;
 }
 
-.dropdown-menu-sys-notice {
-    min-width: auto !important;
-    margin: 40px 0 0 -25px !important;
+.flash-message.flash-message-active {
+    display: block;
+}
+
+.flash-close.close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    color: #fff;
+    z-index: 999;
+}
+
+.flash-removable {
+    position: relative;
+}
+
+.close.flash-close {
+    z-index: 9999999;
+    color: #000;
+    top: -18px;
+    right: 2px;
+}
+
+.flash-icon {
+    display: table;
+    margin: 0 auto 15px;
+    font-size: 30px;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    line-height: 62px;
+    background: #fff;
+}
+
+.flash-message .centralize-content {
+    padding: 30px 15px;
+    border-radius: 4px;
+    background: #fff;
+    text-align: center;
+    box-shadow: 0 0 7px rgba(0, 0, 0, 0.4);
+    display: none;
+    max-width: 460px;
+}
+
+.flash-message .centralize-content p {
+    font-size: 18px;
+}
+
+.flash-message .centralize-content.flash-success {
+    color: #0b0;
+    display: block;
+}
+
+.flash-message .centralize-content.flash-success .flash-icon {
+    border: 4px solid #00bb00;
+}
+
+.flash-message .centralize-content.flash-success .flash-icon::before {
+    content: '\f00c';
+    font-family: FontAwesome;
+}
+
+.flash-message .centralize-content.flash-error {
+    color: #f00;
+    display: block;
+}
+
+.flash-message .centralize-content.flash-error .flash-icon {
+    border: 4px solid #f00;
+}
+
+.flash-message .centralize-content.flash-error .flash-icon::before {
+    content: '\f00d';
+    font-family: FontAwesome;
+}
+
+.flash-message .centralize-content.flash-warning {
+    color: #f80;
+    display: block;
+}
+
+.flash-message .centralize-content.flash-warning .flash-icon {
+    border: 4px solid #f80;
+}
+
+.flash-message .centralize-content.flash-warning .flash-icon::before {
+    content: '\f071';
+    font-family: FontAwesome;
+}
+
+.flash-message .centralize-content.flash-confirmation {
+    color: #2379a1;
+    display: block;
+}
+
+.flash-message .centralize-content.flash-confirmation .flash-icon {
+    border: 4px solid #2379a1;
+}
+
+.flash-message .centralize-content.flash-confirmation .flash-icon::before {
+    content: '\f128';
+    font-family: FontAwesome;
+}
+
+.hidden-flash-item {
+    display: none;
+}
+
+.flash-message .centralize-content.flash-confirmation .hidden-flash-item {
+    display: initial;
+}
+
+div.centralize-content {
+    max-width: 360px;
+    margin: 150px auto;
+    text-align: left;
+    padding: 10px;
 }
 
 .text-green {
     color: #26a69a !important;
+}
+
+.text-red {
+    color: red !important;
 }
 
 table.dataTable thead tr th {
