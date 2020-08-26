@@ -88,7 +88,7 @@ if (!function_exists('crypto_currency_api_services')) {
     function crypto_currency_api_services($input = null) {
         $output = [
             API_COINPAYMENT => __('Coinpayments API'),
-            API_BITCOIN => __('Bitcoin API'),
+            API_BITCOIN => __('RPC API'),
             API_EDC => __('EDCcash API'),
         ];
 
@@ -99,7 +99,7 @@ if (!function_exists('crypto_currency_api_services')) {
 if (!function_exists('real_currency_api_services')) {
     function real_currency_api_services($input = null) {
         $output = [
-            API_PAYPAL => __('PayPal Rest API'),
+            API_PAYPAL => __('Payment Gateway API'),
             BANK_TRANSFER => __('Bank Transfer'),
 
         ];

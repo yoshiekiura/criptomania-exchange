@@ -7,6 +7,7 @@ use App\Repositories\User\Admin\Interfaces\StockItemInterface;
 use App\Http\Controllers\Controller;
 use App\Repositories\User\Admin\Interfaces\StockPairInterface;
 use App\Repositories\User\Trader\Interfaces\WalletInterface;
+use App\Repositories\User\Admin\Interfaces\ApiServiceInterface;
 use App\Services\Core\DataListService;
 use App\Services\Core\FileUploadService;
 use Illuminate\Support\Facades\DB;
@@ -22,6 +23,7 @@ class StockItemController extends Controller
     public function __construct(StockItemInterface $stockItem)
     {
         $this->stockItem = $stockItem;
+       
     }
 
     /**

@@ -56,6 +56,9 @@ use App\Repositories\User\Trader\Interfaces\WithdrawalInterface;
 use App\Repositories\User\Trader\Interfaces\DepositBankInterface;
 use App\Repositories\Core\Interfaces\RpcInterface;
 use App\Repositories\Core\Eloquent\RpcSettingRepository;
+use App\Repositories\User\Admin\Eloquent\ApiServiceRepository;
+use App\Repositories\User\Admin\Interfaces\ApiServiceInterface;
+
 
 use Illuminate\Support\ServiceProvider;
 
@@ -95,6 +98,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(BankNameInterface::class, BankNameRepository::class);
         $this->app->bind(DepositBankInterface::class, DepositBankRepository::class);
         $this->app->bind(RpcInterface::class, RpcSettingRepository::class);
+        $this->app->bind(ApiServiceInterface::class, ApiServiceRepository::class);
 
 
     }

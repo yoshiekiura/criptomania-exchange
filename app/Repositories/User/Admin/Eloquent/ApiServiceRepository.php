@@ -1,0 +1,40 @@
+<?php
+
+namespace App\Repositories\User\Admin\Eloquent;
+use App\Repositories\BaseRepository;
+use App\Models\Backend\ApiService;
+use App\Repositories\User\Admin\Interfaces\ApiServiceInterface;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+
+
+class ApiServiceRepository extends BaseRepository implements ApiServiceInterface
+{
+    /**
+    * @var ModelName
+    */
+    protected $model;
+
+    public function __construct(ApiService $model)
+    {
+      $this->model = $model;
+    }
+
+    public function getAllApiService()
+    {
+    	return $this->model->all();
+    }
+
+    public function getApiServiceCountByConditions(array $conditions)
+    {
+        return $this->model->where($conditions)->count();
+    }
+
+    public function updateApiServiceRows(array $attributes, array $conditions = null)
+    {
+        $model = is_null($conditions) ? $this->model : $this->model->where($conditions);
+
+        return $model->update($attributes);
+    }
+
+}

@@ -46,18 +46,10 @@ Route::group(['namespace' => 'User\Admin'], function () {
 
     Route::put('wallets/{id}/deposit/changeStatusBank', 'WalletController@updateStatusBankTransfer')->name('complete-bank-deposit');
 
-
-
-    // Route::get('list-bank', 'ListBankController@index')->name('admin.list-bank.index');
-    // Route::get('list-bank/create', 'ListBankController@create')->name('admin.list-bank.create');
-    // Route::post('list-bank/create/post', 'ListBankController@store')->name('admin.list-bank.store');
-    // Route::get('list-bank/edit/{id}', 'ListBankController@edit')->name('admin.list-bank.edit');
-    // Route::put('list-bank/update/{id}', 'ListBankController@update')->name('admin.list-bank.update');
-    // Route::delete('list-bank/delete/{id}', 'ListBankController@destroy')->name('admin.list-bank.destroy');
-
     Route::resource('list-bank', 'ListBankController')->parameter('list-bank', 'id')->names('admin.list-bank');
     Route::get('bank-list-trader', 'ListBankController@traderBank')->name('admin.bank-list-trader.index');
 
-
-    // Route::get('testing/test')->name('test');
+    Route::get('api-service-name','ApiServiceController@index')->name('admin.api-service-name');
+    Route::get('api-service-name-create','ApiServiceController@create')->name('admin.api-service-name-create');
+    Route::post('api-service-name-store','ApiServiceController@store')->name('admin.api-service-name-store');
 });

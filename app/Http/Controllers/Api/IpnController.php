@@ -52,6 +52,7 @@ class IpnController extends Controller
             $obj = ['txn_id' => $v['txid']];
             
             $bitcoind = $bitcoin->validateIPN($obj, $request->server());
+            var_dump($bitcoind);
             
 
                     if( $bitcoind['error'] == 'ok')

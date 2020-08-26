@@ -6,6 +6,7 @@ use App\Models\User\DepositBankTransfer;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 use App\Models\Core\Rpcport;
+use App\Models\Backend\ApiService;
 
 class StockItem extends Model implements Auditable
 {
@@ -36,5 +37,9 @@ class StockItem extends Model implements Auditable
 
     public function rpcPort(){
         return $this->belongsTo(Rpcport::class);
+    }
+
+    public function toApiService(){
+        return $this->belongsTo(ApiService::class);
     }
 }

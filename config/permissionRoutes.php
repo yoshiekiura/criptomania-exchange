@@ -141,6 +141,17 @@ return [
                 ]
 
             ],
+            'api_service_name' => [
+                ROUTE_GROUP_READER_ACCESS => [
+
+                    'admin.api-service-name',
+                ],
+                ROUTE_GROUP_CREATION_ACCESS => [
+                    'admin.api-service-name-create',
+                    'admin.api-service-name-store',
+                ],
+
+            ],
             'bonus_management' => [
                 ROUTE_GROUP_CREATION_ACCESS => [
                     'admin.bonuses.create',
