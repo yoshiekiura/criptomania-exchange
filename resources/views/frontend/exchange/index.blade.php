@@ -2,6 +2,26 @@
 @section('title', $title)
 @section('after-style')
 {{-- <link rel="stylesheet" href="{{ asset('common/vendors/mCustomScrollbar/jquery.mCustomScrollbar.min.css') }}"> --}}
+<style>
+    .container-market {
+        padding: 5px 0;
+    }
+
+    .dataTables_filter {
+        margin: 0 20%;
+
+    }
+
+    @media (max-width: 768px) {
+        .container-market {
+            padding: 5px 0;
+        }
+
+        .dataTables_filter {
+            margin: 0 30%;
+        }
+    }
+</style>
 
 @endsection
 @section('content')
@@ -99,31 +119,15 @@
 @section('script')
 <script src="{{asset('newAssets/js/bootstrap.min.js')}}"></script>
 
-
-{{-- Device Screen --}}
-{{-- <script>
-    var x = window.matchMedia("(max-width: 700px)")
-    myFunction(x) // Call listener function at run time
-    function myFunction(x) {
-    if (x.matches) { // If media query matches
-        $('.market-wide-screen').remove();
-    } else {
-        var content = $('div.market-smal-Screen').html();
-        $('.market-wide-screen').html(content);
-        $('div.market-smal-Screen').remove();
-    }
-    }
-</script> --}}
-{{-- End Device Screen --}}
-{{-- <script src="{{asset('common/vendors/bcmath/libbcmath-min.js')}}"></script> --}}
-{{-- <script src="{{asset('common/vendors/bcmath/bcmath.js')}}"></script> --}}
-{{-- <script src="{{asset('common/vendors/mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js')}}"></script> --}}
-{{-- <script src="{{asset('common/vendors/datatable_responsive/datatables/datatables.min.js')}}"></script> --}}
-{{-- <script src="{{asset('common/vendors/datatable_responsive/datatables/plugins/bootstrap/datatables.bootstrap.js')}}">
-</script> --}}
-{{-- <script src="{{asset('common/vendors/echart/echarts.min.js')}}"></script> --}}
-{{-- <script src="{{asset('js/chart.js')}}"></script> --}}
-{{-- <script src="{{asset('common/vendors/cvalidator/cvalidator.js')}}"></script> --}}
+<script src="{{asset('common/vendors/bcmath/libbcmath-min.js')}}"></script>
+<script src="{{asset('common/vendors/bcmath/bcmath.js')}}"></script>
+<script src="{{asset('common/vendors/mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js')}}"></script>
+<script src="{{asset('common/vendors/datatable_responsive/datatables/datatables.min.js')}}"></script>
+<script src="{{asset('common/vendors/datatable_responsive/datatables/plugins/bootstrap/datatables.bootstrap.js')}}">
+</script>
+<script src="{{asset('common/vendors/echart/echarts.min.js')}}"></script>
+<script src="{{asset('js/chart.js')}}"></script>
+<script src="{{asset('common/vendors/cvalidator/cvalidator.js')}}"></script>
 
 @include('frontend.exchange.initial_js')
 

@@ -1,5 +1,4 @@
 <script>
-
     let defaultBaseId = parseInt({{ $stockPair->base_item_id }});
     let defaultStockId = parseInt({{ $stockPair->stock_item_id }});
     let defaultStockPairId = parseInt({{ $stockPair->id }});
@@ -49,7 +48,7 @@
             destroy: true,
             paging: false,
             order: [[0, 'asc']],
-            dom: '<"filter">ft',
+            dom: 'f<"filter">t',
             select: {
                 style: 'single',
                 selector: 'tr:not(.selected)'
@@ -76,6 +75,10 @@
                 }
             },
             initComplete: function () {
+                $('.dataTables_filter').addClass('pull-left');
+                $('input[type="search"]').css(
+                    {'width':'auto'}
+                );
                 stockMarketTable.column(4).search(defaultBaseId).draw();
                 let selectedRowData = stockMarketTable.row({selected: true}).data();
                 updateStockPairSummary(selectedRowData);
