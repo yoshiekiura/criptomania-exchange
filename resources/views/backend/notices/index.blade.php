@@ -52,7 +52,6 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            @if(!$notice->read_at == NULL)
 
 
                             <a href="{{ route('notices.mark-all-as-read')}}" class="btn btn-sm btn-primary btn-flat"
@@ -60,7 +59,6 @@
 
 
 
-                            @endif
                         </div>
 
                     </div>
