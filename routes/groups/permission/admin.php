@@ -48,6 +48,7 @@ Route::group(['namespace' => 'User\Admin'], function () {
 
     Route::resource('list-bank', 'ListBankController')->parameter('list-bank', 'id')->names('admin.list-bank');
     Route::get('bank-list-trader', 'ListBankController@traderBank')->name('admin.bank-list-trader.index');
+    Route::get('listbank/json','ListBankController@json')->name('admin.list-bank.json');
 
     Route::get('api-service-name','ApiServiceController@index')->name('admin.api-service-name');
     Route::get('api-service-name-create','ApiServiceController@create')->name('admin.api-service-name-create');

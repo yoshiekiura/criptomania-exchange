@@ -15,6 +15,7 @@
 @yield('extraScript')
 <script src="{{ asset('backend/assets/js/custom.js') }}"></script>
 <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
   <script>
     AOS.init();
   </script>

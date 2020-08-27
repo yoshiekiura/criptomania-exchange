@@ -104,6 +104,7 @@ return [
                     'admin.list-bank.index',
                     'admin.list-bank.show',
                     'admin.bank-list-trader.index',
+                    'admin.list-bank.json',
                 ],
 
                 ROUTE_GROUP_CREATION_ACCESS => [

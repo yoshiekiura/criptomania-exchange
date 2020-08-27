@@ -1,72 +1,49 @@
 @extends('backend.layouts.main_layout')
-@section('title', $title)
 @section('content')
-    {!! $list['filters'] !!}
     <div class="row">
         <div class="col-lg-12">
             <div class="box box-primary box-borderless">
                 <div class="box-body">
-                    <table class="table datatable dt-responsive display nowrap dc-table" style="width: 100% !important;">
+                    <table class="table table-bordered data-table" style="width: 100% !important;" id="list-bank">
                         <thead>
                         <tr>
                             <th class="text-center">{{ __('Bank Name') }}</th>
-                            <th class="all text-center">{{ __('Account Number') }}</th>
+                            <th class="text-center">{{ __('Account Number') }}</th>
                             <th class="text-center">{{ __('Created Date') }}</th>
                             <th class="text-center all no-sort">{{ __('Action') }}</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        @foreach($list['query'] as $listBank)
-                            <tr>
-                                <td class="text-center">{{ $listBank->bank_name }}</td>
-                                <td class="text-center">{{ $listBank->account_number }}</td>
-                                <td class="text-center">{{ $listBank->created_at->toFormattedDateString() }}</td>
-                                <td class="cm-action">
-                                    <div class="btn-group pull-right">
-                                        <button class="btn green btn-xs btn-outline dropdown-toggle"
-                                                data-toggle="dropdown">
-                                            <i class="fa fa-gear"></i>
-                                        </button>
-                                        <ul class="dropdown-menu pull-right">
-                                            @if(has_permission('admin.list-bank.edit'))
-                                                <li>
-                                                    <a href="{{ route('admin.list-bank.edit', $listBank->id) }}"><i
-                                                                class="fa fa-pencil"></i> {{ __('Edit') }}</a>
-                                                </li>
-                                            @endif
-
-                                            @if(has_permission('admin.list-bank.show'))
-                                                <li>
-                                                    <a href="{{ route('admin.list-bank.show', $listBank->id) }}"><i
-                                                                class="fa fa-eye"></i> {{ __('Show') }}</a>
-                                                </li>
-                                            @endif
-
-
-                                            @if(has_permission('admin.list-bank.destroy'))
-                                                <li>
-                                                    <a data-form-id="delete-{{ $listBank->id }}" data-form-method="DELETE"
-                                                       href="{{ route('admin.list-bank.destroy', $listBank->id) }}" class="confirmation"
-                                                       data-alert="{{__('Do you want to delete this Bank Name?')}}"><i
-                                                                class="fa fa-trash-o"></i> {{ __('Delete') }}</a>
-                                                </li>
-                                            @endif
-                                        </ul>
-                                    </div>
-                                </td>
-                             </tr>
-                        @endforeach
-                        </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
-    {!! $list['pagination'] !!}
 @endsection
 
 @section('script')
     <!-- for datatable and date picker -->
+    <script>
+      
+
+            $('#list-bank').DataTable({
+                processing: false,
+                serverSide: true,
+                paging: true,
+                searching: true,
+                ajax : '{{route("admin.list-bank.json")}}',
+                type : 'GET',
+                columns: [
+                    {className: 'text-center', data: 'bank_name', name: 'bank_name'},
+                    {className: 'text-center', data: 'account_number', name: 'account_number'},
+                    {className: 'text-center', data: 'created_at', name: 'created_at'},
+                    {className:'cm-action', data: 'action', name: 'action', orderable: true, searcable: true},
+
+                ]
+
+            });
+
+
+    </script>
     <script src="{{ asset('common/vendors/datepicker/datepicker.js') }}"></script>
     <script src="{{asset('common/vendors/datatable_responsive/datatables/datatables.min.js')}}"></script>
     <script src="{{asset('common/vendors/datatable_responsive/datatables/plugins/bootstrap/datatables.bootstrap.js')}}"></script>

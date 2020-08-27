@@ -11,6 +11,9 @@ use App\Repositories\User\Trader\Interfaces\BankNameInterface;
 use App\Services\Core\DataListService;
 use App\Services\Core\FileUploadService;
 use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\DataTables;
+use Illuminate\Http\JsonResponse;
+use App\Models\Backend\ListBank;
 
 /*
     Developer   : Muhammad Rizky Firdaus
@@ -32,24 +35,16 @@ class ListBankController extends Controller
 
  	}   
 
+    public function json()
+    {
+        
+       return $this->listBank->getAllListBank();
+
+    }
+
  	public function index(){
 
- 		$searchFields = [
-            ['bank_name', __('Bank Name')],
-            ['account_number', __('Account Number')],
-        ];
-
-        $orderFields = [
-            ['bank_name', __('Bank Name')],
-            ['account_number', __('Account Number')],
-            ['list_bank.created_at', __('Created Date')],
-        ];
-
-        $query = $this->listBank->paginateWithFilters($searchFields, $orderFields);
-        $data['list'] = app(DataListService::class)->dataList($query, $searchFields, $orderFields);
-        $data['title'] = __('List Bank');
-
-        return view('backend.listBank.index', $data);
+        return view('backend.listBank.index');
 
  	}
 

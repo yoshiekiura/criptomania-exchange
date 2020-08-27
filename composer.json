@@ -31,7 +31,8 @@
     "predis/predis": "^1.1",
     "pusher/pusher-php-server": "^4.1",
     "rap2hpoutre/laravel-log-viewer": "^0.17.0",
-    "upgate/laravel-jsonrpc": "^0.7.0"
+    "upgate/laravel-jsonrpc": "^0.7.0",
+    "yajra/laravel-datatables-oracle": "~8.0"
   },
   "require-dev": {
     "barryvdh/laravel-debugbar": "^3.1",

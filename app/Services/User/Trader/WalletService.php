@@ -11,21 +11,11 @@ use App\Repositories\User\Trader\Interfaces\DepositInterface;
 use App\Repositories\User\Trader\Interfaces\WalletInterface;
 use App\Repositories\User\Trader\Interfaces\WithdrawalInterface;
 use App\Services\Api\PaypalRestApi;
-use App\Services\Api\BitcoinApi;
 use App\Services\Core\DataListService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use App\Models\User\Deposit;
-use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Facades\Image;
-use App\Http\Requests\User\Trader\StruckUploadRequest;
-use App\Services\Core\FileUploadService;
-use App\Repositories\User\Trader\Interfaces\DepositBankInterface;
-use App\Models\User\Wallet;
- 
-
 
 class WalletService
 {
@@ -48,7 +38,7 @@ class WalletService
         ];
 
         $whereArray = ['user_id' => $userId];
-        $select = ['wallets.*', 'item', 'item_name', 'item_type', 'deposit_status', 'withdrawal_status','api_service'];
+        $select = ['wallets.*', 'item', 'item_name', 'item_type', 'deposit_status', 'withdrawal_status'];
         $joinArray = ['stock_items', 'stock_items.id', '=', 'wallets.stock_item_id'];
 
         $query = $this->walletRepository->paginateWithFilters($searchFields, $orderFields, $whereArray, $select, $joinArray);
@@ -99,8 +89,7 @@ class WalletService
             'wallet_id' => $wallet->id,
             'stock_item_id' => $wallet->stock_item_id,
             'amount' => $request->amount,
-            'payment_method' => $wallet->stockItem->api_service,
-
+            'payment_method' => $wallet->stockItem->api_service
         ];
 
         if (!$deposited = app(DepositInterface::class)->create($depositParameters)) {
@@ -144,35 +133,10 @@ class WalletService
             return redirect()->away($paymentResponse['return_url'])->send();
         }
 
-
         return [
             SERVICE_RESPONSE_STATUS => false,
             SERVICE_RESPONSE_MESSAGE => __('Deposit service is not available.'),
         ];
-    }
-
-    public function struckUpload(StruckUploadRequest $request, $id)
-    {
-        $struckUpload = app(FileUploadService::class)->upload($request->file('payment_prove'), config('commonconfig.path_struck_upload'), 'payment_prove', 'id', $id, 'public', 300, 300);
-
-        if ($struckUpload) {
-            $parameters = ['payment_prove' => $struckUpload];
-
-            
-                if (app(DepositBankInterface::class)->update($parameters, $id)) {
-                return [
-                    SERVICE_RESPONSE_STATUS => true,
-                    SERVICE_RESPONSE_MESSAGE => __('Struck has been uploaded successfully.')
-                ];
-            }
-            
-        }
-
-        return [
-            SERVICE_RESPONSE_STATUS => false,
-            SERVICE_RESPONSE_MESSAGE => __('Failed to upload Struck.')
-        ];
-
     }
 
     public function completePayment(Request $request)
@@ -228,129 +192,6 @@ class WalletService
         return $this->_cancelPayment($paymentInfo);
     }
 
-    // complete payment bank transfer
-
-public function completePaymentBank($transactionInfo, $depositInfo)
-    {
-        $stockItemRepository = app(StockItemInterface::class);
-        if (!$stockItem = $stockItemRepository->getFirstById($transactionInfo['stock_item_id'])) {
-            return false;
-        }
-
-        $getActualPaidAmount = bcsub($transactionInfo['paid_amount'], $transactionInfo['paid_network_fee']);
-        $depositSystemFee = bcdiv(bcmul($getActualPaidAmount, $stockItem->deposit_fee), "100");
-        $amount = bcsub($getActualPaidAmount, $depositSystemFee);
-
-        $conditions = ['id' => $transactionInfo['deposit_bank_transfer_id'], 'status' => PAYMENT_PENDING];
-        $depositInfo['system_fee'] = $depositSystemFee;
-        $depositInfo['network_fee'] = $transactionInfo['paid_network_fee'];
-
-        if (!$deposited = app(DepositBankInterface::class)->updateByConditions($depositInfo, $conditions)) {
-            return false;
-        }
-
-        $attributes = ['primary_balance' => DB::raw('primary_balance + ' . $amount)];
-        $conditions = ['id' => $transactionInfo['wallet_id'], 'user_id' => Auth::id()];
-
-        if (!$wallet = $this->walletRepository->updateByConditions($attributes, $conditions)) {
-            return false;
-        }
-
-        $date = now();
-        $transactionParameters = [
-            [
-                'user_id' => $wallet->user_id,
-                'stock_item_id' => $wallet->stock_item_id,
-                'model_name' => null,
-                'model_id' => null,
-                'transaction_type' => TRANSACTION_TYPE_TRANSFER,
-                'amount' => bcmul($amount, '-1'),
-                'journal' => DECREASED_FROM_OUTSIDE_ON_DEPOSIT_REQUEST,
-                'updated_at' => $date,
-                'created_at' => $date,
-            ],
-            [
-                'user_id' => $wallet->user_id,
-                'stock_item_id' => $wallet->stock_item_id,
-                'model_name' => get_class($deposited),
-                'model_id' => $deposited->id,
-                'transaction_type' => TRANSACTION_TYPE_TRANSFER,
-                'amount' => $amount,
-                'journal' => INCREASED_TO_DEPOSIT_ON_DEPOSIT_REQUEST,
-                'updated_at' => $date,
-                'created_at' => $date,
-            ],
-            [
-                'user_id' => $wallet->user_id,
-                'stock_item_id' => $wallet->stock_item_id,
-                'model_name' => get_class($deposited),
-                'model_id' => $deposited->id,
-                'transaction_type' => TRANSACTION_TYPE_TRANSFER,
-                'amount' => bcmul($amount, '-1'),
-                'journal' => DECREASED_FROM_DEPOSIT_ON_DEPOSIT_CONFIRMATION,
-                'updated_at' => $date,
-                'created_at' => $date,
-            ],
-            [
-                'user_id' => $wallet->user_id,
-                'stock_item_id' => $wallet->stock_item_id,
-                'model_name' => get_class($wallet),
-                'model_id' => $wallet->id,
-                'transaction_type' => TRANSACTION_TYPE_TRANSFER,
-                'amount' => $amount,
-                'journal' => INCREASED_TO_WALLET_ON_DEPOSIT_CONFIRMATION,
-                'updated_at' => $date,
-                'created_at' => $date,
-            ],
-            [
-                'user_id' => $deposited->user_id,
-                'stock_item_id' => $deposited->stock_item_id,
-                'model_name' => get_class($deposited),
-                'model_id' => $deposited->id,
-                'transaction_type' => TRANSACTION_TYPE_TRANSFER,
-                'amount' => bcmul($depositSystemFee, '-1'),
-                'journal' => DECREASED_FROM_DEPOSIT_AS_DEPOSIT_FEE_ON_DEPOSIT_CONFIRMATION,
-                'updated_at' => $date,
-                'created_at' => $date,
-            ],
-            [
-                'user_id' => $deposited->user_id,
-                'stock_item_id' => $deposited->stock_item_id,
-                'model_name' => null,
-                'model_id' => null,
-                'transaction_type' => TRANSACTION_TYPE_TRANSFER,
-                'amount' => $depositSystemFee,
-                'journal' => INCREASED_TO_SYSTEM_AS_DEPOSIT_FEE_DEPOSIT_CONFIRMATION,
-                'updated_at' => $date,
-                'created_at' => $date,
-            ],
-        ];
-
-        if (!app(TransactionInterface::class)->insert($transactionParameters)) {
-            return false;
-        }
-
-        $notification = app(NotificationInterface::class)->create([
-            'user_id' => Auth::id(),
-            'data' => __("You've just deposited :amount :currency",['amount'=> $amount,'currency' => $transactionInfo['paid_currency']])
-        ]);
-
-        if (!$notification) {
-            return false;
-        }
-
-        $stockItemAttributes = [
-            'total_deposit' => DB::raw('total_deposit + ' . $amount),
-            'total_deposit_fee' => DB::raw('total_deposit_fee + ' . $depositSystemFee)
-        ];
-
-        if (!$stockItemRepository->update($stockItemAttributes, $stockItem->id)) {
-            return false;
-        }
-
-        return true;
-    }
-    // end 
     public function _completePayment($transactionInfo, $depositInfo)
     {
         $stockItemRepository = app(StockItemInterface::class);
@@ -616,9 +457,9 @@ public function completePaymentBank($transactionInfo, $depositInfo)
 
     public function updateTransaction($ipnResponse)
     {
-        if ($ipnResponse['result']['confirmations'] >= 1) {
+        if ($ipnResponse['result']['txn_status'] == 'completed') {
             $txnStatus = PAYMENT_COMPLETED;
-        } elseif ($ipnResponse['result']['confirmations'] < 0) {
+        } elseif ($ipnResponse['result']['txn_status'] == 'failed') {
             $txnStatus = PAYMENT_FAILED;
         } else {
             $txnStatus = PAYMENT_PENDING;
@@ -629,84 +470,55 @@ public function completePaymentBank($transactionInfo, $depositInfo)
             logs()->info('log: Transaction Status: ' . $txnStatus);
         }
         // check ipn type
-        if ($ipnResponse['result']['details'] >=0 )
-        {
+        if ($ipnResponse['result']['ipn_type'] == 'deposit') {
             try {
                 DB::beginTransaction();
-
-
 
                 if(env('APP_ENV') != 'production' && env('APP_DEBUG') == true)
                 {
                     logs()->info('log: Deposit Process Started.');
                 }
-                $array = $ipnResponse['result']['details'];
-                $key = array_keys($array);
-                $count = count($key);
-                $i = 0;
-            // while($i < $count)
-            // {
-                
-                $walletRepository1 = app(WalletInterface::class);
-                $wallet1 = $walletRepository1->getFirstByConditions(['address' => $ipnResponse['result']['details'][0]['address']] , 'stockItem');
-                $wallet2 = $walletRepository1->getFirstByConditions(['address' => $ipnResponse['result']['details'][1]['address']] , 'stockItem');
 
-                if (empty($wallet1)) {
+                $walletRepository = app(WalletInterface::class);
+                $wallet = $walletRepository->getFirstByConditions(['address' => $ipnResponse['result']['address']], 'stockItem');
+
+                if (empty($wallet)) {
                     throw new JobException(__('Relevant wallet not found.'));
                 }
 
-
-                $depositParameters1 = [
+                $depositParameters = [
                     'ref_id' => (string)Str::uuid(),
-                    'user_id' => $wallet1->user_id,
-                    'wallet_id' => $wallet1->id,
-                    'stock_item_id' => $wallet1->stock_item_id,
-                    'amount' => $ipnResponse['result']['details'][0]['amount'],
-                    'address' => $ipnResponse['result']['details'][0]['address'],
-                    'txn_id' => $ipnResponse['result']['txid'],
-                    'network_fee' => $wallet1->stockItem->deposit_fee,
-                    'payment_method' => $wallet1->stockItem->api_service,
+                    'user_id' => $wallet->user_id,
+                    'wallet_id' => $wallet->id,
+                    'stock_item_id' => $wallet->stock_item_id,
+                    'amount' => $ipnResponse['result']['amount'],
+                    'address' => $ipnResponse['result']['address'],
+                    'txn_id' => $ipnResponse['result']['txn_id'],
+                    'network_fee' => $ipnResponse['result']['fee'],
+                    'payment_method' => $wallet->stockItem->api_service,
                     'status' => PAYMENT_PENDING,
                 ];
-
-                $depositParameters2 = [
-                    'ref_id' => (string)Str::uuid(),
-                    'user_id' => $wallet1->user_id,
-                    'wallet_id' => $wallet1->id,
-                    'stock_item_id' => $wallet1->stock_item_id,
-                    'amount' => $ipnResponse['result']['details'][1]['amount'],
-                    'address' => $ipnResponse['result']['details'][1]['address'],
-                    'txn_id' => $ipnResponse['result']['txid'],
-                    'network_fee' => $wallet1->stockItem->deposit_fee,
-                    'payment_method' => $wallet1->stockItem->api_service,
-                    'status' => PAYMENT_PENDING,
+                $conditions = [
+                    'user_id' => $wallet->user_id,
+                    'wallet_id' => $wallet->id,
+                    'stock_item_id' => $wallet->stock_item_id,
+                    'txn_id' => $ipnResponse['result']['txn_id'],
                 ];
-            
-                var_dump([$depositParameters1, $depositParameters2]);
-                $i++;
+                $depositRepository = app(DepositInterface::class);
 
-            
-                $conditions1 = [
-                    'user_id' => $wallet1->user_id,
-                    'wallet_id' => $wallet1->id,
-                    'stock_item_id' => $wallet1->stock_item_id,
-                    'txn_id' => $ipnResponse['result']['txid'],
-                ];
-                $depositRepository1 = app(DepositInterface::class);
+                $deposited = $depositRepository->getFirstByConditions($conditions);
 
-                $deposited1 = $depositRepository1->getFirstByConditions($conditions1);
-
-                if( empty($deposited1) )
+                if( empty($deposited) )
                 {
                     if(env('APP_ENV') != 'production' && env('APP_DEBUG') == true)
                     {
                         logs()->info(' log: No Previous Deposit found.');
                     }
 
-                    $deposited1 = $depositRepository1->create($depositParameters1);
+                    $deposited = $depositRepository->create($depositParameters);
                 }
 
-                if ( empty($deposited1) )
+                if ( empty($deposited) )
                 {
                     if(env('APP_ENV') != 'production' && env('APP_DEBUG') == true)
                     {
@@ -721,27 +533,26 @@ public function completePaymentBank($transactionInfo, $depositInfo)
                     logs()->info('log: deposit created / found with pending status.');
                 }
 
-                if ( $txnStatus == PAYMENT_COMPLETED && $deposited1->status == PAYMENT_PENDING )
+                if ( $txnStatus == PAYMENT_COMPLETED && $deposited->status == PAYMENT_PENDING )
                 {
-                    $depositResponse1 = $this->deposit($ipnResponse, $wallet1, $deposited1);
+                    $depositResponse = $this->deposit($ipnResponse, $wallet, $deposited);
 
-                    if ( $depositResponse1[SERVICE_RESPONSE_STATUS] == SERVICE_RESPONSE_ERROR )
+                    if ( $depositResponse[SERVICE_RESPONSE_STATUS] == SERVICE_RESPONSE_ERROR )
                     {
-                        throw new JobException( $depositResponse1[SERVICE_RESPONSE_MESSAGE] );
+                        throw new JobException( $depositResponse[SERVICE_RESPONSE_MESSAGE] );
                     }
                 }
-                elseif ($txnStatus == PAYMENT_FAILED && $deposited1->status == PAYMENT_PENDING)
+                elseif ($txnStatus == PAYMENT_FAILED && $deposited->status == PAYMENT_PENDING)
                 {
                     if(env('APP_ENV') != 'production' && env('APP_DEBUG') == true)
                     {
                         logs()->info('log: IPN payment is failed and deposit status is found as pending.');
                     }
 
-                    if (!$depositRepository->updateByConditions(['status' => PAYMENT_FAILED], ['id' => $deposited1->id])) {
+                    if (!$depositRepository->updateByConditions(['status' => PAYMENT_FAILED], ['id' => $deposited->id])) {
                         throw new JobException(__('Failed to update deposit status.'));
                     }
                 }
-            // }
 
                 DB::commit();
 
@@ -754,212 +565,106 @@ public function completePaymentBank($transactionInfo, $depositInfo)
                 return false;
             }
         }
-
-        else
+        elseif ($ipnResponse['result']['ipn_type'] == 'withdrawal')
         {
-
-
-            if ($ipnResponse['result']['details'][0]['category'] == 'receive') {
-
-                try {
+            try {
+                if ($txnStatus == PAYMENT_COMPLETED)
+                {
                     DB::beginTransaction();
 
-                    if(env('APP_ENV') != 'production' && env('APP_DEBUG') == true)
+                    $attributes = ['txn_id' => $ipnResponse['result']['txn_id'], 'status' => PAYMENT_COMPLETED];
+                    $conditions = ['txn_id' => $ipnResponse['result']['id'], 'status' => PAYMENT_PENDING];
+                    $withdrawal = app(WithdrawalInterface::class)->updateByConditions($attributes, $conditions);
+
+                    if (!$withdrawal)
                     {
-                        logs()->info('log: Deposit Process Started.');
+                        throw new JobException(__("Withdrawal ID :id does not exists or the transaction is already processed as completed.", ['id' => $ipnResponse['result']['id']]));
                     }
 
-                    $walletRepository = app(WalletInterface::class);
-                    $wallet = $walletRepository->getFirstByConditions(['address' => $ipnResponse['result']['details'][0]['address']] , 'stockItem');
+                    // make transaction
+                    $withdrawalResponse = $this->withdraw($withdrawal);
 
-                    if (empty($wallet)) {
-                        throw new JobException(__('Relevant wallet not found.'));
-                    }
-
-                    $depositParameters = [
-                        'ref_id' => (string)Str::uuid(),
-                        'user_id' => $wallet->user_id,
-                        'wallet_id' => $wallet->id,
-                        'stock_item_id' => $wallet->stock_item_id,
-                        'amount' => $ipnResponse['result']['details'][0]['amount'],
-                        'address' => $ipnResponse['result']['details'][0]['address'],
-                        'txn_id' => $ipnResponse['result']['txid'],
-                        'network_fee' => $wallet->stockItem->deposit_fee,
-                        'payment_method' => $wallet->stockItem->api_service,
-                        'status' => PAYMENT_PENDING,
-                    ];
-                    var_dump($depositParameters);
-
-                
-                    $conditions = [
-                        'user_id' => $wallet->user_id,
-                        'wallet_id' => $wallet->id,
-                        'stock_item_id' => $wallet->stock_item_id,
-                        'txn_id' => $ipnResponse['result']['txid'],
-                    ];
-                    $depositRepository = app(DepositInterface::class);
-
-                    $deposited = $depositRepository->getFirstByConditions($conditions);
-
-                    if( empty($deposited) )
+                    if ( $withdrawalResponse[SERVICE_RESPONSE_STATUS] != SERVICE_RESPONSE_SUCCESS )
                     {
-                        if(env('APP_ENV') != 'production' && env('APP_DEBUG') == true)
-                        {
-                            logs()->info(' log: No Previous Deposit found.');
-                        }
-
-                        $deposited = $depositRepository->create($depositParameters);
-                    }
-
-                    if ( empty($deposited) )
-                    {
-                        if(env('APP_ENV') != 'production' && env('APP_DEBUG') == true)
-                        {
-                            logs()->info(' log: Failed to create deposit');
-                        }
-
-                        throw new JobException(__('Failed to record deposit.'));
-                    }
-
-                    if(env('APP_ENV') != 'production' && env('APP_DEBUG') == true)
-                    {
-                        logs()->info('log: deposit created / found with pending status.');
-                    }
-
-                    if ( $txnStatus == PAYMENT_COMPLETED && $deposited->status == PAYMENT_PENDING )
-                    {
-                        $depositResponse = $this->deposit($ipnResponse, $wallet, $deposited);
-
-                        if ( $depositResponse[SERVICE_RESPONSE_STATUS] == SERVICE_RESPONSE_ERROR )
-                        {
-                            throw new JobException( $depositResponse[SERVICE_RESPONSE_MESSAGE] );
-                        }
-                    }
-                    elseif ($txnStatus == PAYMENT_FAILED && $deposited->status == PAYMENT_PENDING)
-                    {
-                        if(env('APP_ENV') != 'production' && env('APP_DEBUG') == true)
-                        {
-                            logs()->info('log: IPN payment is failed and deposit status is found as pending.');
-                        }
-
-                        if (!$depositRepository->updateByConditions(['status' => PAYMENT_FAILED], ['id' => $deposited->id])) {
-                            throw new JobException(__('Failed to update deposit status.'));
-                        }
+                        throw new JobException(__('Failed to update withdrawal status.'));
                     }
 
                     DB::commit();
 
                     return true;
-
-                } catch (\Exception $exception) {
-                    DB::rollBack();
-                    logs()->error($exception->getMessage());
-
-                    return false;
                 }
-            }
-            elseif ($ipnResponse['result']['details'][0]['category'] == 'send')
-            {
-                try {
-                    if ($txnStatus == PAYMENT_COMPLETED)
-                    {
-                        DB::beginTransaction();
+                elseif ($txnStatus == PAYMENT_FAILED)
+                {
+                    DB::beginTransaction();
 
-                        $attributes = ['txn_id' => $ipnResponse['result']['txid'], 'status' => PAYMENT_COMPLETED];
-                        $conditions = ['txn_id' => $ipnResponse['result']['txid'], 'status' => PAYMENT_PENDING];
-                        $withdrawal = app(WithdrawalInterface::class)->updateByConditions($attributes, $conditions);
+                    $attributes = ['txn_id' => $ipnResponse['result']['txn_id'], 'status' => PAYMENT_FAILED];
+                    $conditions = ['txn_id' => $ipnResponse['result']['id'], 'status' => PAYMENT_PENDING];
+                    $withdrawal = app(WithdrawalInterface::class)->updateByConditions($attributes, $conditions);
 
-                        if (!$withdrawal)
-                        {
-                            throw new JobException(__("Withdrawal ID :id does not exists or the transaction is already processed as completed.", ['id' => $ipnResponse['result']['txid']]));
-                        }
-
-                        // make transaction
-                        $withdrawalResponse = $this->withdraw($withdrawal);
-
-                        if ( $withdrawalResponse[SERVICE_RESPONSE_STATUS] != SERVICE_RESPONSE_SUCCESS )
-                        {
-                            throw new JobException(__('Failed to update withdrawal status.'));
-                        }
-
-                        DB::commit();
-
-                        return true;
-                    }
-                    elseif ($txnStatus == PAYMENT_FAILED)
-                    {
-                        DB::beginTransaction();
-
-                        $attributes = ['txn_id' => $ipnResponse['result']['txid'], 'status' => PAYMENT_FAILED];
-                        $conditions = ['txn_id' => $ipnResponse['result']['txid'], 'status' => PAYMENT_PENDING];
-                        $withdrawal = app(WithdrawalInterface::class)->updateByConditions($attributes, $conditions);
-
-                        if (!$withdrawal) {
-                            throw new JobException(__("Withdrawal ID :id does not exists or the transaction is already processed as failed.", ['id' => $ipnResponse['result']['txid']]));
-                        }
-
-                        // returning balance to user
-                        $walletAttributes = ['primary_balance' => DB::raw('primary_balance + ' . $withdrawal->amount)];
-                        $walletConditions = [
-                            'id' => $withdrawal->wallet_id,
-                            'user_id' => $withdrawal->user_id,
-                            'stock_item_id' => $withdrawal->stock_item_id
-                        ];
-
-                        if ( !app(walletInterface::class)->updateByConditions($walletAttributes, $walletConditions) )
-                        {
-                            throw new JobException(__("Withdrawal ID :id does not exists or the transaction is already processed as failed.", ['id' => $ipnResponse['result']['txid']]));
-                        }
-
-                        $date = now();
-                        $transactionParameters = [
-                            [
-                                'user_id' => $withdrawal->user_id,
-                                'stock_item_id' => $withdrawal->stock_item_id,
-                                'model_name' => get_class($withdrawal),
-                                'model_id' => $withdrawal->id,
-                                'transaction_type' => TRANSACTION_TYPE_DEBIT,
-                                'amount' => bcmul($withdrawal->amount, '-1'),
-                                'journal' => DECREASED_FROM_WITHDRAWAL_ON_WITHDRAWAL_CANCELLATION,
-                                'updated_at' => $date,
-                                'created_at' => $date,
-                            ],
-                            [
-                                'user_id' => $withdrawal->user_id,
-                                'stock_item_id' => $withdrawal->stock_item_id,
-                                'model_name' => get_class($withdrawal->wallet),
-                                'model_id' => $withdrawal->wallet->id,
-                                'transaction_type' => TRANSACTION_TYPE_CREDIT,
-                                'amount' => $withdrawal->amount,
-                                'journal' => INCREASED_TO_WALLET_ON_WITHDRAWAL_CANCELLATION,
-                                'updated_at' => $date,
-                                'created_at' => $date,
-                            ],
-                        ];
-                        app(TransactionInterface::class)->insert($transactionParameters);
-
-                        // notify user
-                        app(NotificationInterface::class)->create([
-                            'user_id' => $withdrawal->user_id,
-                            'data' => __("Your withdrawal request of :amount :stockItem to :address has been failed.", ['amount' => $withdrawal->amount, 'stockItem' => $withdrawal->stockItem->item, 'address' => $withdrawal->address])
-                        ]);
-
-                        DB::commit();
-
-                        return true;
+                    if (!$withdrawal) {
+                        throw new JobException(__("Withdrawal ID :id does not exists or the transaction is already processed as failed.", ['id' => $ipnResponse['result']['id']]));
                     }
 
-                    return null;
-                } catch (\Exception $exception) {
-                    DB::rollBack();
+                    // returning balance to user
+                    $walletAttributes = ['primary_balance' => DB::raw('primary_balance + ' . $withdrawal->amount)];
+                    $walletConditions = [
+                        'id' => $withdrawal->wallet_id,
+                        'user_id' => $withdrawal->user_id,
+                        'stock_item_id' => $withdrawal->stock_item_id
+                    ];
 
-                    logs()->error($exception->getMessage());
+                    if ( !app(walletInterface::class)->updateByConditions($walletAttributes, $walletConditions) )
+                    {
+                        throw new JobException(__("Withdrawal ID :id does not exists or the transaction is already processed as failed.", ['id' => $ipnResponse['result']['id']]));
+                    }
 
-                    return false;
+                    $date = now();
+                    $transactionParameters = [
+                        [
+                            'user_id' => $withdrawal->user_id,
+                            'stock_item_id' => $withdrawal->stock_item_id,
+                            'model_name' => get_class($withdrawal),
+                            'model_id' => $withdrawal->id,
+                            'transaction_type' => TRANSACTION_TYPE_DEBIT,
+                            'amount' => bcmul($withdrawal->amount, '-1'),
+                            'journal' => DECREASED_FROM_WITHDRAWAL_ON_WITHDRAWAL_CANCELLATION,
+                            'updated_at' => $date,
+                            'created_at' => $date,
+                        ],
+                        [
+                            'user_id' => $withdrawal->user_id,
+                            'stock_item_id' => $withdrawal->stock_item_id,
+                            'model_name' => get_class($withdrawal->wallet),
+                            'model_id' => $withdrawal->wallet->id,
+                            'transaction_type' => TRANSACTION_TYPE_CREDIT,
+                            'amount' => $withdrawal->amount,
+                            'journal' => INCREASED_TO_WALLET_ON_WITHDRAWAL_CANCELLATION,
+                            'updated_at' => $date,
+                            'created_at' => $date,
+                        ],
+                    ];
+                    app(TransactionInterface::class)->insert($transactionParameters);
+
+                    // notify user
+                    app(NotificationInterface::class)->create([
+                        'user_id' => $withdrawal->user_id,
+                        'data' => __("Your withdrawal request of :amount :stockItem to :address has been failed.", ['amount' => $withdrawal->amount, 'stockItem' => $withdrawal->stockItem->item, 'address' => $withdrawal->address])
+                    ]);
+
+                    DB::commit();
+
+                    return true;
                 }
+
+                return null;
+            } catch (\Exception $exception) {
+                DB::rollBack();
+
+                logs()->error($exception->getMessage());
+
+                return false;
             }
         }
-       
     }
 
     public function deposit($ipnResponse, $wallet, $deposited)
@@ -969,298 +674,136 @@ public function completePaymentBank($transactionInfo, $depositInfo)
             logs()->info('log: IPN payment is completed and deposit status is found as pending.');
         }
 
-        if($ipnResponse['result']['details'] > 0)
+        $getActualPaidAmount = bcsub($ipnResponse['result']['amount'], $ipnResponse['result']['fee']);
+        $depositSystemFee = bcdiv(bcmul($getActualPaidAmount, $wallet->stockItem->deposit_fee), "100");
+        $amount = bcsub($getActualPaidAmount, $depositSystemFee);
+        // update deposit status
+        $depositAttributes = [
+            'status' => PAYMENT_COMPLETED,
+            'system_fee' => $depositSystemFee,
+            'payment_method' => $ipnResponse['result']['payment_method'],
+            'network_fee' => $ipnResponse['result']['fee'],
+        ];
+
+        if ( !app(DepositInterface::class)->updateByConditions($depositAttributes, ['id' => $deposited->id]) )
         {
-
-
-            $array = $ipnResponse['result']['details'];
-            $key = array_keys($array);
-            // $size = sizeof($key);
-            $count = count($key);
-            $i = 0;
-
-            while($i < $count)
-            {
-
-
-                    $notifWallet = Wallet::select('user_id')->where('address',$ipnResponse['result']['details'][$i]['address'])->get();
-
-
-                    $getActualPaidAmount1 = bcsub($ipnResponse['result']['details'][$i]['amount'], $wallet->stockItem->deposit_fee);
-                    $depositSystemFee1 = bcdiv(bcmul($getActualPaidAmount1, $wallet->stockItem->deposit_fee), "100");
-                    $amount1 = bcsub($getActualPaidAmount1, $depositSystemFee1);
-                    // update deposit status
-                    $depositAttributes1 = [
-                        'status' => PAYMENT_COMPLETED,
-                        'system_fee' => $depositSystemFee1,
-                        'payment_method' => API_BITCOIN,
-                        'network_fee' => $wallet->stockItem->deposit_fee,
-                        // 'amount' => $ipnResponse['result']['details'][$i]['amount'],
-                        // 'address' => $ipnResponse['result']['details'][$i]['address'],
-                    ];
-                    
-
-                    if ( !app(DepositInterface::class)->updateByConditions($depositAttributes1, ['id' => $deposited->id]) )
-                    {
-                        return [
-                            SERVICE_RESPONSE_STATUS => SERVICE_RESPONSE_ERROR,
-                            SERVICE_RESPONSE_MESSAGE => __('Failed to update deposit status to complete.'),
-                        ];
-                    }
-
-                    if(env('APP_ENV') != 'production' && env('APP_DEBUG') == true)
-                    {
-                        logs()->info('log: Deposit Status is updated as completed successfully.');
-                    }
-
-                    $attributes1 = ['primary_balance' => DB::raw('primary_balance + ' . $amount1)];
-                    // update relevant wallet
-                    if ( !app(WalletInterface::class)->updateByConditions($attributes1, ['id' => $wallet->id]) )
-                    {
-                        return [
-                            SERVICE_RESPONSE_STATUS => SERVICE_RESPONSE_ERROR,
-                            SERVICE_RESPONSE_MESSAGE => __('Failed to update wallet balance.'),
-                        ];
-                    }
-            
-                    if(env('APP_ENV') != 'production' && env('APP_DEBUG') == true)
-                    {
-                        logs()->info('log: Wallet is updated with received amount.');
-                    }
-
-                    // make transaction
-                     $date1 = now();
-                     $transactionParameters1 = [
-                            [
-                                'user_id' => $wallet->user_id,
-                                'stock_item_id' => $wallet->stock_item_id,
-                                'model_name' => null,
-                                'model_id' => null,
-                                'transaction_type' => TRANSACTION_TYPE_DEBIT,
-                                'amount' => bcmul($amount1, '-1'),
-                                'journal' => DECREASED_FROM_OUTSIDE_ON_DEPOSIT_REQUEST,
-                                'updated_at' => $date1,
-                                'created_at' => $date1,
-                            ],
-                            [
-                                'user_id' => $wallet->user_id,
-                                'stock_item_id' => $wallet->stock_item_id,
-                                'model_name' => get_class($deposited),
-                                'model_id' => $deposited->id,
-                                'transaction_type' => TRANSACTION_TYPE_CREDIT,
-                                'amount' => $amount1,
-                                'journal' => INCREASED_TO_DEPOSIT_ON_DEPOSIT_REQUEST,
-                                'updated_at' => $date1,
-                                'created_at' => $date1,
-                            ],
-                            [
-                                'user_id' => $wallet->user_id,
-                                'stock_item_id' => $wallet->stock_item_id,
-                                'model_name' => get_class($deposited),
-                                'model_id' => $deposited->id,
-                                'transaction_type' => TRANSACTION_TYPE_DEBIT,
-                                'amount' => bcmul($amount1, '-1'),
-                                'journal' => DECREASED_FROM_DEPOSIT_ON_DEPOSIT_CONFIRMATION,
-                                'updated_at' => $date1,
-                                'created_at' => $date1,
-                            ],
-                            [
-                                'user_id' => $wallet->user_id,
-                                'stock_item_id' => $wallet->stock_item_id,
-                                'model_name' => get_class($wallet),
-                                'model_id' => $wallet->id,
-                                'transaction_type' => TRANSACTION_TYPE_CREDIT,
-                                'amount' => $amount1,
-                                'journal' => INCREASED_TO_WALLET_ON_DEPOSIT_CONFIRMATION,
-                                'updated_at' => $date1,
-                                'created_at' => $date1,
-                            ],
-                            [
-                                'user_id' => $deposited->user_id,
-                                'stock_item_id' => $deposited->stock_item_id,
-                                'model_name' => get_class($deposited),
-                                'model_id' => $deposited->id,
-                                'transaction_type' => TRANSACTION_TYPE_DEBIT,
-                                'amount' => bcmul($depositSystemFee1, '-1'),
-                                'journal' => DECREASED_FROM_DEPOSIT_AS_DEPOSIT_FEE_ON_DEPOSIT_CONFIRMATION,
-                                'updated_at' => $date1,
-                                'created_at' => $date1,
-                            ],
-                            [
-                                'user_id' => $deposited->user_id,
-                                'stock_item_id' => $deposited->stock_item_id,
-                                'model_name' => null,
-                                'model_id' => null,
-                                'transaction_type' => TRANSACTION_TYPE_CREDIT,
-                                'amount' => $depositSystemFee1,
-                                'journal' => INCREASED_TO_SYSTEM_AS_DEPOSIT_FEE_DEPOSIT_CONFIRMATION,
-                                'updated_at' => $date1,
-                                'created_at' => $date1,
-                            ]
-                        ];
-                        app(TransactionInterface::class)->insert($transactionParameters1);
-
-                        // notify user
-                        foreach($notifWallet as $notif){
-                        app(NotificationInterface::class)->create([
-                            'user_id' => $notif->user_id,
-                            // 'address' => $ipnResponse['result']['details'][$i]['address'],
-                            'data' => __("You've just received :amount :coin", ['amount' => $amount1, 'coin' => $ipnResponse['currency']])
-                        ]);
-                        }
-
-                        // update deposit
-                        $stockItemAttributes1 = [
-                            'total_deposit' => DB::raw('total_deposit + ' . $amount1),
-                            'total_deposit_fee' => DB::raw('total_deposit_fee + ' . $depositSystemFee1)
-                        ];
-
-                        if ( !app(StockItemInterface::class)->update($stockItemAttributes1, $wallet->stockItem->id) )
-                        {
-                            return [
-                                SERVICE_RESPONSE_STATUS => SERVICE_RESPONSE_ERROR,
-                                SERVICE_RESPONSE_MESSAGE => __('Failed to update deposit status.'),
-                            ];
-                        }
-              $i++;
-            }
+            return [
+                SERVICE_RESPONSE_STATUS => SERVICE_RESPONSE_ERROR,
+                SERVICE_RESPONSE_MESSAGE => __('Failed to update deposit status to complete.'),
+            ];
         }
 
-        else
+        if(env('APP_ENV') != 'production' && env('APP_DEBUG') == true)
         {
+            logs()->info('log: Deposit Status is updated as completed successfully.');
+        }
 
-            $getActualPaidAmount = bcsub($ipnResponse['result']['details'][0]['amount'], $wallet->stockItem->deposit_fee);
-            $depositSystemFee = bcdiv(bcmul($getActualPaidAmount, $wallet->stockItem->deposit_fee), "100");
-            $amount = bcsub($getActualPaidAmount, $depositSystemFee);
-            // update deposit status
-            $depositAttributes = [
-                'status' => PAYMENT_COMPLETED,
-                'system_fee' => $depositSystemFee,
-                'payment_method' => API_BITCOIN,
-                'network_fee' => $wallet->stockItem->deposit_fee,
+        $attributes = ['primary_balance' => DB::raw('primary_balance + ' . $amount)];
+        // update relevant wallet
+        if ( !app(WalletInterface::class)->updateByConditions($attributes, ['id' => $wallet->id]) )
+        {
+            return [
+                SERVICE_RESPONSE_STATUS => SERVICE_RESPONSE_ERROR,
+                SERVICE_RESPONSE_MESSAGE => __('Failed to update wallet balance.'),
             ];
-    
-            if ( !app(DepositInterface::class)->updateByConditions($depositAttributes, ['id' => $deposited->id]) )
-            {
-                return [
-                    SERVICE_RESPONSE_STATUS => SERVICE_RESPONSE_ERROR,
-                    SERVICE_RESPONSE_MESSAGE => __('Failed to update deposit status to complete.'),
-                ];
-            }
-    
-            if(env('APP_ENV') != 'production' && env('APP_DEBUG') == true)
-            {
-                logs()->info('log: Deposit Status is updated as completed successfully.');
-            }
-    
-            $attributes = ['primary_balance' => DB::raw('primary_balance + ' . $amount)];
-            // update relevant wallet
-            if ( !app(WalletInterface::class)->updateByConditions($attributes, ['id' => $wallet->id]) )
-            {
-                return [
-                    SERVICE_RESPONSE_STATUS => SERVICE_RESPONSE_ERROR,
-                    SERVICE_RESPONSE_MESSAGE => __('Failed to update wallet balance.'),
-                ];
-            }
-    
-            if(env('APP_ENV') != 'production' && env('APP_DEBUG') == true)
-            {
-                logs()->info('log: Wallet is updated with received amount.');
-            }
-    
-            // make transaction
-            $date = now();
-            $transactionParameters = [
-                [
-                    'user_id' => $wallet->user_id,
-                    'stock_item_id' => $wallet->stock_item_id,
-                    'model_name' => null,
-                    'model_id' => null,
-                    'transaction_type' => TRANSACTION_TYPE_DEBIT,
-                    'amount' => bcmul($amount, '-1'),
-                    'journal' => DECREASED_FROM_OUTSIDE_ON_DEPOSIT_REQUEST,
-                    'updated_at' => $date,
-                    'created_at' => $date,
-                ],
-                [
-                    'user_id' => $wallet->user_id,
-                    'stock_item_id' => $wallet->stock_item_id,
-                    'model_name' => get_class($deposited),
-                    'model_id' => $deposited->id,
-                    'transaction_type' => TRANSACTION_TYPE_CREDIT,
-                    'amount' => $amount,
-                    'journal' => INCREASED_TO_DEPOSIT_ON_DEPOSIT_REQUEST,
-                    'updated_at' => $date,
-                    'created_at' => $date,
-                ],
-                [
-                    'user_id' => $wallet->user_id,
-                    'stock_item_id' => $wallet->stock_item_id,
-                    'model_name' => get_class($deposited),
-                    'model_id' => $deposited->id,
-                    'transaction_type' => TRANSACTION_TYPE_DEBIT,
-                    'amount' => bcmul($amount, '-1'),
-                    'journal' => DECREASED_FROM_DEPOSIT_ON_DEPOSIT_CONFIRMATION,
-                    'updated_at' => $date,
-                    'created_at' => $date,
-                ],
-                [
-                    'user_id' => $wallet->user_id,
-                    'stock_item_id' => $wallet->stock_item_id,
-                    'model_name' => get_class($wallet),
-                    'model_id' => $wallet->id,
-                    'transaction_type' => TRANSACTION_TYPE_CREDIT,
-                    'amount' => $amount,
-                    'journal' => INCREASED_TO_WALLET_ON_DEPOSIT_CONFIRMATION,
-                    'updated_at' => $date,
-                    'created_at' => $date,
-                ],
-                [
-                    'user_id' => $deposited->user_id,
-                    'stock_item_id' => $deposited->stock_item_id,
-                    'model_name' => get_class($deposited),
-                    'model_id' => $deposited->id,
-                    'transaction_type' => TRANSACTION_TYPE_DEBIT,
-                    'amount' => bcmul($depositSystemFee, '-1'),
-                    'journal' => DECREASED_FROM_DEPOSIT_AS_DEPOSIT_FEE_ON_DEPOSIT_CONFIRMATION,
-                    'updated_at' => $date,
-                    'created_at' => $date,
-                ],
-                [
-                    'user_id' => $deposited->user_id,
-                    'stock_item_id' => $deposited->stock_item_id,
-                    'model_name' => null,
-                    'model_id' => null,
-                    'transaction_type' => TRANSACTION_TYPE_CREDIT,
-                    'amount' => $depositSystemFee,
-                    'journal' => INCREASED_TO_SYSTEM_AS_DEPOSIT_FEE_DEPOSIT_CONFIRMATION,
-                    'updated_at' => $date,
-                    'created_at' => $date,
-                ]
-            ];
-            app(TransactionInterface::class)->insert($transactionParameters);
-    
-            // notify user
-            app(NotificationInterface::class)->create([
+        }
+
+        if(env('APP_ENV') != 'production' && env('APP_DEBUG') == true)
+        {
+            logs()->info('log: Wallet is updated with received amount.');
+        }
+
+        // make transaction
+        $date = now();
+        $transactionParameters = [
+            [
                 'user_id' => $wallet->user_id,
-                'data' => __("You've just received :amount :coin", ['amount' => $amount, 'coin' => $ipnResponse['currency']])
-            ]);
-    
-            // update deposit
-            $stockItemAttributes = [
-                'total_deposit' => DB::raw('total_deposit + ' . $amount),
-                'total_deposit_fee' => DB::raw('total_deposit_fee + ' . $depositSystemFee)
-            ];
-    
-            if ( !app(StockItemInterface::class)->update($stockItemAttributes, $wallet->stockItem->id) )
-            {
-                return [
-                    SERVICE_RESPONSE_STATUS => SERVICE_RESPONSE_ERROR,
-                    SERVICE_RESPONSE_MESSAGE => __('Failed to update deposit status.'),
-                ];
-            }
-        }
+                'stock_item_id' => $wallet->stock_item_id,
+                'model_name' => null,
+                'model_id' => null,
+                'transaction_type' => TRANSACTION_TYPE_DEBIT,
+                'amount' => bcmul($amount, '-1'),
+                'journal' => DECREASED_FROM_OUTSIDE_ON_DEPOSIT_REQUEST,
+                'updated_at' => $date,
+                'created_at' => $date,
+            ],
+            [
+                'user_id' => $wallet->user_id,
+                'stock_item_id' => $wallet->stock_item_id,
+                'model_name' => get_class($deposited),
+                'model_id' => $deposited->id,
+                'transaction_type' => TRANSACTION_TYPE_CREDIT,
+                'amount' => $amount,
+                'journal' => INCREASED_TO_DEPOSIT_ON_DEPOSIT_REQUEST,
+                'updated_at' => $date,
+                'created_at' => $date,
+            ],
+            [
+                'user_id' => $wallet->user_id,
+                'stock_item_id' => $wallet->stock_item_id,
+                'model_name' => get_class($deposited),
+                'model_id' => $deposited->id,
+                'transaction_type' => TRANSACTION_TYPE_DEBIT,
+                'amount' => bcmul($amount, '-1'),
+                'journal' => DECREASED_FROM_DEPOSIT_ON_DEPOSIT_CONFIRMATION,
+                'updated_at' => $date,
+                'created_at' => $date,
+            ],
+            [
+                'user_id' => $wallet->user_id,
+                'stock_item_id' => $wallet->stock_item_id,
+                'model_name' => get_class($wallet),
+                'model_id' => $wallet->id,
+                'transaction_type' => TRANSACTION_TYPE_CREDIT,
+                'amount' => $amount,
+                'journal' => INCREASED_TO_WALLET_ON_DEPOSIT_CONFIRMATION,
+                'updated_at' => $date,
+                'created_at' => $date,
+            ],
+            [
+                'user_id' => $deposited->user_id,
+                'stock_item_id' => $deposited->stock_item_id,
+                'model_name' => get_class($deposited),
+                'model_id' => $deposited->id,
+                'transaction_type' => TRANSACTION_TYPE_DEBIT,
+                'amount' => bcmul($depositSystemFee, '-1'),
+                'journal' => DECREASED_FROM_DEPOSIT_AS_DEPOSIT_FEE_ON_DEPOSIT_CONFIRMATION,
+                'updated_at' => $date,
+                'created_at' => $date,
+            ],
+            [
+                'user_id' => $deposited->user_id,
+                'stock_item_id' => $deposited->stock_item_id,
+                'model_name' => null,
+                'model_id' => null,
+                'transaction_type' => TRANSACTION_TYPE_CREDIT,
+                'amount' => $depositSystemFee,
+                'journal' => INCREASED_TO_SYSTEM_AS_DEPOSIT_FEE_DEPOSIT_CONFIRMATION,
+                'updated_at' => $date,
+                'created_at' => $date,
+            ]
+        ];
+        app(TransactionInterface::class)->insert($transactionParameters);
 
+        // notify user
+        app(NotificationInterface::class)->create([
+            'user_id' => $wallet->user_id,
+            'data' => __("You've just received :amount :coin", ['amount' => $amount, 'coin' => $ipnResponse['result']['currency']])
+        ]);
+
+        // update deposit
+        $stockItemAttributes = [
+            'total_deposit' => DB::raw('total_deposit + ' . $amount),
+            'total_deposit_fee' => DB::raw('total_deposit_fee + ' . $depositSystemFee)
+        ];
+
+        if ( !app(StockItemInterface::class)->update($stockItemAttributes, $wallet->stockItem->id) )
+        {
+            return [
+                SERVICE_RESPONSE_STATUS => SERVICE_RESPONSE_ERROR,
+                SERVICE_RESPONSE_MESSAGE => __('Failed to update deposit status.'),
+            ];
+        }
     }
 
     public function withdraw($withdrawal)

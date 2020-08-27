@@ -1,6 +1,6 @@
 <?php
 
-namespace App\models\backend;
+namespace App\Models\Backend;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User\DepositBankTransfer;
