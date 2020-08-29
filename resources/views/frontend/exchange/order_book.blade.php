@@ -111,109 +111,46 @@
             </tbody>
         </table>
     </div>
-    <div class="market-history">
+    <div class="market-history" style="overflow:auto">
         <ul class="nav nav-pills" role="tablist">
             <li class="nav-item">
-                <a class="nav-link" data-toggle="pill" href="#recent-trades" role="tab" aria-selected="true">Recent
-                    Trades</a>
+                <a class="nav-link active" data-toggle="pill" href="#market_trade" role="tab"
+                    aria-selected="true">{{ __('MARKET TRADES') }}</a>
             </li>
+            @auth
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="pill" href="#market-depth" role="tab"
-                    aria-selected="false">Market
-                    Depth</a>
+                <a class="nav-link" data-toggle="pill" href="#my_trade" role="tab"
+                    aria-selected="false">{{ __('MY TRADES') }}</a>
             </li>
+            @endauth
         </ul>
         <div class="tab-content">
-            <div class="tab-pane fade" id="recent-trades" role="tabpanel">
-                <table class="table">
+            <div class="tab-pane fade show active" id="market_trade" role="tabpanel">
+                <table id="trade_history_table" class="table table-hover table-responsive small exchange-table"
+                    style="width:100%">
                     <thead>
                         <tr>
-                            <th>Time</th>
-                            <th>Price(BTC)</th>
-                            <th>Amount(ETH)</th>
+                            <th class="text-center">{{ __('PRICE') }}</th>
+                            <th class="text-center">{{ __('AMOUNT') }}</th>
+                            <th class="hide_in_mobile">{{ __('DATE') }}</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>13:03:53</td>
-                            <td class="red">0.020191</td>
-                            <td>0.2155045</td>
-                        </tr>
-                        <tr>
-                            <td>13:03:53</td>
-                            <td class="green">0.020191</td>
-                            <td>0.2155045</td>
-                        </tr>
-                        <tr>
-                            <td>13:03:53</td>
-                            <td class="green">0.020191</td>
-                            <td>0.2155045</td>
-                        </tr>
-                        <tr>
-                            <td>13:03:53</td>
-                            <td class="red">0.020191</td>
-                            <td>0.2155045</td>
-                        </tr>
-                        <tr>
-                            <td>13:03:53</td>
-                            <td class="green">0.020191</td>
-                            <td>0.2155045</td>
-                        </tr>
-                        <tr>
-                            <td>13:03:53</td>
-                            <td class="green">0.020191</td>
-                            <td>0.2155045</td>
-                        </tr>
-                        <tr>
-                            <td>13:03:53</td>
-                            <td class="green">0.020191</td>
-                            <td>0.2155045</td>
-                        </tr>
-                        <tr>
-                            <td>13:03:53</td>
-                            <td class="red">0.020191</td>
-                            <td>0.2155045</td>
-                        </tr>
-                        <tr>
-                            <td>13:03:53</td>
-                            <td class="red">0.020191</td>
-                            <td>0.2155045</td>
-                        </tr>
-                        <tr>
-                            <td>13:03:53</td>
-                            <td class="green">0.020191</td>
-                            <td>0.2155045</td>
-                        </tr>
-                        <tr>
-                            <td>13:03:53</td>
-                            <td class="green">0.020191</td>
-                            <td>0.2155045</td>
-                        </tr>
-                        <tr>
-                            <td>13:03:53</td>
-                            <td class="red">0.020191</td>
-                            <td>0.2155045</td>
-                        </tr>
-                        <tr>
-                            <td>13:03:53</td>
-                            <td class="green">0.020191</td>
-                            <td>0.2155045</td>
-                        </tr>
-                        <tr>
-                            <td>13:03:53</td>
-                            <td class="red">0.020191</td>
-                            <td>0.2155045</td>
-                        </tr>
-                    </tbody>
                 </table>
             </div>
-            <div class="tab-pane fade show active" id="market-depth" role="tabpanel">
-                <div class="depth-chart-container">
-                    <div class="depth-chart-inner">
-                        <div id="lightDepthChart"></div>
-                    </div>
-                </div>
+            @auth
+            <div class="tab-pane fade show" id="my_trade" role="tabpanel">
+                <table id="my_trade_table" class="table table-hover table-responsive small exchange-table"
+                    style="width:100%">
+                    <thead>
+                        <tr>
+                            <th class="text-center">{{ __('PRICE') }}</th>
+                            <th class="text-center">{{ __('AMOUNT') }}</th>
+                            <th class="hide_in_mobile">{{ __('DATE') }}</th>
+                        </tr>
+                    </thead>
+                </table>
             </div>
+            @endauth
         </div>
     </div>
 </div>

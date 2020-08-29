@@ -2,7 +2,8 @@
     <div class="container">
         <div class="container-market">
             <div class="box-body" id="stock-market-section">
-                <table id="stock_market_table" class="table table-hover table-responsive small exchange-table">
+                <table id="stock_market_table" class="table table-hover table-responsive small exchange-table"
+                    style="cursor:pointer ">
                     <thead>
                         <tr>
                             <th>{{ __('STOCK') }}</th>
