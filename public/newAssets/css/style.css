@@ -874,6 +874,70 @@ tbody.ob-heading {
   border-left: 1px solid #e0e3eb;
 }
 
+/* *myCSS */
+
+/* .active-order {
+  border: 1px solid #e0e3eb;
+  border-radius: 2px;
+}
+
+.active-order a.nav-link.active {
+  background: transparent;
+  color: #007bff;
+}
+
+.active-order .nav-link {
+  color: #4a4a4a;
+  padding: 10px 13px;
+} */
+
+.active-order .nav {
+  background: #F5F9FC;
+}
+
+.active-order .nav-link {
+  color: #4a4a4a;
+  padding: 10px 13px;
+}
+
+.active-order .nav-link.active {
+  color: #007bff;
+  background: transparent;
+}
+
+.active-order thead tr th,
+.active-order tbody tr td {
+  cursor: pointer;
+  font-weight: 400;
+}
+
+.active-order tbody {
+  height: 375px;
+  overflow-y: auto;
+  display: block;
+}
+
+/* .active-order table,
+.active-order tr,
+.active-order td,
+.active-order th {
+  width: 100%;
+  table-layout: fixed;
+} */
+
+.active-order tr {
+  float: left;
+  clear: both;
+  overflow: hidden;
+}
+
+.active-order {
+  border: 1px solid #e0e3eb;
+  border-radius: 2px;
+}
+
+/*  */
+
 .market-history .nav {
   background: #F5F9FC;
 }
@@ -895,7 +959,7 @@ tbody.ob-heading {
 }
 
 .market-history tbody {
-  height: 315px;
+  height: 375px;
   overflow-y: auto;
   display: block;
 }
