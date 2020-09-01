@@ -67,10 +67,12 @@
             @auth
             <div class="row" style="margin-top: -45px">
                 <div class="col-6">
-                    <button class="btn buy btn-sm btn-block form-submission-button">Buy</button>
+                    <button class="btn buy btn-sm btn-block form-submission-button"
+                        name="{{ fake_field('exchange_type') }}" value="{{ EXCHANGE_BUY }}">Buy</button>
                 </div>
                 <div class="col-6">
-                    <button class="btn sell btn-sm btn-block form-submission-button">Sell</button>
+                    <button class="btn sell btn-sm btn-block form-submission-button"
+                        name="{{ fake_field('exchange_type') }}" value="{{ EXCHANGE_SELL }}">Sell</button>
                 </div>
             </div>
             @endauth
