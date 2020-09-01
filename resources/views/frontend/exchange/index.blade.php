@@ -62,12 +62,12 @@
             </div>
             <div class="market-trade">
                 <ul class="nav nav-pills" role="tablist">
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a class="nav-link active" data-toggle="pill" href="#pills-trade-limit" role="tab"
                             aria-selected="true">Limit</a>
-                    </li>
+                    </li> --}}
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="pill" href="#pills-market" role="tab"
+                        <a class="nav-link active" data-toggle="pill" href="#pills-market" role="tab"
                             aria-selected="false">Market</a>
                     </li>
                     <li class="nav-item">
@@ -75,20 +75,20 @@
                             aria-selected="false">Stop
                             Limit</a>
                     </li>
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a class="nav-link" data-toggle="pill" href="#pills-stop-market" role="tab"
                             aria-selected="false">Stop
                             Market</a>
-                    </li>
+                    </li> --}}
                 </ul>
                 <div class="tab-content">
-                    <div class="tab-pane fade show active" id="pills-trade-limit" role="tabpanel">
+                    {{-- <div class="tab-pane fade show active" id="pills-trade-limit" role="tabpanel">
                         <div class="d-flex justify-content-between">
                             @include('frontend.exchange.trading.buy_trade_limit_form')
                             @include('frontend.exchange.trading.sell_trade_limit_form')
                         </div>
-                    </div>
-                    <div class="tab-pane fade" id="pills-market" role="tabpanel">
+                    </div> --}}
+                    <div class="tab-pane fade show active" id="pills-market" role="tabpanel">
                         <div class="d-flex justify-content-between">
                             @include('frontend.exchange.trading.buy_trade_market_form')
                             @include('frontend.exchange.trading.sell_trade_market_form')
@@ -100,17 +100,19 @@
                             @include('frontend.exchange.trading.sell_stop_limit_form')
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="pills-stop-market" role="tabpanel">
+                    {{-- <div class="tab-pane fade" id="pills-stop-market" role="tabpanel">
                         <div class="d-flex justify-content-between">
                             @include('frontend.exchange.trading.buy_stop_market_form')
                             @include('frontend.exchange.trading.sell_stop_market_form')
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
         @include('frontend.exchange.order_book')
+        @auth
         @include('frontend.exchange.my_order')
+        @endauth
 
     </div>
 </div>
