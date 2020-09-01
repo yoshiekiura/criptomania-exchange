@@ -25,6 +25,7 @@
 
 @endsection
 @section('content')
+@include('frontend.exchange.stock_pair_summary')
 <div class="container-fluid p-0">
     <div class="row no-gutters">
         @include('frontend.exchange.stock_market')
@@ -97,7 +98,6 @@
                     <div class="tab-pane fade" id="pills-stop-limit" role="tabpanel">
                         <div class="d-flex justify-content-between">
                             @include('frontend.exchange.trading.buy_stop_limit_form')
-                            @include('frontend.exchange.trading.sell_stop_limit_form')
                         </div>
                     </div>
                     {{-- <div class="tab-pane fade" id="pills-stop-market" role="tabpanel">

@@ -1,25 +1,84 @@
 <div class="market-trade-buy">
-    <div class="input-group">
-        <input type="number" class="form-control" placeholder="Price">
-        <div class="input-group-append">
-            <span class="input-group-text">BTC</span>
-        </div>
+    <div class="box-body">
+        <form method="post" action="{{ route('trader.orders.store') }}" id="stop_limit_form"
+            class="form-horizontal show-form-data" data-ajax-submission="y" data-reset-on-success="y">
+            @csrf
+            <input type="hidden" value="{{ base_key() }}" name="base_key">
+            <input type="hidden" value="{{ CATEGORY_EXCHANGE }}" name="{{ fake_field('category') }}">
+            <input type="hidden" value="{{ $stockPair->id }}" name="{{ fake_field('stock_pair_id') }}"
+                class="stock-pair">
+            <div class="input-group">
+                <input type="text" class="form-control" id="stop_limit" name="{{ fake_field('stop_limit') }}"
+                    placeholder="{{ __('Stop') }}">
+                <div class="input-group-append text-uppercase">
+                    <span class="base_item input-group-text"></span>
+                </div>
+            </div>
+            <div class="input-group">
+                <input type="text" class="form-control price" name="{{ fake_field('price') }}"
+                    placeholder="{{ __('Price') }}">
+                <div class="input-group-append text-uppercase">
+                    <span class="base_item input-group-text"></span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <input type="text" class="form-control amount" name="{{ fake_field('amount') }}"
+                    placeholder="{{ __('Amount') }}">
+                <div class="input-group-append text-uppercase">
+                    <span class="stock_item input-group-text"></span>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <input type="text" class="form-control total" placeholder="{{ __('Total') }}">
+                <div class="input-group-append text-uppercase">
+                    <span class="base_item input-group-text"></span>
+                </div>
+            </div>
+
+            @auth
+            <div class="form-horizontal show-form-data">
+                <div class="form-group margin-bottom-none">
+                    <div class="row">
+                        <label class="col-4 font-light margin-bottom-none">{{ __('You have') }}:</label>
+                        <div class="col-8">
+                            <div class="text-right">
+                                <span class="clickable base_item_balance"></span>
+                                <span class="base_item"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group margin-bottom-none">
+                    <div class="row">
+                        <label class="col-4 font-light margin-bottom-none">{{ __('You have') }}:</label>
+                        <div class="col-8">
+                            <div class=" text-right">
+                                <span class="clickable stock_item_balance">0</span>
+                                <span class="stock_item"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endauth
+
+            @auth
+            <div class="row" style="margin-top: -45px">
+                <div class="col-6">
+                    <button class="btn buy btn-sm btn-block form-submission-button">Buy</button>
+                </div>
+                <div class="col-6">
+                    <button class="btn sell btn-sm btn-block form-submission-button">Sell</button>
+                </div>
+            </div>
+            @endauth
+
+            @guest
+            <a href="{{ route('login') }}">{{__('Login')}}</a> {{ __('or') }} <a
+                href="{{ route('register.index') }}">{{ __('Register') }}</a>{{ __(' to trade') }}
+            @endguest
+        </form>
     </div>
-    <div class="input-group">
-        <input type="number" class="form-control" placeholder="Amount">
-        <div class="input-group-append">
-            <span class="input-group-text">ETH</span>
-        </div>
-    </div>
-    <ul class="market-trade-list">
-        <li><a href="#!">25%</a></li>
-        <li><a href="#!">50%</a></li>
-        <li><a href="#!">75%</a></li>
-        <li><a href="#!">100%</a></li>
-    </ul>
-    <p>Available: <span>0 BTC = 0 USD</span></p>
-    <p>Volume: <span>0 BTC = 0 USD</span></p>
-    <p>Margin: <span>0 BTC = 0 USD</span></p>
-    <p>Fee: <span>0 BTC = 0 USD</span></p>
-    <button class="btn buy">Buy</button>
 </div>

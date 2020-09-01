@@ -8,7 +8,7 @@
 <!-- ./wrapper -->
 @include('errors.flash_message')
 <!-- jQuery 3 -->
-{{-- <script src="{{ asset('js/app.js') }}?t={{ random_string() }}"></script> --}}
+<script src="{{ asset('js/app.js') }}?t={{ random_string() }}"></script>
 <script src="{{ asset('common/vendors/jquery-ui/jquery-ui.min.js') }}"></script>
 {{-- <script src="{{ asset('common/vendors/bootstrap/js/bootstrap.min.js') }}"></script> --}}
 <script src="{{ asset('common/vendors/iCheck/icheck.min.js') }}"></script>
