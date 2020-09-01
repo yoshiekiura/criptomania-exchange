@@ -1,4 +1,4 @@
-<div class="market-trade-buy">
+<div class="box market-trade-buy">
     <div class="box-body">
         <form method="post" action="{{ route('trader.orders.store') }}" id="buy_order_form"
             class="form-horizontal show-form-data" data-ajax-submission="y" data-reset-on-success="y">

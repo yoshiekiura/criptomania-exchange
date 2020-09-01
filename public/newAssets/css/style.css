@@ -876,6 +876,11 @@ tbody.ob-heading {
 
 /* *myCSS */
 
+.clickable {
+  border-bottom: dotted 1px #999;
+  cursor: pointer;
+}
+
 .active-order-list .nav {
   background: #F5F9FC;
 }

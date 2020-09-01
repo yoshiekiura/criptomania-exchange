@@ -1,4 +1,4 @@
-<div class="market-trade-buy">
+<div class="box market-trade-buy">
     <div class="box-body">
         <form method="post" action="{{ route('trader.orders.store') }}" id="stop_limit_form"
             class="form-horizontal show-form-data" data-ajax-submission="y" data-reset-on-success="y">
@@ -65,7 +65,7 @@
             @endauth
 
             @auth
-            <div class="row" style="margin-top: -45px">
+            <div class="row" style="margin-top: -35px">
                 <div class="col-6">
                     <button class="btn buy btn-sm btn-block form-submission-button"
                         name="{{ fake_field('exchange_type') }}" value="{{ EXCHANGE_BUY }}">Buy</button>

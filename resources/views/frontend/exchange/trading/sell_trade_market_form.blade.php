@@ -1,4 +1,4 @@
-<div class="market-trade-sell">
+<div class="box market-trade-sell">
     <div class="box-body">
         <form method="post" action="{{ route('trader.orders.store') }}" id="sell_order_form"
             class="form-horizontal show-form-data" data-ajax-submission="y" data-reset-on-success="y">
