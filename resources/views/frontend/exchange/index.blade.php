@@ -403,7 +403,7 @@
         <div class="col-md-6">
             <div class="main-chart">
                 <!-- TradingView Widget BEGIN -->
-                <div class="tradingview-widget-container">
+                {{-- <div class="tradingview-widget-container">
                     <div id="tradingview_e8053"></div>
                     <script src="https://s3.tradingview.com/tv.js"></script>
                     <script>
@@ -429,8 +429,9 @@
                     }
                   );
                     </script>
-                </div>
+                </div> --}}
                 <!-- TradingView Widget END -->
+                @include('frontend.exchange.chart')
             </div>
             <div class="market-trade">
                 <ul class="nav nav-pills" role="tablist">

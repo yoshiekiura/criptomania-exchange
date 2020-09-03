@@ -876,6 +876,40 @@ tbody.ob-heading {
 
 /* *myCSS */
 
+.pagination {
+  margin: 0;
+}
+
+.pagination>li>a {
+  background: #fafafa;
+  color: #666;
+}
+
+.pagination.pagination-flat>li>a {
+  border-radius: 0 !important;
+}
+
+.pagination,
+.pagination li>a,
+.pagination li>span {
+  border-radius: 0 !important;
+}
+
+.pagination>.active>a,
+.pagination>.active>a:focus,
+.pagination>.active>a:hover,
+.pagination>.active>span,
+.pagination>.active>span:focus,
+.pagination>.active>span:hover {
+  background-color: #26a69a;
+  border-color: #26a69a;
+}
+
+.pagination-sm>li>a,
+.pagination-sm>li>span {
+  border-radius: 0 !important;
+}
+
 .clickable {
   border-bottom: dotted 1px #999;
   cursor: pointer;
