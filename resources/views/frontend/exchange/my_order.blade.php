@@ -6,6 +6,7 @@
                     Order</a>
             </li>
         </ul>
+        @auth
         <div class="tab-content">
             <div class="tab-pane fade show active" id="order-history" role="tabpanel">
                 <table id="my_open_order_table" class="table table-hover small exchange-table" style="width:100%">
@@ -23,5 +24,12 @@
                 </table>
             </div>
         </div>
+        @endauth
+        @guest
+        <div class="text-center" style="margin-top: 12%">
+            <a href="{{ route('login') }}">{{__('Login')}}</a> {{ __('or') }}
+            <a href="{{ route('register.index') }}">{{ __('Register Now') }}</a>{{ __(' to trade') }}
+        </div>
+        @endguest
     </div>
 </div>

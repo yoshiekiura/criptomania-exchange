@@ -78,8 +78,10 @@
             @endauth
 
             @guest
-            <a href="{{ route('login') }}">{{__('Login')}}</a> {{ __('or') }} <a
-                href="{{ route('register.index') }}">{{ __('Register') }}</a>{{ __(' to trade') }}
+            <div class="border-btn-sl text-center">
+                <a href="{{ route('login') }}">{{__('Login')}}</a> {{ __('or') }}
+                <a href="{{ route('register.index') }}">{{ __('Register') }}</a>{{ __(' to trade') }}
+            </div>
             @endguest
         </form>
     </div>

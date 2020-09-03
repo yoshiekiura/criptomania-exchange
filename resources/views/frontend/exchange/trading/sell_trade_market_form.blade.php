@@ -73,10 +73,11 @@
             <button class="btn sell btn-sm btn-block form-submission-button" style="margin-top: -3px">{{ __('SELL') }}
                 <span class="stock_item"></button>
             @endauth
-
             @guest
-            <a href="{{ route('login') }}">{{__('Login')}}</a> {{ __('or') }} <a
-                href="{{ route('register.index') }}">{{ __('Register') }}</a>{{ __(' to trade') }}
+            <div class="border-btn-sell text-center">
+                <a href="{{ route('login') }}">{{__('Login')}}</a> {{ __('or') }}
+                <a href="{{ route('register.index') }}">{{ __('Register') }}</a>{{ __(' to trade') }}
+            </div>
             @endguest
         </form>
     </div>

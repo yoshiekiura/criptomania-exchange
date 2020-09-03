@@ -5,12 +5,10 @@
                 <a class="nav-link active" data-toggle="pill" href="#market_trade" role="tab"
                     aria-selected="true">{{ __('MARKET TRADES') }}</a>
             </li>
-            @auth
             <li class="nav-item">
                 <a class="nav-link" data-toggle="pill" href="#my_trade" role="tab"
                     aria-selected="false">{{ __('MY TRADES') }}</a>
             </li>
-            @endauth
         </ul>
         <div class="tab-content">
             <div class="tab-pane fade show active" id="market_trade" role="tabpanel">
@@ -39,6 +37,14 @@
                 </table>
             </div>
             @endauth
+            @guest
+            <div class="tab-pane fade show" id="my_trade" role="tabpanel">
+                <div class="text-center" style="margin-top: 50%; height: 240px">
+                    <a href="{{ route('login') }}">{{__('Login')}}</a> {{ __('or') }}
+                    <a href="{{ route('register.index') }}">{{ __('Register Now') }}</a>{{ __(' to trade') }}
+                </div>
+            </div>
+            @endguest
         </div>
     </div>
     <div class="active-order">

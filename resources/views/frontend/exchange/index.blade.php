@@ -12,6 +12,45 @@
 
     }
 
+    .border-btn {
+        box-sizing: border-box;
+        min-width: 0px;
+        height: 40px;
+        margin: 120px 0;
+        border-width: 1px;
+        border-style: solid;
+        border-image: initial;
+        border-radius: 3px;
+        border-color: rgb(71, 77, 87);
+        padding-top: 10px;
+    }
+
+    .border-btn-sell {
+        box-sizing: border-box;
+        min-width: 0px;
+        height: 40px;
+        margin: 119px 0;
+        border-width: 1px;
+        border-style: solid;
+        border-image: initial;
+        border-radius: 3px;
+        border-color: rgb(71, 77, 87);
+        padding-top: 10px;
+    }
+
+    .border-btn-sl {
+        box-sizing: border-box;
+        min-width: 0px;
+        height: 40px;
+        margin: 100px 0;
+        border-width: 1px;
+        border-style: solid;
+        border-image: initial;
+        border-radius: 3px;
+        border-color: rgb(71, 77, 87);
+        padding-top: 10px;
+    }
+
     @media (max-width: 768px) {
         .container-market {
             padding: 5px 0;
@@ -442,9 +481,7 @@
             </div>
         </div>
         @include('frontend.exchange.order_book')
-        @auth
         @include('frontend.exchange.my_order')
-        @endauth
 
     </div>
 </div>
