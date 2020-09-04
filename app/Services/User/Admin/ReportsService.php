@@ -11,6 +11,11 @@ use App\Repositories\User\Trader\Interfaces\StockOrderInterface;
 use App\Repositories\User\Trader\Interfaces\WithdrawalInterface;
 use App\Services\Core\DataListService;
 use Illuminate\Support\Facades\DB;
+use App\Models\Backend\StockExchange;
+use Carbon\Carbon;
+use DataTables;
+
+
 
 
 class ReportsService
@@ -18,12 +23,13 @@ class ReportsService
     private $depositRepository;
     private $withdrawalRepository;
     private $depositBankRepo;
-
-    public function __construct(DepositInterface $deposit, WithdrawalInterface $withdrawal, DepositBankInterface $depositBank)
+    private $model;
+    public function __construct(StockExchange $model, DepositInterface $deposit, WithdrawalInterface $withdrawal, DepositBankInterface $depositBank)
     {
         $this->depositRepository = $deposit;
         $this->withdrawalRepository = $withdrawal;
         $this->depositBankRepo = $depositBank;
+        $this->model = $model;
     }
 
     public function deposits($userId = null, $id = null, $transactionType = null)
@@ -226,6 +232,85 @@ class ReportsService
         return app(DataListService::class)->dataList($query, $searchFields, $orderFields);
     }
 
+    public function tradesJson($userId = null, $categoryType = null, $stockPairId = null)
+    {
+      $query = $this->model->join('stock_pairs', 'stock_pairs.id', '=', 'stock_exchanges.stock_pair_id')
+                            ->join('stock_orders', 'stock_orders.id', '=', 'stock_exchanges.stock_order_id')
+                            ->join('stock_items', 'stock_items.id', '=', 'stock_pairs.stock_item_id')
+                            ->join('stock_items as base_items', 'base_items.id', '=', 'stock_pairs.base_item_id')
+                            ->join('users', 'users.id', '=', 'stock_exchanges.user_id');
+                            if(!is_null($userId))
+                            {
+                              $query->where('stock_exchanges.user_id', $userId);
+                            }
+                            if(!is_null($categoryType)){
+                              $query->where('stock_orders.category',config('commonconfig.category_slug.' . $categoryType));
+                            }
+                            if(!is_null($stockPairId))
+                            {
+                              $query->where('stock_orders.stock_pair_id',$stockPairId);
+                            }
+                            $data = $query->select([
+
+                                  'stock_exchanges.*',
+                                  'stock_orders.category',
+                                  'stock_orders.maker_fee',
+                                  'stock_orders.taker_fee',
+                                  // stock item
+                                  'stock_items.id as stock_item_id',
+                                  'stock_items.item as stock_item_abbr',
+                                  'stock_items.item_name as stock_item_name',
+                                  'stock_items.item_type as stock_item_type',
+                                  // base item
+                                  'base_items.id as base_item_id',
+                                  'base_items.item as base_item_abbr',
+                                  'base_items.item_name as base_item_name',
+                                  'base_items.item_type as base_item_type',
+                                  'email',
+
+                                ])->get();
+
+
+                            // $dec = json_decode($data);
+
+              return Datatables::of($data)
+                                ->addIndexColumn()
+                                ->addColumn('coin-pair',function($pair){
+                                  return $pair->stock_item_abbr.'/'.$pair->base_item_abbr;
+                                })
+                                ->editColumn('exchange_type',function($exchange){
+                                  return exchange_type($exchange->exchange_type);
+                                })
+                                ->addColumn('category',function($category) use ($categoryType){
+                                  if(!$categoryType)
+                                  {
+                                    $row = category_type($category->category);
+                                  }
+                                  return $row;
+
+                                })
+                                ->editColumn('referral',function($referral){
+                                  if($referral->is_maker == 1)
+                                  {
+                                    $maker = number_format($referral->maker_fee, 2);
+                                  }
+                                  else{
+                                    $maker = number_format($referral->taker_fee, 2);
+                                  }
+                                  return bcadd($referral->fee,$referral->referral_earning).'('.$maker.'%)';
+                                })
+                                ->editColumn('email',function($user){
+                                    if(has_permission('users.show')){
+                                      $email = '<a href="'.route('users.show', $user->id).'">'.$user->email.'</a>';
+                                    }
+                                    else{
+                                      $email = $user->email;
+                                    }
+                                    return $email;
+                                })->rawColumns(['coin-pair','exchange_type','category','referral','email'])
+                                ->make(true);
+
+    }
     public function openOrders($userId = null, $categoryType = null, $stockPairId = null)
     {
         $searchFields = [

@@ -2,10 +2,13 @@
 //User Group Role
 Route::resource('user-role-managements', 'Core\UserRoleManagementsController')->parameter('user-role-managements', 'id')->except(['show']);
 Route::put('user-role-managements/{id}/change-status', 'Core\UserRoleManagementsController@changeStatus')->name('user-role-managements.status');
+Route::get('user-role-managements/json', 'Core\UserRoleManagementsController@json')->name('user-role-managements.json');
 //User Managements
 Route::get('users/{id}/edit/status', 'User\Admin\UsersController@editStatus')->name('users.edit.status');
 Route::put('users/{id}/update/status', 'User\Admin\UsersController@updateStatus')->name('users.update.status');
 Route::resource('users', 'User\Admin\UsersController')->parameter('users', 'id');
+Route::get('users/json', 'User\Admin\UsersController@json')->name('users.json');
+
 //User profile
 Route::get('profile', 'User\ProfileController@index')->name('profile.index');
 Route::get('profile/edit', 'User\ProfileController@edit')->name('profile.edit');

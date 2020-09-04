@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $filepath = storage_path('logs/laravel.log');
+        $filepath = storage_path('logs/ipn.log');
         $schedule->command('ipn:call')
                  ->everyMinute()->sendOutputTo($filepath);
     }

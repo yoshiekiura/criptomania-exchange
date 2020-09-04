@@ -51,6 +51,11 @@ class ListBankRepository extends BaseRepository implements ListBankInterface
         })->rawColumns(['action'])->make(true);
 	}
 
+    public function allListBank()
+    {
+        return $this->model->all();
+    }
+
 	public function getListBankCountByConditions(array $conditions)
     {
         return $this->model->where($conditions)->count();

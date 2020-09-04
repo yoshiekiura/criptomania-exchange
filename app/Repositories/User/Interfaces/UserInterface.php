@@ -14,4 +14,6 @@ interface UserInterface
     public function getCountByConditions(array $conditions);
 
     public function getByUserIds(array $ids, array $conditions = []);
+    public function getUserInfo();
+
 }

@@ -29,35 +29,14 @@ class UsersController extends Controller
         $this->user = $user;
     }
 
+    public function json()
+    {
+      return $this->user->getUserInfo();
+    }
+
     public function index()
     {
-        $searchFields = [
-            ['username', __('Username')],
-            ['email', __('Email')],
-            ['first_name', __('First Name')],
-            ['last_name', __('Last Name')],
-        ];
-        $orderFields = [
-            ['first_name', __('First Name')],
-            ['users.id', __('Serial')],
-            ['last_name', __('Last Name')],
-            ['email', __('Email')],
-            ['username', __('Username')],
-            ['users.created_at', __('Registered Date')],
-        ];
-        $joinArray = [
-            ['user_role_managements', 'user_role_managements.id', '=', 'users.user_role_management_id'],
-            ['user_infos', 'user_infos.user_id', '=', 'users.id'],
-        ];
-        $select = [
-            'users.*', 'role_name', 'first_name', 'last_name'
-        ];
-
-        $query = $this->user->paginateWithFilters($searchFields, $orderFields, null, $select, $joinArray);
-        $data['list'] = app(DataListService::class)->dataList($query, $searchFields, $orderFields);
-        $data['title'] = __('Users');
-
-        return view('backend.users.index', $data);
+        return view('backend.users.index');
     }
 
     public function show($id)
@@ -258,7 +237,7 @@ class UsersController extends Controller
         }
     }
 
-    /* 
+    /*
 
     Developer : Muhammad Rizky Firdaus
     Date : 20 July 2020
@@ -272,7 +251,7 @@ class UsersController extends Controller
     {
         $attributes = ['primary_balance' => DB::raw('primary_balance + ' . $request->amount)];
 
-        try { 
+        try {
             DB::beginTransaction();
 
 
@@ -308,8 +287,8 @@ class UsersController extends Controller
             ];
 
             $depositBankParameter = [
-            
-                    'status' => PAYMENT_COMPLETED, 
+
+                    'status' => PAYMENT_COMPLETED,
             ];
 
 
@@ -349,8 +328,8 @@ class UsersController extends Controller
             $date = now();
 
              $depositBankParameter = [
-            
-                    'status' => PAYMENT_FAILED, 
+
+                    'status' => PAYMENT_FAILED,
             ];
 
 
@@ -370,7 +349,7 @@ class UsersController extends Controller
         } catch (Exception $exception){
             DB::rollBack();
 
-            return redirect()->back()->with(SERVICE_RESPONSE_ERROR, __('Failed to update status.'));     
+            return redirect()->back()->with(SERVICE_RESPONSE_ERROR, __('Failed to update status.'));
         }
     }
 }

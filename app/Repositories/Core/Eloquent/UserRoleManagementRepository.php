@@ -12,6 +12,9 @@ namespace App\Repositories\Core\Eloquent;
 use App\Models\Core\UserRoleManagement;
 use App\Repositories\BaseRepository;
 use App\Repositories\Core\Interfaces\UserRoleManagementInterface;
+use DataTables;
+use Carbon\Carbon;
+
 
 class UserRoleManagementRepository extends BaseRepository implements UserRoleManagementInterface
 {
@@ -25,6 +28,64 @@ class UserRoleManagementRepository extends BaseRepository implements UserRoleMan
         $this->model = $model;
     }
 
+    public function getAllRoles()
+    {
+      $data = $this->model->all();
+
+      return DataTables::of($data)
+                        ->addIndexColumn()
+                        ->addColumn('action',function($row){
+                          $defaultRoles = config('commonconfig.fixed_roles');
+
+                          $btn = '<div class="btn-group pull-right">
+                              <button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">
+                                  <i class="fa fa-gear"></i>
+                              </button>
+                              <ul class="dropdown-menu pull-right">';
+
+
+                            if(has_permission('user-role-managements.edit')){
+                                      $btn .= '<li>
+                                                    <a href="'.route('user-role-managements.edit', $row->id).'"><i
+                                                                class="fa fa-eye"></i>Edit</a>
+                                                </li>';
+                            }
+
+
+                              if(!in_array($row->id, $defaultRoles)){
+                                      $btn .=    '<li>
+                                                  <a class="confirmation" data-alert="Do you want to delete this role?" data-form-id="ur-'.$row->id.'"
+                                                  data-form-method="delete" href="'.route('user-role-managements.destroy',$row->id).'">
+                                                  <i class="fa fa-trash-o"></i>Delete</a>
+                                              </li>';
+
+                                        if(has_permission('user-role-managements.status') && $row->is_active == ACTIVE_STATUS_ACTIVE){
+                                            $btn .=  '<li>
+                                                          <a data-form-id="ur-'.$row->id.'" data-form-method="PUT"
+                                                          href='.route('user-role-managements.status',$row->id).'
+                                                          class="confirmation" data-alert="Do you want to disable this role?">
+                                                          <i class="fa  fa-times-circle-o"></i>Disable</a>
+                                                      </li>';
+                                                    }
+                              }
+
+
+                              if($row->is_active == ACTIVE_STATUS_INACTIVE){
+                                      $btn .=  '<li>
+                                          <a data-form-id="ur-'.$row->id.'" data-form-method="PUT"
+                                          href='.route('user-role-managements.status',$row->id).'
+                                          class="confirmation" data-alert="Do you want to active this role?">
+                                          <i class="fa fa-check-square-o"></i>Active</a>
+                                            </li>';
+                                }
+
+                      return $btn;
+                    })->editColumn('is_active', function($active){
+                          return $active->is_active == ACTIVE_STATUS_ACTIVE ? '<i class="fa fa-check text-green"></i>' : '<i class="fa fa-close text-red"></i>';
+                    })->editColumn('created_at', function ($date) {
+                        return $date->created_at ? with(new Carbon($date->created_at))->format('m/d/Y') : '';
+                    })->rawColumns(['action','is_active'])->make(true);
+    }
     public function getUserRoles()
     {
         return $this->model->where('is_active', ACTIVE_STATUS_ACTIVE)->pluck('role_name', 'id');

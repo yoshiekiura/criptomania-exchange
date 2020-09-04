@@ -24,4 +24,7 @@ interface UserRoleManagementInterface
     public function isNonDeletableRole(int $id);
 
     public function toggleStatusById(int $id);
+
+    public function getAllRoles();
+
 }

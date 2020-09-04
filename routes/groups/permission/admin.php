@@ -9,7 +9,7 @@ Route::group(['namespace' => 'User\Admin'], function () {
 
 
     Route::post('users/{id}/wallets/{walletId}/update', 'UsersController@updateWalletBalance')->name('admin.users.wallets.update')->where('walletId', '[0-9]+');
-    
+
     Route::post('users/{id}/wallets/{walletId}/update/{depositId}', 'UsersController@updateWalletBalanceBank')->name('admin.users.wallets.updateDepoBank')->where('walletId', '[0-9]+');
 
 
@@ -25,6 +25,7 @@ Route::group(['namespace' => 'User\Admin'], function () {
     Route::put('coins-pairs/{id}/make-status-default', 'StockPairController@makeStatusDefault')->name('admin.stock-pairs.make-status-default');
 
     Route::resource('coins-pairs', 'StockPairController')->parameter('coins-pairs', 'id')->names('admin.stock-pairs');
+    Route::get('coin-pairs/json', 'StockPairController@json')->name('admin.stock-pairs.json');
 
     Route::get('review-withdrawals', 'WithdrawalController@index')->name('admin.review-withdrawals.index');
     Route::get('review-withdrawals/{id}/show', 'WithdrawalController@show')->name('admin.review-withdrawals.show');
@@ -34,7 +35,7 @@ Route::group(['namespace' => 'User\Admin'], function () {
     Route::put('review-withdrawals/declineBank/{id}', 'WithdrawalController@declineBank')->name('admin.review-withdrawals.declineBank');
 
 
-    
+
 
     Route::put('id-management/{id}/approve', 'IdManagementController@approve')->name('admin.id-management.approve');
     Route::put('id-management/{id}/decline', 'IdManagementController@decline')->name('admin.id-management.decline');

@@ -34,43 +34,13 @@ class StockPairController extends Controller
      * @description:
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
+     public function json()
+     {
+      return $this->stockPair->allStockPairs();
+     }
     public function index()
     {
-        $searchFields = [
-            ['stock_items.item', __('Exchangeable Item')],
-            ['stock_items.item_name', __('Exchangeable Item Name')],
-            ['base_items.item', __('Base Item')],
-            ['base_items.item_name', __('Base Item Name')],
-            ['stock_pairs.is_active', __('Active Status')],
-        ];
-        $orderFields = [
-            ['stock_items.item', __('Exchangeable Item')],
-            ['base_items.item', __('Base Item')],
-            ['stock_items.created_at', __('Created Date')],
-        ];
-        $joinArray = [
-            // connected table, connected field, operator, this table field
-            ['stock_items as base_items', 'base_items.id', '=', 'stock_pairs.base_item_id'],
-            ['stock_items', 'stock_items.id', '=', 'stock_pairs.stock_item_id'],
-        ];
-        $select = [
-            'stock_pairs.id as id',
-            'base_item_id',
-            'stock_item_id',
-            'base_items.item as base_stock_item',
-            'base_items.item_name as base_stock_name',
-            'stock_items.item as stock_item',
-            'stock_items.item_name as stock_name',
-            'last_price',
-            'stock_pairs.is_active',
-            'is_default',
-            'stock_pairs.created_at'
-        ];
-        $query = $this->stockPair->paginateWithFilters($searchFields, $orderFields, null, $select, $joinArray);
-        $data['list'] = app(DataListService::class)->dataList($query, $searchFields, $orderFields);
-        $data['title'] = __('Stock Pairs');
-
-        return view('backend.stockPairs.index', $data);
+        return view('backend.stockPairs.index');
     }
 
     /**
@@ -130,7 +100,7 @@ class StockPairController extends Controller
     }
 
 
-    
+
 
     /**
      * @developer: M.G. Rabbi
@@ -273,10 +243,10 @@ class StockPairController extends Controller
     /**
      * @developer: Muhammad Rizky Firdaus
      * @date: 16/07/2020 22:23 PM
-     * @description: Method multiStore ini dibuat untuk menangani form input multiple, untuk saat ini rules 
+     * @description: Method multiStore ini dibuat untuk menangani form input multiple, untuk saat ini rules
                      sudah berhasil dibuat dengan membuat aturan atau rules sendiri di dalam method multiStore ini.
                      Redirect juga sudah berhasil
-                     
+
     */
 
     public function multiStore(Request $request)
@@ -335,5 +305,5 @@ class StockPairController extends Controller
     }
 
 
-    
+
 }

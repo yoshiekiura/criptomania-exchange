@@ -1,14 +1,12 @@
 @extends('backend.layouts.main_layout')
-@section('title', $title)
 @section('content')
     <h3 class="page-header">{{ __('My Trades') }}</h3>
-    {!! $list['filters'] !!}
     <div class="row">
         <div class="col-lg-12">
             @include('backend.reports._category_nav', ['routeName' => 'reports.admin.allTrades'])
             <div class="nav-tabs-custom">
                 <div class="tab-content">
-                    <table class="table datatable dt-responsive display nowrap dc-table" style="width:100% !important;">
+                    <table class="table datatable dt-responsive display nowrap dc-table" style="width:100% !important;" id="trade-history">
                         <thead>
                         <tr>
                             <th class="all">{{ __('Market') }}</th>
@@ -24,48 +22,48 @@
                             <th class="min-desktop">{{ __('Date') }}</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        @foreach($list['query'] as $transaction)
-                            <tr>
-                                <td>{{ $transaction->stock_item_abbr }}/{{ $transaction->base_item_abbr }}</td>
-                                <td>{{ exchange_type($transaction->exchange_type) }}</td>
-                                @if(!$categoryType )
-                                <td>{{ category_type($transaction->category) }}</td>
-                                @endif
-                                <td>{{ $transaction->price }}</td>
-                                <td>{{ $transaction->amount }}</td>
-                                <td>
-                                    {{ bcadd($transaction->fee,$transaction->referral_earning) }}
-                                    ({{ $transaction->is_maker == 1 ?
-                                            number_format($transaction->maker_fee, 2) . '%' :
-                                            number_format($transaction->taker_fee, 2) . '%' }})
-                                </td>
-                                <td>{{ $transaction->total }}</td>
-                                <td>
-                                    @if(has_permission('users.show'))
-                                        <a href="{{ route('users.show', $transaction->user_id) }}">{{ $transaction->email }}</a>
-                                    @else
-                                        {{ $transaction->email }}
-                                    @endif
-                                </td>
-                                <td>{{ $transaction->created_at->toFormattedDateString() }}</td>
-                            </tr>
-                        @endforeach
-                        </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
-    {!! $list['pagination'] !!}
 @endsection
 
 @section('script')
     <!-- for datatable and date picker -->
     <script src="{{ asset('common/vendors/datepicker/datepicker.js') }}"></script>
-    <script src="{{asset('common/vendors/datatable_responsive/datatables/datatables.min.js')}}"></script>
+    <!-- <script src="{{asset('common/vendors/datatable_responsive/datatables/datatables.min.js')}}"></script> -->
     <script src="{{asset('common/vendors/datatable_responsive/datatables/plugins/bootstrap/datatables.bootstrap.js')}}"></script>
-    <script src="{{asset('common/vendors/datatable_responsive/table-datatables-responsive.js')}}"></script>
+    <!-- <script src="{{asset('common/vendors/datatable_responsive/table-datatables-responsive.js')}}"></script> -->
+    <script>
+
+          $('#trade-history').DataTable({
+
+          processing: true,
+
+          serverSide: true,
+
+          bInfo: false,
+
+          language: {search: "", searchPlaceholder: "{{ __('Search...') }}",info: ""},
+          ajax: "{{ route('reports.admin.trades.json',$user,$categoryType) }}",
+
+          columns: [
+              {data: 'coin-pair', name: 'coin-pair', className:'text-center'},
+              {data: 'exchange_type', name: 'exchange_type'},
+              {data: 'category', name: 'category'},
+              {data: 'price', name: 'price'},
+              {data: 'amount', name: 'amount'},
+              {data: 'referral', name: 'referral'},
+              {data: 'total', name: 'total'},
+              {data: 'email', name: 'email'},
+              {data: 'created_at', name: 'stock_exchanges.created_at'},
+          ]
+
+
+
+      });
+    </script>
     <script type="text/javascript">
         //Init jquery Date Picker
         $('.datepicker').datepicker({

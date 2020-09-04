@@ -44,7 +44,22 @@ class ListBankController extends Controller
 
  	public function index(){
 
-        return view('backend.listBank.index');
+        $searchFields = [
+            ['bank_name', __('Bank Name')],
+            ['account_number', __('Account Number')],
+        ];
+
+        $orderFields = [
+            ['bank_name', __('Bank Name')],
+            ['account_number', __('Account Number')],
+            ['list_bank.created_at', __('Created Date')],
+        ];
+
+        $query = $this->listBank->paginateWithFilters($searchFields, $orderFields);
+        $data['list'] = app(DataListService::class)->dataList($query, $searchFields, $orderFields);
+        $data['title'] = __('List Bank');
+
+        return view('backend.listBank.index', $data);
 
  	}
 

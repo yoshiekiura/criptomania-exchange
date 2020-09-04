@@ -1,6 +1,6 @@
 <?php
 return [
-    'fixed_roles' => [USER_ROLE_SUPER_ADMIN, USER_ROLE_USER, USER_ROLE_TRADE_ANALYST],
+    'fixed_roles' => [USER_ROLE_SUPER_ADMIN, USER_ROLE_USER],
 
     'fixed_users' => [FIXED_USER_SUPER_ADMIN],
 

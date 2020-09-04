@@ -6,6 +6,7 @@ Route::group(['namespace' => 'Reports\Admin'], function () {
         Route::get('withdrawals/{paymentTransactionType?}', 'ReportsController@allWithdrawals')->name('reports.admin.all-withdrawals');
         Route::get('trades/{categoryType?}', 'ReportsController@allTrades')->name('reports.admin.allTrades');
         Route::get('trades/{userId}/{categoryType?}', 'ReportsController@trades')->name('reports.admin.trades');
+        Route::get('tradesJson/{userId?}/{categoryType?}/{stockPairId?}', 'ReportsController@tradesJson')->name('reports.admin.trades.json');
         Route::get('coins-pairs/{id}/trades/{categoryType?}', 'ReportsController@trades')->name('reports.admin.stock-pairs.trades');
         Route::get('open-orders/{userId}', 'ReportsController@openOrders')->name('reports.admin.open-orders');
         Route::get('coins-pairs/{id}/open-orders', 'ReportsController@openOrdersByStockPairId')->name('reports.admin.stock-pairs.open-orders');
@@ -14,7 +15,7 @@ Route::group(['namespace' => 'Reports\Admin'], function () {
     });
 
     Route::get('wallets/{id}/deposits/{paymentTransactionType?}', 'ReportsController@deposits')->name('reports.admin.wallets.deposits');
-    
+
     // ini untuk admin
     Route::get('wallets-bankAdmin/{id}/depositsBank-admin/{paymentTransactionType?}', 'ReportsController@depositsBank')->name('reports.admin.wallets.depositsBank');
 

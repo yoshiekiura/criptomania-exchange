@@ -75,7 +75,8 @@ return [
             'stock_pair_management' => [
                 ROUTE_GROUP_READER_ACCESS => [
                     'admin.stock-pairs.index',
-                    'admin.stock-pairs.show'
+                    'admin.stock-pairs.show',
+                    'admin.stock-pairs.json',
                 ],
                 ROUTE_GROUP_CREATION_ACCESS => [
                     'admin.stock-pairs.create',
@@ -193,6 +194,7 @@ return [
                     'reports.admin.stock-pairs.open-orders',
                     'reports.admin.transaction.all-users',
                     'reports.admin.transaction.user',
+                    'reports.admin.trades.json',
                     // 'reports.trader.deposits-bank'
                 ],
                 'transaction_bank_reports' => [
@@ -221,6 +223,7 @@ return [
                 ROUTE_GROUP_READER_ACCESS => [
                     'users.index',
                     'users.show',
+                    'users.json',
                     'admin.users.wallets',
                 ],
                 ROUTE_GROUP_CREATION_ACCESS => [
@@ -239,6 +242,7 @@ return [
             ROUTE_SUB_SECTION_ROLE_MANAGEMENTS => [
                 ROUTE_GROUP_READER_ACCESS => [
                     'user-role-managements.index',
+                    'user-role-managements.json',
                 ],
                 ROUTE_GROUP_CREATION_ACCESS => [
                     'user-role-managements.create',
