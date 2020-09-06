@@ -498,6 +498,7 @@
 <script src="{{asset('common/vendors/datatable_responsive/datatables/plugins/bootstrap/datatables.bootstrap.js')}}">
 </script>
 <script src="{{asset('common/vendors/echart/echarts.min.js')}}"></script>
+<script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
 <script src="{{asset('js/chart.js')}}"></script>
 <script src="{{asset('common/vendors/cvalidator/cvalidator.js')}}"></script>
 

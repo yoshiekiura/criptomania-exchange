@@ -254,9 +254,9 @@
             success: function (data) {
                 chartData = data;
                 makeChart(document.getElementById('echart'), chartData);
-                $(window).resize(function () {
-                    eChart.resize();
-                })
+                // $(window).resize(function () {
+                //     eChart.resize();
+                // })
             }
         });
     }
