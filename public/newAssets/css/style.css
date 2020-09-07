@@ -1,8 +1,7 @@
 @import url("//fonts.googleapis.com/css?family=Overpass:300,400,600,700&display=swap");
-/* @import url("bootstrap.min.css"); */
+@import url("bootstrap.min.css");
 @import url("ionicons.min.css");
 @import url("jquery.mCustomScrollbar.min.css");
-
 body {
   font-family: "Overpass", sans-serif;
   font-size: 14px;
@@ -96,7 +95,7 @@ tbody tr:hover {
   border-radius: 5px;
 }
 
-.table tbody+tbody {
+.table tbody + tbody {
   border: none;
 }
 
@@ -142,8 +141,8 @@ tbody tr:hover {
   padding-right: 7.5px;
 }
 
-.sm-gutters>.col,
-.sm-gutters>[class*=col-] {
+.sm-gutters > .col,
+.sm-gutters > [class*=col-] {
   padding-right: 7.5px;
   padding-left: 7.5px;
 }
@@ -168,7 +167,7 @@ tbody tr:hover {
   color: #18214d59;
 }
 
-.custom-control-input:focus~.custom-control-label::before {
+.custom-control-input:focus ~ .custom-control-label::before {
   box-shadow: none;
 }
 
@@ -180,7 +179,6 @@ tbody tr:hover {
     left: 0;
     top: 0;
   }
-
   95% {
     opacity: 0.1;
     left: -10.5px;
@@ -188,7 +186,6 @@ tbody tr:hover {
     width: 28px;
     height: 28px;
   }
-
   100% {
     opacity: 0;
     width: 7px;
@@ -197,24 +194,20 @@ tbody tr:hover {
     top: 0;
   }
 }
-
 @keyframes slideIn {
   0% {
     transform: translateY(1rem);
     opacity: 0;
   }
-
   100% {
     transform: translateY(0rem);
     opacity: 1;
   }
-
   0% {
     transform: translateY(1rem);
     opacity: 0;
   }
 }
-
 header nav a {
   color: #18214d;
 }
@@ -764,7 +757,6 @@ tbody.ob-heading {
 
 .market-trade .tab-content {
   height: 357px;
-  overflow-y: auto;
   padding: 14px;
 }
 
@@ -874,111 +866,6 @@ tbody.ob-heading {
   border-left: 1px solid #e0e3eb;
 }
 
-/* *myCSS */
-
-.pagination {
-  margin: 0;
-}
-
-.pagination>li>a {
-  background: #fafafa;
-  color: #666;
-}
-
-.pagination.pagination-flat>li>a {
-  border-radius: 0 !important;
-}
-
-.pagination,
-.pagination li>a,
-.pagination li>span {
-  border-radius: 0 !important;
-}
-
-.pagination>.active>a,
-.pagination>.active>a:focus,
-.pagination>.active>a:hover,
-.pagination>.active>span,
-.pagination>.active>span:focus,
-.pagination>.active>span:hover {
-  background-color: #26a69a;
-  border-color: #26a69a;
-}
-
-.pagination-sm>li>a,
-.pagination-sm>li>span {
-  border-radius: 0 !important;
-}
-
-.clickable {
-  border-bottom: dotted 1px #999;
-  cursor: pointer;
-}
-
-.active-order-list .nav {
-  background: #F5F9FC;
-}
-
-.active-order-list .nav-link {
-  color: #4a4a4a;
-  padding: 10px 13px;
-}
-
-.active-order-list .nav-link.active {
-  color: #007bff;
-  background: transparent;
-}
-
-.active-order-list {
-  border: 1px solid #e0e3eb;
-  border-radius: 2px;
-}
-
-/*  */
-
-.active-order .nav {
-  background: #F5F9FC;
-}
-
-.active-order .nav-link {
-  color: #4a4a4a;
-  padding: 10px 13px;
-}
-
-.active-order .nav-link.active {
-  color: #007bff;
-  background: transparent;
-}
-
-.active-order thead tr th,
-.active-order tbody tr td {
-  cursor: pointer;
-  font-weight: 400;
-}
-
-.active-order tbody {
-  height: 375px;
-  overflow-y: auto;
-  display: block;
-}
-
-.active-order tr {
-  float: left;
-  clear: both;
-  overflow: hidden;
-}
-
-.active-order {
-  border: 1px solid #e0e3eb;
-  border-radius: 2px;
-}
-
-.stock-market {
-  cursor: pointer
-}
-
-/*  */
-
 .market-history .nav {
   background: #F5F9FC;
 }
@@ -1000,7 +887,7 @@ tbody.ob-heading {
 }
 
 .market-history tbody {
-  height: 375px;
+  height: 315px;
   overflow-y: auto;
   display: block;
 }
@@ -1097,7 +984,7 @@ tbody.ob-heading {
   border-radius: 2px;
 }
 
-.markets-chart>div {
+.markets-chart > div {
   width: 110%;
   margin-left: -16px;
 }
@@ -1906,7 +1793,7 @@ tbody.ob-heading {
   color: #fff;
 }
 
-#dark .custom-control-input:checked~.custom-control-label::before {
+#dark .custom-control-input:checked ~ .custom-control-label::before {
   color: #fff;
   border-color: #007bff;
   background-color: #007bff;
@@ -2089,7 +1976,6 @@ tbody.ob-heading {
     width: 25%;
   }
 }
-
 @media only screen and (max-width: 1300px) {
   .market-pairs tbody {
     height: 740px;
@@ -2099,13 +1985,11 @@ tbody.ob-heading {
     height: 755px;
   }
 }
-
 @media only screen and (max-width: 1200px) {
   .markets-capital-item {
     height: 289px;
   }
 }
-
 @media only screen and (max-width: 991px) {
   .settings-nav {
     margin-bottom: 15px;
@@ -2115,19 +1999,16 @@ tbody.ob-heading {
     width: 35%;
   }
 }
-
 @media only screen and (max-width: 918px) {
   .market-history tbody {
     height: 274px;
   }
 }
-
 @media only screen and (max-width: 792px) {
   .market-pairs tbody {
     height: 699px;
   }
 }
-
 @media only screen and (max-width: 768px) {
   .settings-profile .custom-file {
     width: 45%;
@@ -2189,7 +2070,6 @@ tbody.ob-heading {
     height: 304px;
   }
 }
-
 @media only screen and (max-width: 576px) {
   .markets-capital-item {
     height: 91.4%;
