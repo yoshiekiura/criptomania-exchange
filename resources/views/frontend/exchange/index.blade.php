@@ -16,7 +16,7 @@
         box-sizing: border-box;
         min-width: 0px;
         height: 40px;
-        margin: 120px 0;
+        margin: 120px 0 -100px 0;
         border-width: 1px;
         border-style: solid;
         border-image: initial;
@@ -29,7 +29,7 @@
         box-sizing: border-box;
         min-width: 0px;
         height: 40px;
-        margin: 119px 0;
+        margin: 119px 0 -100px 0;
         border-width: 1px;
         border-style: solid;
         border-image: initial;
@@ -42,7 +42,7 @@
         box-sizing: border-box;
         min-width: 0px;
         height: 40px;
-        margin: 100px 0;
+        margin: 100px 0 -100px 0;
         border-width: 1px;
         border-style: solid;
         border-image: initial;
@@ -157,7 +157,7 @@
     }
 
     .filter {
-        width: 110px;
+        width: 310px;
         position: relative;
     }
 
@@ -186,7 +186,7 @@
     #datatable-filter {
         -moz-appearance: none;
         -webkit-appearance: none;
-        padding-right: 20px;
+        /* padding-right: 20px; */
         position: relative;
         z-index: 99999999;
         background: none;
