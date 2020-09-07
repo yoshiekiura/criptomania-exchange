@@ -10,7 +10,7 @@
         <div class="tab-content">
             <div class="tab-pane fade show active" id="order-history" role="tabpanel">
                 <table id="my_open_order_table" class="table table-hover small exchange-table" style="width:100%">
-                    <thead>
+                    <thead class="text-center">
                         <tr>
                             <th>{{ __('TYPE') }}</th>
                             <th>{{ __('PRICE') }}</th>
