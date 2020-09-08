@@ -21,6 +21,9 @@ Route::group(['namespace' => 'User\Admin'], function () {
 
     Route::resource('coins', 'StockItemController')->parameter('coins', 'id')->names('admin.stock-items');
 
+    //stock item json
+    Route::get('coinsjson', 'StockItemController@stockItemJson')->name('admin.stock-items.json');
+
     Route::put('coins-pairs/{id}/toggle-status', 'StockPairController@toggleActiveStatus')->name('admin.stock-pairs.toggle-status');
 
     Route::put('coins-pairs/{id}/make-status-default', 'StockPairController@makeStatusDefault')->name('admin.stock-pairs.make-status-default');
@@ -43,6 +46,8 @@ Route::group(['namespace' => 'User\Admin'], function () {
     Route::put('id-management/{id}/approve', 'IdManagementController@approve')->name('admin.id-management.approve');
     Route::put('id-management/{id}/decline', 'IdManagementController@decline')->name('admin.id-management.decline');
     Route::resource('id-management', 'IdManagementController')->only(['index', 'show'])->parameter('id-management', 'id')->names('admin.id-management');
+    //id management json
+    Route::get('id-management-json', 'IdManagementController@idManagementJson')->name('admin.id-management-json');
 
     Route::post('multi-post', 'StockPairController@multiStore')->name('admin.stock-pairs.multiStore');
     Route::get('/multi/create', 'StockPairController@multiIndex')->name('admin.stock-pairs.multiIndex');
@@ -55,6 +60,7 @@ Route::group(['namespace' => 'User\Admin'], function () {
     Route::get('listbank/json','ListBankController@json')->name('admin.list-bank.json');
 
     Route::get('api-service-name','ApiServiceController@index')->name('admin.api-service-name');
+    Route::get('api-service-name-json','ApiServiceController@apiServiceJson')->name('admin.api-service-name-json');
     Route::get('api-service-name-create','ApiServiceController@create')->name('admin.api-service-name-create');
     Route::post('api-service-name-store','ApiServiceController@store')->name('admin.api-service-name-store');
 });

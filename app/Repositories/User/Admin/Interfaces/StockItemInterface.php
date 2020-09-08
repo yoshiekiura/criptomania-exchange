@@ -9,4 +9,6 @@ interface StockItemInterface
     public function getCountByConditions(array $conditions);
 
     public function getStockPairsById($id);
+
+    public function getStockItemJson();
 }

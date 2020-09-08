@@ -11,5 +11,5 @@ namespace App\Repositories\User\Interfaces;
 
 interface UserInfoInterface
 {
-    //
+    public function idManagementJson();
 }

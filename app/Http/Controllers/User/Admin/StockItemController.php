@@ -32,27 +32,14 @@ class StockItemController extends Controller
      * @description:
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
+    public function stockItemJson()
+    {
+        return $this->stockItem->getStockItemJson();
+    }
     public function index()
     {
-        $searchFields = [
-            ['item', __('Stock Item')],
-            ['item_name', __('Stock Item Name')],
-            ['item_type', __('Stock Item Type')],
-            ['is_active', __('Active Status')],
-        ];
 
-        $orderFields = [
-            ['item', __('Stock Item')],
-            ['item_name', __('Stock Item Name')],
-            ['item_type', __('Stock Item Type')],
-            ['stock_items.created_at', __('Created Date')],
-        ];
-
-        $query = $this->stockItem->paginateWithFilters($searchFields, $orderFields);
-        $data['list'] = app(DataListService::class)->dataList($query, $searchFields, $orderFields);
-        $data['title'] = __('Stock Items');
-
-        return view('backend.stockItems.index', $data);
+        return view('backend.stockItems.index');
     }
 
     /**

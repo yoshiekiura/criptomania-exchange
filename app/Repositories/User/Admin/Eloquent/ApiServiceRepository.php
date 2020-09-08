@@ -6,6 +6,7 @@ use App\Models\Backend\ApiService;
 use App\Repositories\User\Admin\Interfaces\ApiServiceInterface;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use DataTables;
 
 
 class ApiServiceRepository extends BaseRepository implements ApiServiceInterface
@@ -22,7 +23,12 @@ class ApiServiceRepository extends BaseRepository implements ApiServiceInterface
 
     public function getAllApiService()
     {
-    	return $this->model->all();
+    	$data = $this->model->all();
+        return Datatables::of($data)->addIndexColumn()
+                                    ->editColumn('created', function($row){
+                                        return $row->created_at->toDateTimeString();
+                                    })
+                                    ->rawColumns(['created'])->make(true);
     }
 
     public function getApiServiceCountByConditions(array $conditions)

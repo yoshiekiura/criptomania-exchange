@@ -26,24 +26,14 @@ class IdManagementController extends Controller
      * @description:
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
+
+    public function idManagementJson()
+    {
+        return $this->userInfo->idManagementJson();
+    }
     public function index()
     {
-        $searchFields = [
-            ['email', __('Email')],
-        ];
-
-        $orderFields = [
-            ['email', __('Email')],
-        ];
-
-        $joinArray = ['users', 'users.id', '=', 'user_infos.user_id'];
-
-        $select = ['users.id as id', 'email', 'id_type', 'is_id_verified'];
-        $query = $this->userInfo->paginateWithFilters($searchFields, $orderFields, ['is_id_verified', '!=', ID_STATUS_UNVERIFIED], $select, $joinArray);
-        $data['list'] = app(DataListService::class)->dataList($query, $searchFields, $orderFields);
-        $data['title'] = __('ID Management');
-
-        return view('backend.idManagement.index', $data);
+        return view('backend.idManagement.index');
     }
 
     /**

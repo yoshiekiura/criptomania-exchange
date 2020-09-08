@@ -23,26 +23,15 @@ class ApiServiceController extends Controller
     	$this->apiservice = $apiservice;
     }
 
+    public function apiServiceJson()
+    {
+        return $this->apiservice->getAllApiService();
+    }
+
     public function index()
     {
-    	$searchFields = [
-            ['api_name', __('Api Name')],
-            ['api_value', __('Api Core Name')],
-        ];
 
-        $orderFields = [
-            ['api_name', __('Api Name')],
-            ['api_value', __('Api Core Name')],
-            ['api_stock_item.created_at', __('Created Date')],
-        ];
-
-
-        $query = $this->apiservice->paginateWithFilters($searchFields, $orderFields);
-
-        $data['list'] = app(DataListService::class)->dataList($query, $searchFields, $orderFields);
-        $data['title'] = __('Api Service List');
-
-        return view('backend.apiService.index', $data);
+        return view('backend.apiService.index');
     }
 
      public function create()

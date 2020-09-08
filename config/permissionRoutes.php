@@ -48,6 +48,7 @@ return [
             'id_management' => [
                 ROUTE_GROUP_READER_ACCESS => [
                     'admin.id-management.index',
+                    'admin.id-management-json',
                     'admin.id-management.show',
                 ],
                 ROUTE_GROUP_MODIFIER_ACCESS => [
@@ -58,7 +59,8 @@ return [
             'stock_management' => [
                 ROUTE_GROUP_READER_ACCESS => [
                     'admin.stock-items.index',
-                    'admin.stock-items.show'
+                    'admin.stock-items.show',
+                    'admin.stock-items.json'
                 ],
                 ROUTE_GROUP_CREATION_ACCESS => [
                     'admin.stock-items.create',
@@ -149,6 +151,7 @@ return [
                 ROUTE_GROUP_READER_ACCESS => [
 
                     'admin.api-service-name',
+                    'admin.api-service-name-json',
                 ],
                 ROUTE_GROUP_CREATION_ACCESS => [
                     'admin.api-service-name-create',
@@ -199,6 +202,8 @@ return [
                     'reports.admin.stock-pairs.open-orders',
                     'reports.admin.transaction.all-users',
                     'reports.admin.transaction.user',
+                    // 'reports.admin.transaction.user.json',
+                    // 'reports.admin.sum-transaction.user.json',
                     'reports.admin.trades.json',
                     'reports.admin.all-deposits-bank',
                     'reports.admin.wallets.deposit.json',

@@ -16,11 +16,11 @@
                                 <th class="none">{{ __('Last Name') }}</th>
                             @endif
                             <th class="all">{{ __('Stock Item') }}</th>
-                            <th class="all">{{ __('Transaction Type') }}</th>
+                            <th class="text-center all">{{ __('Transaction Type') }}</th>
                             @if(!$journalType)
-                                <th class="all">{{ __('Journal') }}</th>
+                                <th class="min-desktop">{{ __('Journal') }}</th>
                             @endif
-                            <th class="all">{{ __('Amount') }}</th>
+                            <th class="min-desktop">{{ __('Amount') }}</th>
                             <th class="min-desktop">{{ __('Date') }}</th>
                         </tr>
                         </thead>
@@ -39,7 +39,7 @@
                                     <td>{{ $transaction->last_name }}</td>
                                 @endif
                                 <td>{{ $transaction->item }}</td>
-                                <td>{{ get_transaction_type($transaction->transaction_type) }}</td>
+                                <td class="text-center">{{ get_transaction_type($transaction->transaction_type) }}</td>
                                 @if(!$journalType)
                                     @php
                                         $journal = array_flip(config('commonconfig.journal_type'))[$transaction->journal];
