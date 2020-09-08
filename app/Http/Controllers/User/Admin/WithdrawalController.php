@@ -14,6 +14,8 @@ use App\Repositories\User\Interfaces\NotificationInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\User\Wallet;
+use App\Models\Backend\StockItem;
+
 
 
 class WithdrawalController extends Controller
@@ -25,13 +27,27 @@ class WithdrawalController extends Controller
         $this->withdrawalRepository = $withdrawalRepository;
     }
 
+    public function withdrawalsBankTransferJson()
+    {
+      return app(ReportsService::class)->withdrawalsBankTransfer();
+    }
+
+    public function withdrawalCryptoCurrencyJson()
+    {
+      return $this->withdrawalRepository->withdrawalCryptoCurrency();
+    }
+
     public function index()
     {
         // $transactionType = PAYMENT_REVIEWING;
-        $data['list'] = app(ReportsService::class)->withdrawals(null, null, null);
-        $data['title'] = __('Withdrawals for Reviewing');
+        // $data['list'] = app(ReportsService::class)->withdrawals(null, null, null);
+        // $data['title'] = __('Withdrawals for Reviewing');
+        $data['cryptoCurrency'] = StockItem::where('item_type',CURRENCY_CRYPTO)
+                                            ->select(['item'])->get();
+        $data['realCurrency'] = StockItem::where('item_type',CURRENCY_REAL)
+                                            ->select(['item'])->get();
 
-        return view('backend.review_withdrawals.withdrawal', $data);
+        return view('backend.review_withdrawals.withdrawal',$data);
     }
 
     public function show($id)
@@ -77,7 +93,7 @@ class WithdrawalController extends Controller
 
 
 
-    /* 
+    /*
 
 
         Doc Code : 1
@@ -87,7 +103,7 @@ class WithdrawalController extends Controller
                       Fungsi ini hanya akan dijalankan dengan kondisi dimana payment_method dari withdraw adalah BANK_TRANSFER atau 4.
         NOTE : (JIKA TERJADI BUG SAAT WITHDRAW DENGAN TIPE TRANSAKSI SELAIN BANK TRANSFER. LIHAT KEMBALI FUNGSI INI!)
 
-        
+
 
     */
 
@@ -95,7 +111,7 @@ class WithdrawalController extends Controller
     {
        $attributes = ['primary_balance' => DB::raw('primary_balance + ' . $request->amount)];
 
-        try { 
+        try {
             DB::beginTransaction();
 
             $withdrawalRepository = app(WithdrawalInterface::class);
@@ -109,7 +125,7 @@ class WithdrawalController extends Controller
                 throw new \Exception(__('No wallet is found.'));
             }
 
-       
+
 
             $date = now();
             // parameter untuk transaksi table
@@ -188,7 +204,7 @@ class WithdrawalController extends Controller
     }
 }
 
-/* 
+/*
     END Doc Code 1
-    
+
 */

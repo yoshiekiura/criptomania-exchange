@@ -11,5 +11,5 @@ namespace App\Repositories\Core\Interfaces;
 
 interface AuditInterface
 {
-    //
+  public function dataAudits();
 }

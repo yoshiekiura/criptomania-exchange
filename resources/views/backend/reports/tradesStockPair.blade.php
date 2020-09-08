@@ -14,15 +14,6 @@
                      <option value="{{category_type(CATEGORY_ICO)}}"> ICO </option>
                    </select>
                  </div>
-                <div class="cm-order-filter">
-                  <label for="filter-coin-pair"> Filter By Coin Pair :</label>
-                   <select data-column="0" class="form-control filter-satuan" placeholder="Filter By Category" style="width:30%;">
-                     <option value=""> All </option>
-                     @foreach($stockPair as $stock)
-                     <option value="{{$stock->stock_item_abbr}}/{{$stock->base_item_abbr}}"> {{$stock->stock_item_abbr}}/{{$stock->base_item_abbr}} </option>
-                     @endforeach
-                   </select>
-                </div>
             </div>
           </div>
         </div>
@@ -33,7 +24,7 @@
         <div class="col-lg-12">
             <div class="nav-tabs-custom">
                 <div class="tab-content">
-                    <table class="table datatable dt-responsive display nowrap dc-table" style="width:100% !important;" id="trade-history">
+                    <table class="table datatable dt-responsive display nowrap dc-table" style="width:100% !important;" id="trade-stockpair-history">
                         <thead>
                         <tr>
                             <th class="all">{{ __('Market') }}</th>
@@ -65,7 +56,7 @@
 
     <script>
 
-      var table = $('#trade-history').DataTable({
+      var table = $('#trade-stockpair-history').DataTable({
 
           processing: true,
 
@@ -74,7 +65,7 @@
           // bInfo: false,
 
           language: {search: "", searchPlaceholder: "{{ __('Search...') }}"},
-          ajax: "{{ route('reports.admin.trades.json',$user) }}",
+          ajax: "{{ route('reports.admin.stock-pairs.json',$stockPairId) }}",
 
           order : [8, 'desc'],
 
@@ -92,12 +83,6 @@
       });
 
       $('.filter-satuan').change(function () {
-         table.column( $(this).data('column'))
-         .search( $(this).val() )
-         .draw();
-     });
-      
-    $('.filter-coin-pair').change(function () {
          table.column( $(this).data('column'))
          .search( $(this).val() )
          .draw();

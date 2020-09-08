@@ -8,6 +8,8 @@ use App\Repositories\User\Interfaces\NotificationInterface;
 use App\Repositories\User\Trader\Interfaces\WalletInterface;
 use App\Repositories\BaseRepository;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use DataTables;
 
 class WalletRepository extends BaseRepository implements WalletInterface
 {
@@ -23,6 +25,134 @@ class WalletRepository extends BaseRepository implements WalletInterface
     {
         return $this->model->all();
     }
+
+    public function getWalletJson($userId)
+    {
+        $query = $this->model->join('stock_items', 'stock_items.id', '=', 'wallets.stock_item_id')
+                            ->where('user_id', $userId)
+                            ->select([
+                                'wallets.*', 
+                                'item', 
+                                'item_name', 
+                                'item_type', 
+                                'api_service',
+                                'deposit_status', 
+                                'withdrawal_status'
+                            ])->get();
+        return DataTables::of($query)
+                          ->addIndexColumn()
+                          ->addColumn('action',function($row){
+                            if( in_array($row->item_type, config('commonconfig.currency_transferable')) ){
+
+                                $btn = '<div class="btn-group pull-right">
+                                                <button class="btn green btn-xs btn-outline dropdown-toggle"
+                                                        data-toggle="dropdown">
+                                                    <i class="fa fa-gear"></i>
+                                                </button>
+                                                <ul class="dropdown-menu pull-right">';
+                                    if($row->api_service == BANK_TRANSFER){
+                                        if( has_permission('reports.admin.wallets.depositsBank')){
+                                        
+                                        $btn .= '<li>
+                                                    <a href="'.route('reports.admin.wallets.depositsBank', $row->id).'"><i class="fa fa-magic"></i>'.__('Deposit Bank Transfer History').'</a>
+                                                </li>';
+                                        }
+                                    }else{
+                                        if( has_permission('reports.admin.wallets.deposits')){
+                                            $btn .= '<li>
+                                                        <a href="'.route('reports.admin.wallets.deposits', ['id' => $row->id]).'"><i class="fa fa-magic"></i>'.__('Deposit History').'</a>
+                                                    </li>';
+                                        }
+                                    }
+
+                                    if( has_permission('reports.admin.wallets.withdrawals')){
+                                        $btn .= ' <li>
+                                                    <a href="'.route('reports.admin.wallets.withdrawals', ['id' => $row->id]).'"><i class="fa fa-magic"></i>'.__('Withdrawal History').'</a>
+                                                  </li>';
+                                    }
+
+                                   
+
+                                    if( has_permission('admin.users.wallets.edit')){
+                                        $btn .= '<li>
+                                                    <a href="'.route('admin.users.wallets.edit', ['id' => $row->user_id, 'walletId' => $row->id]).'"><i class="fa fa-magic"></i>'.__('Give Amount').'</a>
+                                                </li>';
+                                    }
+
+                                    
+                            }
+
+                            return $btn;
+                          })->rawColumns(['action'])->make(true);
+    }
+
+    public function getWalletJsonTrader($userId)
+    {
+        $query = $this->model->join('stock_items', 'stock_items.id', '=', 'wallets.stock_item_id')
+                            ->where('user_id', $userId)
+                            ->select([
+                                'wallets.*', 
+                                'item', 
+                                'item_name', 
+                                'item_type', 
+                                'api_service',
+                                'deposit_status', 
+                                'withdrawal_status'
+                            ])->get();
+        return DataTables::of($query)
+                          ->addIndexColumn()
+                          ->addColumn('action',function($row){
+                            if( in_array($row->item_type, config('commonconfig.currency_transferable')) ){
+
+                                $btn = '<div class="btn-group pull-right">
+                                                <button class="btn green btn-xs btn-outline dropdown-toggle"
+                                                        data-toggle="dropdown">
+                                                    <i class="fa fa-gear"></i>
+                                                </button>
+                                                <ul class="dropdown-menu pull-right">';
+                                                
+                                     if( has_permission('trader.wallets.deposit')){
+                                                  $btn.= '<li>
+                                                            <a href='.route('trader.wallets.deposit', $row->id).'><i class="fa fa-magic"></i>'.__('Deposit').'</a>
+                                                        </li>';
+                                                    }
+
+                                    if($row->api_service == BANK_TRANSFER){
+                                        if( has_permission('reports.trader.deposits-bank')){
+                                        
+                                        $btn .= '<li>
+                                                    <a href="'.route('reports.trader.deposits-bank', $row->id).'"><i class="fa fa-magic"></i>'.__('Deposit Bank Transfer History').'</a>
+                                                </li>';
+                                        }
+                                    }else{
+                                        if( has_permission('reports.trader.deposits')){
+                                            $btn .= '<li>
+                                                        <a href="'.route('reports.trader.deposits', ['id' => $row->id]).'"><i class="fa fa-magic"></i>'.__('Deposit History').'</a>
+                                                    </li>';
+                                        }
+                                    }
+
+                                    if( has_permission('trader.wallets.withdrawal')){
+                                        $btn .= ' <li>
+                                                    <a href="'.route('trader.wallets.withdrawal', ['id' => $row->id]).'"><i class="fa fa-magic"></i>'.__('Withdrawal').'</a>
+                                                  </li>';
+                                    }
+
+                                   
+
+                                    if( has_permission('reports.trader.withdrawals')){
+                                        $btn .= '<li>
+                                                    <a href="'.route('reports.trader.withdrawals', ['walletId' => $row->id]).'"><i class="fa fa-magic"></i>'.__('Withdrawal History').'</a>
+                                                </li>';
+                                    }
+
+                                    
+                            }
+
+                            return $btn;
+                          })->rawColumns(['action'])->make(true);
+    }
+
 
     public function findStockItem(int $id)
     {

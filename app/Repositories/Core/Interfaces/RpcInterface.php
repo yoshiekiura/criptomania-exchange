@@ -18,6 +18,8 @@ interface RpcInterface
 
     public function getRpcPort($conditions);
 
+    public function listRpcJson();
 
-    
+
+
 }

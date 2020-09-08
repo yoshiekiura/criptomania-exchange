@@ -11,4 +11,7 @@ interface WalletInterface
 
     public function updateWalletBalance($conditions, $amount);
 
+    public function getWalletJson($userId);
+    public function getWalletJsonTrader($userId);
+
 }

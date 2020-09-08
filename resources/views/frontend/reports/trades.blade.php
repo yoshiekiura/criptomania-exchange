@@ -1,21 +1,43 @@
 @extends('backend.layouts.main_layout')
-@section('title', $title)
 @section('content')
     <h3 class="page-header">{{ __('My Trades') }}</h3>
-    {!! $list['filters'] !!}
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="box box-primary box-borderless">
+          <div class="box-body">
+            <div class="cm-filter clearfix">
+                <div class="cm-order-filter">
+                  <label for="filter-satuan"> Filter By Category :</label>
+                   <select data-column="2" class="form-control filter-satuan" placeholder="Filter By Category" style="width:30%;">
+                     <option value=""> All </option>
+                     <option value="{{category_type(CATEGORY_EXCHANGE)}}"> Exchange </option>
+                     <option value="{{category_type(CATEGORY_ICO)}}"> ICO </option>
+                   </select>
+                 </div> 
+                 <div class="cm-order-filter">
+                  <label for="filter-coin-pair"> Filter By Coin Pair :</label>
+                   <select data-column="0" class="form-control filter-satuan" placeholder="Filter By Category" style="width:30%;">
+                     <option value=""> All </option>
+                     @foreach($stockPair as $stock)
+                     <option value="{{$stock->stock_item_abbr}}/{{$stock->base_item_abbr}}"> {{$stock->stock_item_abbr}}/{{$stock->base_item_abbr}} </option>
+                     @endforeach
+                   </select>
+                 </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="row">
         <div class="col-lg-12">
-            @include('frontend.reports._category_nav', ['routeName' => 'reports.trader.trades'])
             <div class="nav-tabs-custom">
                 <div class="tab-content">
-                    <table class="table datatable dt-responsive display nowrap dc-table" style="width:100% !important;">
+                    <table class="table datatable dt-responsive display nowrap dc-table" style="width:100% !important;" id="all-trades-trader">
                         <thead>
                         <tr>
                             <th class="all">{{ __('Market') }}</th>
                             <th class="all">{{ __('Type') }}</th>
-                            @if(!$categoryType )
                             <th class="min-desktop">{{ __('Category') }}</th>
-                            @endif
                             <th class="all">{{ __('Price') }}</th>
                             <th class="min-desktop">{{ __('Amount') }}</th>
                             <th class="min-desktop">{{ __('Fee') }}</th>
@@ -23,42 +45,20 @@
                             <th class="min-desktop">{{ __('Date') }}</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        @foreach($list['query'] as $transaction)
-                            <tr>
-                                <td>{{ $transaction->stock_item_abbr }}/{{ $transaction->base_item_abbr }}</td>
-                                <td>{{ exchange_type($transaction->exchange_type) }}</td>
-                                @if(!$categoryType )
-                                <td>{{ category_type($transaction->category) }}</td>
-                                @endif
-                                <td>{{ $transaction->price }} <span class="strong">{{ $transaction->base_item_abbr }}</span></td>
-                                <td>{{ $transaction->amount }} <span class="strong">{{ $transaction->stock_item_abbr }}</span></td>
-                                <td>
-                                    {{ bcadd($transaction->fee,$transaction->referral_earning) }}
-                                    <span class="strong">{{ $transaction->exchange_type == EXCHANGE_BUY ? $transaction->stock_item_abbr : $transaction->base_item_abbr }}</span>
-                                    ({{ $transaction->is_maker == 1 ?
-                                            number_format($transaction->maker_fee, 2) . '%' :
-                                            number_format($transaction->taker_fee, 2) . '%' }})
-                                </td>
-                                <td>{{ $transaction->total }} <span class="strong">{{ $transaction->base_item_abbr }}</span></td>
-                                <td>{{ $transaction->created_at->toFormattedDateString() }}</td>
-                            </tr>
-                        @endforeach
-                        </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
-    {!! $list['pagination'] !!}
 @endsection
 
 @section('script')
     <!-- for datatable and date picker -->
     <script src="{{ asset('common/vendors/datepicker/datepicker.js') }}"></script>
-    <script src="{{asset('common/vendors/datatable_responsive/datatables/datatables.min.js')}}"></script>
-    <script src="{{asset('common/vendors/datatable_responsive/datatables/plugins/bootstrap/datatables.bootstrap.js')}}"></script>
-    <script src="{{asset('common/vendors/datatable_responsive/table-datatables-responsive.js')}}"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js"></script>
     <script type="text/javascript">
         //Init jquery Date Picker
         $('.datepicker').datepicker({
@@ -67,5 +67,46 @@
             orientation: 'bottom',
             todayHighlight: true,
         });
+    </script>
+
+     <script>
+
+      var table = $('#all-trades-trader').DataTable({
+
+          processing: true,
+
+          serverSide: true,
+
+          // bInfo: false,
+
+          language: {search: "", searchPlaceholder: "{{ __('Search...') }}"},
+          ajax: "{{ route('reports.trader.trades.json') }}",
+
+          order : [7, 'desc'],
+
+          columns: [
+              {data: 'coin-pair', name: 'coin-pair', className:'text-center'},
+              {data: 'exchange_type', name: 'exchange_type'},
+              {data: 'category', name: 'category'},
+              {data: 'price', name: 'price'},
+              {data: 'amount', name: 'amount'},
+              {data: 'referral', name: 'referral'},
+              {data: 'total', name: 'total'},
+              {data: 'created_at', name: 'created_at'},
+          ],
+      });
+
+      $('.filter-satuan').change(function () {
+         table.column( $(this).data('column'))
+         .search( $(this).val() )
+         .draw();
+     });
+
+    $('.filter-coin-pair').change(function () {
+         table.column( $(this).data('column'))
+         .search( $(this).val() )
+         .draw();
+     });
+
     </script>
 @endsection

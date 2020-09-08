@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableInterface;
 use Illuminate\Notifications\Notifiable;
+use App\Models\User\Deposit;
+
 class User extends Authenticatable implements AuditableInterface
 {
     use Auditable, Notifiable;
@@ -17,6 +19,7 @@ class User extends Authenticatable implements AuditableInterface
      *
      * @var array
      */
+    protected $primaryKey = 'id';
     protected $fillable = ['username', 'password', 'email', 'user_role_management_id', 'remember_me', 'avatar', 'is_email_verified', 'is_financial_active', 'is_accessible_under_maintenance', 'google2fa_secret', 'is_active', 'created_by_admin','referral_code','referrer_id'];
 
     protected $fakeFields = ['username', 'password', 'email', 'user_role_management_id', 'remember_me', 'avatar', 'is_email_verified', 'is_financial_active', 'is_accessible_under_maintenance', 'google2fa_secret', 'is_active', 'created_by_admin'];
@@ -63,5 +66,9 @@ class User extends Authenticatable implements AuditableInterface
     public function receivesBroadcastNotificationsOn()
     {
         return 'users.'.$this->id;
+    }
+
+    public function depositTrader(){
+        return $this->belongsTo(Deposit::class);
     }
 }

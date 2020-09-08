@@ -33,29 +33,14 @@ class BankNameController extends Controller
 
  	}   
 
+    public function bankTraderJson()
+    {
+        return $this->bankName->getAllListBankJson(Auth::id());
+    }
+
  	public function index(){
 
- 		$searchFields = [
-            ['bank_name', __('Bank Name')],
-            ['account_number', __('Account Number')],
-        ];
-
-        $orderFields = [
-            ['bank_name', __('Bank Name')],
-            ['account_number', __('Account Number')],
-            ['user_bank.created_at', __('Created Date')],
-        ];
-
-         $whereArray = ['users_id' => Auth::user()->id];
-        $select = ['user_bank.*'];
-        $joinArray = ['users', 'users.id', '=', 'user_bank.users_id'];
-
-        $query = $this->bankName->paginateWithFilters($searchFields, $orderFields, $whereArray, $select, $joinArray);
-        $data['list'] = app(DataListService::class)->dataList($query, $searchFields, $orderFields);
-        $data['title'] = __('List Bank');
-
-        return view('backend.userBank.index', $data);
-
+        return view('backend.userBank.index');
  	}
 
 

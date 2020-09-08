@@ -4,8 +4,9 @@ Route::group(['namespace' => 'User\Admin'], function () {
     Route::get('/dashboard', 'DashboardController')->name('dashboard');
 
     Route::get('users/{id}/wallets', 'UsersController@wallets')->name('admin.users.wallets');
+    Route::get('users/{id}/wallets-json', 'UsersController@walletsJson')->name('admin.users.wallets.json');
     Route::get('users/{id}/wallets/{walletId}', 'UsersController@editWalletBalance')->name('admin.users.wallets.edit')->where('walletId', '[0-9]+');
-    Route::get('users/{id}/wallets/{walletId}/depositId/{depositId}', 'UsersController@editWalletBalanceBank')->name('admin.users.wallets.editBankBalance')->where('walletId', '[0-9]+');
+    Route::get('users/{id}/walletsBank/{walletId}/{depositId?}', 'UsersController@editWalletBalanceBank')->name('admin.users.wallets.editBankBalance')->where('walletId', '[0-9]+');
 
 
     Route::post('users/{id}/wallets/{walletId}/update', 'UsersController@updateWalletBalance')->name('admin.users.wallets.update')->where('walletId', '[0-9]+');
@@ -28,6 +29,8 @@ Route::group(['namespace' => 'User\Admin'], function () {
     Route::get('coin-pairs/json', 'StockPairController@json')->name('admin.stock-pairs.json');
 
     Route::get('review-withdrawals', 'WithdrawalController@index')->name('admin.review-withdrawals.index');
+    Route::get('review-withdrawals-bank-json','WithdrawalController@withdrawalsBankTransferJson')->name('admin.review-withdrawals-bank.json');
+    Route::get('review-withdrawals-cryptocurrency-json','WithdrawalController@withdrawalCryptoCurrencyJson')->name('admin.review-withdrawals-cryptocurrency.json');
     Route::get('review-withdrawals/{id}/show', 'WithdrawalController@show')->name('admin.review-withdrawals.show');
     Route::put('review-withdrawals/{id}/approve', 'WithdrawalController@approve')->name('admin.review-withdrawals.approve');
     Route::put('review-withdrawals/{id}/approveBank', 'WithdrawalController@approveBank')->name('admin.review-withdrawals.approveBank');

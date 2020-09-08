@@ -21,27 +21,13 @@ class RpcController extends Controller
     	$this->rpcrepository = $rpcrepository;
     }
 
+		public function rpcJson()
+		{
+			return $this->rpcrepository->listRpcJson();
+		}
+
     public function index(){
-
- 		$searchFields = [
-            ['stock_items.item', __('Coin Name')],
-            ['port', __('Port Number')],
-        ];
-
-        $orderFields = [
-            ['stock_items.item', __('Coin Name')],
-            ['port', __('Port Number')],
-        ];
-
-        $joinArray = ['stock_items', 'stock_items.id', '=', 'rpc_port.stock_item_id'];
-        $select = ['rpc_port.*','stock_items.item'];
-
-        $query = $this->rpcrepository->paginateWithFilters($searchFields, $orderFields,null, $select, $joinArray);
-        $data['list'] = app(DataListService::class)->dataList($query, $searchFields, $orderFields);
-        $data['title'] = __('List RPC Port API');
-
-        return view('backend.rpcport.index', $data);
-
+        return view('backend.rpcport.index');
  	}
 
  	 public function create(){

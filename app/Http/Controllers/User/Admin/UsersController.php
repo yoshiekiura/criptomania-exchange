@@ -23,10 +23,12 @@ use App\Models\User\DepositBankTransfer;
 class UsersController extends Controller
 {
     protected $user;
+    protected $walletRepository;
 
-    public function __construct(UserInterface $user)
+    public function __construct(UserInterface $user, WalletInterface $walletRepository)
     {
         $this->user = $user;
+        $this->walletRepository = $walletRepository;
     }
 
     public function json()
@@ -143,10 +145,20 @@ class UsersController extends Controller
         return redirect()->route('users.edit.status', $id)->with(SERVICE_RESPONSE_SUCCESS, __('User status has been updated successfully.'));
     }
 
+    public function walletsJson($id)
+    {
+        // $data['list'] = app(WalletService::class)->getWallets($id);
+        // $data['title'] = __('Wallets');
+
+        $data = $this->walletRepository->getWalletJson($id);
+
+        return $data;
+    }
+
     public function wallets($id)
     {
-        $data['list'] = app(WalletService::class)->getWallets($id);
-        $data['title'] = __('Wallets');
+        // $data['list'] = app(WalletService::class)->getWallets($id);
+        $data['id'] = $id;
 
         return view('backend.users.wallets.index', $data);
     }
@@ -159,11 +171,15 @@ class UsersController extends Controller
         return view('backend.users.wallets.edit', $data);
     }
 
-     public function editWalletBalanceBank($id, $walletId, $depoId)
+     public function editWalletBalanceBank($id, $walletId, $depoId = null)
     {
         // $data['depoId'] = DepositBankTransfer::find($depoId);
         $data['wallet'] = app(WalletInterface::class)->getFirstByConditions(['id' => $walletId, 'user_id' => $id]);
-        $data['depositBank'] = app(DepositBankInterface::class)->getFirstByConditions(['id' => $depoId]);
+       
+        if(!is_null($depoId))
+        {
+             $data['depositBank'] = app(DepositBankInterface::class)->getFirstByConditions(['id' => $depoId]);
+        }
         $data['title'] = __('Modify Wallet Balance');
 
         return view('backend.users.wallets.editBankWallet', $data);
@@ -197,7 +213,7 @@ class UsersController extends Controller
                     'stock_item_id' => $wallet->stock_item_id,
                     'model_name' => null,
                     'model_id' => null,
-                    'transaction_type' => TRANSACTION_TYPE_DEBIT,
+                    'transaction_type' =>  $wallet->stockItem->api_service == BANK_TRANSFER ? TRANSACTION_TYPE_TRANSFER : TRANSACTION_TYPE_DEBIT,
                     'amount' => bcmul($request->amount, '-1'),
                     'journal' => DECREASED_FROM_SYSTEM_ON_TRANSFER_BY_ADMIN,
                     'updated_at' => $date,
@@ -208,7 +224,7 @@ class UsersController extends Controller
                     'stock_item_id' => $wallet->stock_item_id,
                     'model_name' => get_class($wallet),
                     'model_id' => $wallet->id,
-                    'transaction_type' => TRANSACTION_TYPE_CREDIT,
+                    'transaction_type' => $wallet->stockItem->api_service == BANK_TRANSFER ? TRANSACTION_TYPE_TRANSFER : TRANSACTION_TYPE_CREDIT,
                     'amount' => bcmul($request->amount, '1'),
                     'journal' => INCREASED_TO_USER_WALLET_ON_TRANSFER_BY_ADMIN,
                     'updated_at' => $date,

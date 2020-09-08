@@ -27,6 +27,11 @@ class WalletService
         $this->walletRepository = $wallet;
     }
 
+    public function getWalletJson($userId)
+    {
+        return $this->walletRepository->getWalletJson($userId);
+    }
+
     public function getWallets($userId)
     {
         $searchFields = [

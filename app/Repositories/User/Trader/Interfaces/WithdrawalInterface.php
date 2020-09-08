@@ -6,6 +6,8 @@ interface WithdrawalInterface
 {
      public function getLast24hrWithrawalAmount(array $conditions);
      public function withdrawAll();
+     public function withdrawalCryptoCurrency();
+
 
 
 }

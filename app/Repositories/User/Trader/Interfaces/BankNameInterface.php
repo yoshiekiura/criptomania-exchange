@@ -8,5 +8,6 @@ interface BankNameInterface
     public function getBankNameCountByConditions(array $conditions);
 
     public function getBankNameById($userId);
+    public function getAllListBankJson($userId);
     
 }

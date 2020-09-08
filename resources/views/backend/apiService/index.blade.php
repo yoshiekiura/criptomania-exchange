@@ -9,7 +9,7 @@
                     <table class="table datatable dt-responsive display nowrap dc-table" style="width: 100% !important;">
                         <thead>
                         <tr>
-                            <th class="all text-center">{{ __('Api Core') }}</th>
+                            <!-- <th class="all text-center">{{ __('Api Core') }}</th> -->
                             <th class="text-center">{{ __('Api Name') }}</th>
                             <th class="text-center">{{ __('Created At') }}</th>
                             <!-- <th class="text-center all no-sort">{{ __('Action') }}</th> -->
@@ -18,7 +18,7 @@
                         <tbody>
                         @foreach($list['query'] as $apiservices)
                             <tr>
-                                <td class="text-center">{{ array_key_exists($apiservices->api_value, api_services()) ? api_services($apiservices->api_value) : '' }}</td>
+                                <!-- <td class="text-center">{{ array_key_exists($apiservices->api_value, api_services()) ? api_services($apiservices->api_value) : '' }}</td> -->
                                 <td class="text-center">{{ $apiservices->api_name }}</td>
                                 <td class="text-center">{{ $apiservices->created_at->toFormattedDateString() }}</td>
 

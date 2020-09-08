@@ -32,6 +32,7 @@ Route::put('admin-settings/{admin_setting_type}/update', 'Core\AdminSettingContr
 Route::resource('system-notices', 'Core\SystemNoticeController')->except(['show'])->parameter('system-notices', 'id');
 
 //User Specific Notice
+Route::get('notices/json','User\NotificationController@notificationJson')->name('notices.json');
 Route::get('notices','User\NotificationController@index')->name('notices.index');
 Route::get('notices/{id}/read','User\NotificationController@markAsRead')->name('notices.mark-as-read');
 Route::get('notices/{id}/unread','User\NotificationController@markAsUnread')->name('notices.mark-as-unread');
@@ -42,6 +43,7 @@ Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->n
 
 //Laravel Audits
 Route::get('audits', 'Core\AuditsController@index')->name('audits.index');
+Route::get('audits/json', 'Core\AuditsController@auditsJson')->name('audits.json');
 
 // Route::get('rpcport','Core\RpcController@index')->name('rpc.index.list');
 // Route::get('rpcport/create','Core\RpcController@create')->name('rpc.port.create');
@@ -49,6 +51,7 @@ Route::get('audits', 'Core\AuditsController@index')->name('audits.index');
 
 // rpc port
 Route::resource('rpcport', 'Core\RpcController')->except(['show'])->parameter('rpcport', 'id');
+Route::get('rpcport/json','Core\RpcController@rpcJson')->name('rpcport.json');
 
 
 //Ajax route

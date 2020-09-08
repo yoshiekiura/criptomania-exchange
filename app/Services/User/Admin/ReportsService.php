@@ -9,6 +9,7 @@ use App\Repositories\User\Trader\Interfaces\DepositBankInterface;
 use App\Repositories\User\Trader\Interfaces\ReferralEarningInterface;
 use App\Repositories\User\Trader\Interfaces\StockOrderInterface;
 use App\Repositories\User\Trader\Interfaces\WithdrawalInterface;
+use App\Models\User\Withdrawal;
 use App\Services\Core\DataListService;
 use Illuminate\Support\Facades\DB;
 use App\Models\Backend\StockExchange;
@@ -24,213 +25,270 @@ class ReportsService
     private $withdrawalRepository;
     private $depositBankRepo;
     private $model;
-    public function __construct(StockExchange $model, DepositInterface $deposit, WithdrawalInterface $withdrawal, DepositBankInterface $depositBank)
+    private $withdrawModel;
+    public function __construct(StockExchange $model, DepositInterface $deposit, WithdrawalInterface $withdrawal, DepositBankInterface $depositBank,
+                                Withdrawal $withdrawalModel)
     {
         $this->depositRepository = $deposit;
         $this->withdrawalRepository = $withdrawal;
         $this->depositBankRepo = $depositBank;
         $this->model = $model;
+        $this->withdrawalModel = $withdrawalModel;
     }
 
-    public function deposits($userId = null, $id = null, $transactionType = null)
+    // public function deposits($userId = null, $id = null, $transactionType = null)
+    // {
+    //     $searchFields = [
+    //         ['ref_id', __('Reference ID')],
+    //         ['amount', __('Amount')],
+    //         ['address', __('Address')],
+    //         ['txn_id', __('Transaction ID')],
+    //     ];
+
+    //     if (is_null($id)) {
+    //         $searchFields[] = ['item_name', __('Stock Name')];
+    //     }
+
+    //     $orderFields = [
+    //         ['created_at', __('Date')],
+    //     ];
+
+    //     if (is_null($id)) {
+    //         $orderFields[] = ['item_name', __('Stock Name')];
+    //     }
+
+    //     $where = null;
+
+    //     if (!is_null($userId)) {
+    //         $where['user_id'] = $userId;
+    //     } else {
+    //         $searchFields[] = ['email', __('Email')];
+    //     }
+
+    //     if (!is_null($transactionType)) {
+    //         $where['status'] = config('commonconfig.payment_slug.' . $transactionType);
+    //     }
+
+    //     $select = ['deposits.*', 'item', 'item_name', 'email'];
+    //     $joinArray = [
+    //         ['stock_items', 'stock_items.id', '=', 'deposits.stock_item_id'],
+    //         ['users', 'users.id', '=', 'deposits.user_id'],
+    //     ];
+
+    //     if (!is_null($id)) {
+    //         $where['wallet_id'] = $id;
+    //     }
+
+    //     $query = $this->depositRepository->paginateWithFilters($searchFields, $orderFields, $where, $select, $joinArray);
+
+    //     return app(DataListService::class)->dataList($query, $searchFields, $orderFields);
+    // }
+
+    // public function depositBankTransfer($userId = null, $id = null, $transactionType = null)
+    // {
+    //     $searchFields = [
+    //         ['ref_id', __('Reference ID')],
+    //         ['amount', __('Amount')],
+    //         ['admin_bank_id', __('Bank Name')],
+    //         ['users_id', __('Trader Name')],
+    //     ];
+
+    //     if (is_null($id)) {
+    //         $searchFields[] = ['item_name', __('Stock Name')];
+    //     }
+
+    //     $orderFields = [
+    //         ['created_at', __('Date')],
+    //     ];
+
+    //     if (is_null($id)) {
+    //         $orderFields[] = ['item_name', __('Stock Name')];
+    //     }
+
+    //     $where = null;
+
+    //     if (!is_null($userId)) {
+    //         $where['users_id'] = $userId;
+    //     } else {
+    //         $searchFields[] = ['email', __('Email')];
+    //     }
+
+    //     if (!is_null($transactionType)) {
+    //         $where['status'] = config('commonconfig.payment_slug.' . $transactionType);
+    //     }
+
+    //     $select = ['deposit_bank_transfer.*', 'item', 'item_name', 'email','bank_name','account_number','payment_prove'];
+    //     $joinArray = [
+    //         ['stock_items', 'stock_items.id', '=', 'deposit_bank_transfer.stock_item_id'],
+    //         ['users', 'users.id', '=', 'deposit_bank_transfer.users_id'],
+    //         ['list_bank','list_bank.id', '=' ,'deposit_bank_transfer.admin_bank_id'],
+    //     ];
+
+    //     if (!is_null($id)) {
+    //         $where['wallet_id'] = $id;
+    //     }
+
+    //     $query = $this->depositBankRepo->paginateWithFilters($searchFields, $orderFields, $where, $select, $joinArray);
+
+    //     return app(DataListService::class)->dataList($query, $searchFields, $orderFields);
+    // }
+     // public function withdrawals($userId = null, $id = null, $transactionType = null)
+    // {
+    //     $searchFields = [
+    //         ['ref_id', __('Reference ID')],
+    //         ['amount', __('Amount')],
+    //         ['address', __('Address')],
+    //         ['txn_id', __('Transaction ID')],
+    //     ];
+
+    //     if (is_null($id)) {
+    //         $searchFields[] = ['item_name', __('Stock Name')];
+    //     }
+
+    //     $orderFields = [
+    //         ['created_at', __('Date')],
+    //     ];
+
+    //     if (is_null($id)) {
+    //         $orderFields[] = ['item_name', __('Stock Name')];
+    //     }
+
+    //     $where = null;
+
+    //     if (!is_null($userId)) {
+    //         $where['user_id'] = $userId;
+    //     } else {
+    //         $searchFields[] = ['email', __('Email')];
+    //     }
+
+    //     if (!is_null($transactionType)) {
+    //         $where['status'] = config('commonconfig.payment_slug.' . $transactionType);
+    //     }
+
+    //     $select = ['withdrawals.*', 'item', 'item_name', 'email'];
+    //     $joinArray = [
+    //         ['stock_items', 'stock_items.id', '=', 'withdrawals.stock_item_id'],
+    //         ['users', 'users.id', '=', 'withdrawals.user_id'],
+    //     ];
+
+    //     if (!is_null($id)) {
+    //         $where['wallet_id'] = $id;
+    //     }
+
+    //     $query = $this->withdrawalRepository->paginateWithFilters($searchFields, $orderFields, $where, $select, $joinArray);
+
+    //     return app(DataListService::class)->dataList($query, $searchFields, $orderFields);
+    // }
+
+    // public function trades($userId = null, $categoryType = null, $stockPairId = null)
+    // {
+    //     $searchFields = [
+    //         ['stock_exchanges.stock_pair_id', __('Market')],
+    //     ];
+
+    //     $orderFields = [
+    //         ['stock_exchanges.created_at', __('Date')],
+    //     ];
+
+    //     $where = null;
+
+    //     if (!is_null($userId)) {
+    //         $where['stock_exchanges.user_id'] = $userId;
+    //     }
+
+    //     if (!is_null($categoryType)) {
+    //         $where['stock_orders.category'] = config('commonconfig.category_slug.' . $categoryType);
+
+    //     }
+
+    //     if (!is_null($stockPairId)) {
+    //         $where['stock_orders.stock_pair_id'] = $stockPairId;
+    //     }
+
+    //     $select = [
+    //         'stock_exchanges.*',
+    //         'stock_orders.category',
+    //         'stock_orders.maker_fee',
+    //         'stock_orders.taker_fee',
+    //         // stock item
+    //         'stock_items.id as stock_item_id',
+    //         'stock_items.item as stock_item_abbr',
+    //         'stock_items.item_name as stock_item_name',
+    //         'stock_items.item_type as stock_item_type',
+    //         // base item
+    //         'base_items.id as base_item_id',
+    //         'base_items.item as base_item_abbr',
+    //         'base_items.item_name as base_item_name',
+    //         'base_items.item_type as base_item_type',
+    //         'email',
+    //     ];
+    //     $joinArray = [
+    //         ['stock_pairs', 'stock_pairs.id', '=', 'stock_exchanges.stock_pair_id'],
+    //         ['stock_orders', 'stock_orders.id', '=', 'stock_exchanges.stock_order_id'],
+    //         ['stock_items', 'stock_items.id', '=', 'stock_pairs.stock_item_id'],
+    //         ['stock_items as base_items', 'base_items.id', '=', 'stock_pairs.base_item_id'],
+    //         ['users', 'users.id', '=', 'stock_exchanges.user_id'],
+    //     ];
+
+    //     $query = app(StockExchangeInterface::class)->paginateWithFilters($searchFields, $orderFields, $where, $select, $joinArray);
+
+    //     return app(DataListService::class)->dataList($query, $searchFields, $orderFields);
+    // }
+
+
+    public function withdrawalsBankTransfer()
     {
-        $searchFields = [
-            ['ref_id', __('Reference ID')],
-            ['amount', __('Amount')],
-            ['address', __('Address')],
-            ['txn_id', __('Transaction ID')],
-        ];
+      $query = $this->withdrawalModel->where('stock_items.item_type', CURRENCY_REAL)
+                                          ->join('stock_items', 'stock_items.id', '=', 'withdrawals.stock_item_id')
+                                          ->join('users', 'users.id', '=', 'withdrawals.user_id')
+                                          ->select([
+                                            'withdrawals.*',
+                                            'item',
+                                            'item_name',
+                                            'email'
+                                          ])->orderBy('created_at','desc')->get();
+      return DataTables::of($query)
+                        ->addIndexColumn()
+                        ->editColumn('stock-name',function($stockItem){
+                          return $stockItem->item_name.'('.$stockItem->item.')';
+                        })
+                        ->editColumn('amount',function($amount){
+                          return $amount->amount.'<span class="strong">'.$amount->item.'</span>';
+                        })
+                        ->editColumn('status',function($status){
+                          $span = '<span class="label label-'.config('commonconfig.payment_status.' . $status->status . '.color_class').'">'.payment_status($status->status).'
+                          </span>';
 
-        if (is_null($id)) {
-            $searchFields[] = ['item_name', __('Stock Name')];
-        }
+                          return $span;
+                        })
+                        ->editColumn('email',function($user){
+                          if(has_permission('users.show')){
+                            $email = '<a href="'.route('users.show', $user->user_id).'">'.$user->email.'</a>';
+                          }
+                          else{
+                            $email = $transaction->email;
+                          }
+                          return $email;
+                        })->addColumn('action',function($row){
+                            $btn = '<div class="btn-group pull-right">
+                                      <button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">
+                                          <i class="fa fa-gear"></i>
+                                      </button>
+                                        <ul class="dropdown-menu pull-right">';
+                                        if(has_permission('admin.review-withdrawals.show')){
+                                            $btn .= '<li><a href="'.route('admin.review-withdrawals.show', $row->id).'">
+                                                        <i class="fa fa-eye"></i>'.__('Show').'</a>
+                                                    </li>';
+                                        }
 
-        $orderFields = [
-            ['created_at', __('Date')],
-        ];
+                            $btn .=      '</ul>
+                                    </div>';
 
-        if (is_null($id)) {
-            $orderFields[] = ['item_name', __('Stock Name')];
-        }
-
-        $where = null;
-
-        if (!is_null($userId)) {
-            $where['user_id'] = $userId;
-        } else {
-            $searchFields[] = ['email', __('Email')];
-        }
-
-        if (!is_null($transactionType)) {
-            $where['status'] = config('commonconfig.payment_slug.' . $transactionType);
-        }
-
-        $select = ['deposits.*', 'item', 'item_name', 'email'];
-        $joinArray = [
-            ['stock_items', 'stock_items.id', '=', 'deposits.stock_item_id'],
-            ['users', 'users.id', '=', 'deposits.user_id'],
-        ];
-
-        if (!is_null($id)) {
-            $where['wallet_id'] = $id;
-        }
-
-        $query = $this->depositRepository->paginateWithFilters($searchFields, $orderFields, $where, $select, $joinArray);
-
-        return app(DataListService::class)->dataList($query, $searchFields, $orderFields);
+                            return $btn;
+                        })->rawColumns(['stock-name','amount','status','email','action'])->make(true);
     }
 
-    public function depositBankTransfer($userId = null, $id = null, $transactionType = null)
-    {
-        $searchFields = [
-            ['ref_id', __('Reference ID')],
-            ['amount', __('Amount')],
-            ['admin_bank_id', __('Bank Name')],
-            ['users_id', __('Trader Name')],
-        ];
-
-        if (is_null($id)) {
-            $searchFields[] = ['item_name', __('Stock Name')];
-        }
-
-        $orderFields = [
-            ['created_at', __('Date')],
-        ];
-
-        if (is_null($id)) {
-            $orderFields[] = ['item_name', __('Stock Name')];
-        }
-
-        $where = null;
-
-        if (!is_null($userId)) {
-            $where['users_id'] = $userId;
-        } else {
-            $searchFields[] = ['email', __('Email')];
-        }
-
-        if (!is_null($transactionType)) {
-            $where['status'] = config('commonconfig.payment_slug.' . $transactionType);
-        }
-
-        $select = ['deposit_bank_transfer.*', 'item', 'item_name', 'email','bank_name','account_number','payment_prove'];
-        $joinArray = [
-            ['stock_items', 'stock_items.id', '=', 'deposit_bank_transfer.stock_item_id'],
-            ['users', 'users.id', '=', 'deposit_bank_transfer.users_id'],
-            ['list_bank','list_bank.id', '=' ,'deposit_bank_transfer.admin_bank_id'],
-        ];
-
-        if (!is_null($id)) {
-            $where['wallet_id'] = $id;
-        }
-
-        $query = $this->depositBankRepo->paginateWithFilters($searchFields, $orderFields, $where, $select, $joinArray);
-
-        return app(DataListService::class)->dataList($query, $searchFields, $orderFields);
-    }
-
-    public function withdrawals($userId = null, $id = null, $transactionType = null)
-    {
-        $searchFields = [
-            ['ref_id', __('Reference ID')],
-            ['amount', __('Amount')],
-            ['address', __('Address')],
-            ['txn_id', __('Transaction ID')],
-        ];
-
-        if (is_null($id)) {
-            $searchFields[] = ['item_name', __('Stock Name')];
-        }
-
-        $orderFields = [
-            ['created_at', __('Date')],
-        ];
-
-        if (is_null($id)) {
-            $orderFields[] = ['item_name', __('Stock Name')];
-        }
-
-        $where = null;
-
-        if (!is_null($userId)) {
-            $where['user_id'] = $userId;
-        } else {
-            $searchFields[] = ['email', __('Email')];
-        }
-
-        if (!is_null($transactionType)) {
-            $where['status'] = config('commonconfig.payment_slug.' . $transactionType);
-        }
-
-        $select = ['withdrawals.*', 'item', 'item_name', 'email'];
-        $joinArray = [
-            ['stock_items', 'stock_items.id', '=', 'withdrawals.stock_item_id'],
-            ['users', 'users.id', '=', 'withdrawals.user_id'],
-        ];
-
-        if (!is_null($id)) {
-            $where['wallet_id'] = $id;
-        }
-
-        $query = $this->withdrawalRepository->paginateWithFilters($searchFields, $orderFields, $where, $select, $joinArray);
-
-        return app(DataListService::class)->dataList($query, $searchFields, $orderFields);
-    }
-
-    public function trades($userId = null, $categoryType = null, $stockPairId = null)
-    {
-        $searchFields = [
-            ['stock_exchanges.stock_pair_id', __('Market')],
-        ];
-
-        $orderFields = [
-            ['stock_exchanges.created_at', __('Date')],
-        ];
-
-        $where = null;
-
-        if (!is_null($userId)) {
-            $where['stock_exchanges.user_id'] = $userId;
-        }
-
-        if (!is_null($categoryType)) {
-            $where['stock_orders.category'] = config('commonconfig.category_slug.' . $categoryType);
-
-        }
-
-        if (!is_null($stockPairId)) {
-            $where['stock_orders.stock_pair_id'] = $stockPairId;
-        }
-
-        $select = [
-            'stock_exchanges.*',
-            'stock_orders.category',
-            'stock_orders.maker_fee',
-            'stock_orders.taker_fee',
-            // stock item
-            'stock_items.id as stock_item_id',
-            'stock_items.item as stock_item_abbr',
-            'stock_items.item_name as stock_item_name',
-            'stock_items.item_type as stock_item_type',
-            // base item
-            'base_items.id as base_item_id',
-            'base_items.item as base_item_abbr',
-            'base_items.item_name as base_item_name',
-            'base_items.item_type as base_item_type',
-            'email',
-        ];
-        $joinArray = [
-            ['stock_pairs', 'stock_pairs.id', '=', 'stock_exchanges.stock_pair_id'],
-            ['stock_orders', 'stock_orders.id', '=', 'stock_exchanges.stock_order_id'],
-            ['stock_items', 'stock_items.id', '=', 'stock_pairs.stock_item_id'],
-            ['stock_items as base_items', 'base_items.id', '=', 'stock_pairs.base_item_id'],
-            ['users', 'users.id', '=', 'stock_exchanges.user_id'],
-        ];
-
-        $query = app(StockExchangeInterface::class)->paginateWithFilters($searchFields, $orderFields, $where, $select, $joinArray);
-
-        return app(DataListService::class)->dataList($query, $searchFields, $orderFields);
-    }
+   
 
     public function tradesJson($userId = null, $categoryType = null, $stockPairId = null)
     {
@@ -268,7 +326,7 @@ class ReportsService
                                   'base_items.item_type as base_item_type',
                                   'email',
 
-                                ])->get();
+                                ])->orderBy('stock_exchanges.created_at','desc')->get();
 
 
                             // $dec = json_decode($data);

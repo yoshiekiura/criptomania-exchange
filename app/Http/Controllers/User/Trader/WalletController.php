@@ -49,14 +49,20 @@ class WalletController extends Controller
     /*
         Modified by : Muhammad Rizky Firdaus & Muhammad Fatur Prayuda
         Date        : 13-08-2020
-        Description : Adding new statement in index() method to calling bitcoin IPN
+        Description : 
 
-        NOTE: This method may not work for other cryptocurrencies, this method is still under development.
     */
+    public function walletJsonIndex()
+    {
+        $this->walletRepository->createUnavailableWallet(Auth::id());
+        $data = $this->walletRepository->getWalletJsonTrader(Auth::id());
+
+        return $data;
+
+    }
     public function index()
     {
         $this->walletRepository->createUnavailableWallet(Auth::id());
-        $data['list'] = $this->walletService->getWallets(Auth::id());
         $data['title'] = __('Wallets');
         return view('frontend.wallets.index', $data);
     }

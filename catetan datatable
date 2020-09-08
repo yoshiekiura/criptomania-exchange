@@ -1,0 +1,51 @@
+Datatable yang belom:
+
+App Control -> Audits -- selesai
+RPC Port -> RPC List -- selesai
+Notice Board -> [
+      My Notice -- selesai
+      System Notice -- ini gampang (BISA ENTAR)
+  ]
+Reviews -> [
+  Review Withdrawals (Mao dikasih 2 table niatnya, tapi belom dicoba,, coba ae dulu nanti) -- udah bisa dong
+  Review Request Deposit Bank Trader
+]
+Coin Management -> [
+  All Coins
+  All Api Service
+]
+List Bank -> All List Bank
+ID Management
+
+Reports -> [
+  Deposit History All
+  Withdrawal History All
+]
+
+#Buat datatable di public function withdrawalsBankTransfer() -> ReportsService
+#Buat datatable di withdrawalCryptoCurrency() -> WithdrawalRepository
+
+
+Datatable untuk trader
+[
+	
+	Route::resource('wallets', 'WalletController')->only(['index'])->parameter('wallets', 'id')->names('trader.wallets') -> WalletService.php,
+
+    Route::get('deposits/{paymentTransactionType?}', 'ReportsController@allDeposits')->name('reports.trader.all-deposits'),
+
+    Route::get('withdrawals/{paymentTransactionType?}', 'ReportsController@allWithdrawals')->name('reports.trader.all-withdrawals'),
+
+	trader bank
+
+    Route::get('my-trades/{categoryType?}', 'ReportsController@trades')->name('reports.trader.trades') -> reports.php 
+
+    Route::get('my-open-orders', 'OrdersController@openOrders')->name('trader.orders.open-orders') -> trader.php
+
+    Referral
+
+    Route::get('wallet/{id}/deposits/{paymentTransactionType?}', 'ReportsController@deposits')->name('reports.trader.deposits');
+
+    Route::get('wallet/{id}/withdrawals/{paymentTransactionType?}', 'ReportsController@withdrawals')->name('reports.trader.withdrawals');
+    
+
+]

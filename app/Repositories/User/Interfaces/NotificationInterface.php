@@ -22,4 +22,7 @@ interface NotificationInterface
     public function countUnread($userId);
 
     public function getLastFive($userId);
+
+    public function notificationJson();
+
 }
