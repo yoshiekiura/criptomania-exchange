@@ -5,9 +5,9 @@
         </div>
 </div>
 
-{{-- <div class="row">
+<div class="row">
     <div class="col-md-6 text-center">
-        <ul id="candlestick_zoom" class="pagination pagination-sm">
+        {{-- <ul id="candlestick_zoom" class="pagination pagination-sm">
             <li class="active page-item"><span class="page-link">{{ __('Zoom') }}</span></li>
 <li class="{{ $chartZoom == 360 ? 'disabled' : '' }} page-item"><a data-zoom="360" class="page-link"
                 href="javascript:">{{ __('6h') }}</a></li>
@@ -25,7 +25,7 @@
                 href="javascript:">{{ __('1M') }}</a></li>
 <li class="{{ $chartZoom == 0 ? 'disabled' : '' }} page-item"><a data-zoom="0" class="page-link"
                 href="javascript:">{{ __('All') }}</a></li>
-</ul>
+</ul> --}}
 </div>
 <div class="col-md-6 text-center">
         <ul id="candlestick" class="pagination pagination-sm">
@@ -44,4 +44,4 @@
                                 class="page-link" href="javascript:">{{ __('1D') }}</a></li>
         </ul>
 </div>
-</div> --}}
+</div>
