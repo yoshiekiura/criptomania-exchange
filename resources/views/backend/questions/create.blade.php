@@ -1,29 +1,34 @@
 @extends('backend.layouts.main_layout')
 @section('title', $title)
 @section('content')
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="box box-primary box-borderless">
-                <div class="box-body">
-                    <div class="row">
-                        <div class="col-sm-8 col-sm-offset-2">
-                            {{ Form::open(['route'=>'trader.questions.store', 'method' => 'post', 'class'=>'form-horizontal validator','files'=> true]) }}
-                            @include('backend.questions._form',['buttonText' => __('Create')])
-                            {{ Form::close() }}
+<div class="card">
+    <div class="card-body">
+        <div class="">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="box box-primary box-borderless">
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-sm-12 col-sm-offset-2">
+                                    {{ Form::open(['route'=>'trader.questions.store', 'method' => 'post', 'class'=>'form-horizontal validator','files'=> true]) }}
+                                    @include('backend.questions._form',['buttonText' => __('Create')])
+                                    {{ Form::close() }}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 @endsection
 
 @section('script')
-    <script src="{{ asset('common/vendors/tinymce/tinymce.min.js') }}"></script>
-    <script src="{{ asset('common/vendors/cvalidator/cvalidator.js') }}"></script>
-    <script>
-
-        tinymce.init({
+<script src="{{ asset('common/vendors/tinymce/tinymce.min.js') }}"></script>
+<script src="{{ asset('common/vendors/cvalidator/cvalidator.js') }}"></script>
+<script>
+    tinymce.init({
             selector: "#content_textarea",
             menubar: false,
             theme: "modern",
@@ -60,6 +65,5 @@
             $('.validator').cValidate();
 
         });
-    </script>
+</script>
 @endsection
-

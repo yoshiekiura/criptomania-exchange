@@ -112,7 +112,6 @@
             orientation: 'bottom',
             todayHighlight: true,
         });
-
         $('a').tooltip();
     </script>
 @endsection

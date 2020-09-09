@@ -28,13 +28,12 @@
 @section('script')
     <!-- for datatable and date picker -->
     <script src="{{ asset('common/vendors/datepicker/datepicker.js') }}"></script>
-    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js"></script>
-
+    <script src="{{ asset('common/vendors/datatable_responsive/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('common/vendors/datatable_responsive/datatables/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('common/vendors/datatable_responsive/datatables/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('common/vendors/datatable_responsive/datatables/responsive.bootstrap4.min.js') }}"></script>
     <script type="text/javascript">
-        //Init jquery Date Picker
+    //Init jquery Date Picker
         $('.datepicker').datepicker({
             format: 'yyyy-mm-dd',
             autoclose: true,
@@ -64,10 +63,11 @@
         {data: 'username', name: 'username'},
         {data: 'created_at', name: 'users.created_at'},
         {data: 'is_active', name: 'is_active',className:'text-center'},
-        {data: 'action', name: 'action', orderable: false, searchable: false,className:'cm-action'},
+        {data: 'action', name: 'action', orderable: false, searchable: false,className:'text-center cm-action'},
     ]
 });
 
 
     </script>
 @endsection
+

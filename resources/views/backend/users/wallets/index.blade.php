@@ -27,12 +27,12 @@ $bankName = \App\Models\User\DepositBankTransfer::all();
 @section('script')
     <!-- for datatable and date picker -->
     <script src="{{ asset('common/vendors/datepicker/datepicker.js') }}"></script>
-    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js"></script>
+    <script src="{{ asset('common/vendors/datatable_responsive/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('common/vendors/datatable_responsive/datatables/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('common/vendors/datatable_responsive/datatables/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('common/vendors/datatable_responsive/datatables/responsive.bootstrap4.min.js') }}"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
+    $(document).ready(function () {
             //Init jquery Date Picker
             $('.datepicker').datepicker({
                 format: 'yyyy-mm-dd',
@@ -63,3 +63,4 @@ $bankName = \App\Models\User\DepositBankTransfer::all();
 
     </script>
 @endsection
+

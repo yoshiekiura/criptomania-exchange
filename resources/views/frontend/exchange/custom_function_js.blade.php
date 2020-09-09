@@ -254,9 +254,9 @@
             success: function (data) {
                 chartData = data;
                 makeChart(document.getElementById('echart'), chartData);
-                $(window).resize(function () {
-                    eChart.resize();
-                })
+                // $(window).resize(function () {
+                //     eChart.resize();
+                // })
             }
         });
     }
@@ -301,7 +301,7 @@
             paging: false,
             searching: false,
             info: false,
-            scrollY: 385,
+            // scrollY: 385,
             ajax: {
                 url: '{{ route('exchange.get-orders') }}',
                 data: {
@@ -403,7 +403,7 @@
             order: [[0, 'asc']],
             searching: false,
             info: false,
-            scrollY: 385,
+            // scrollY: 385,
             ajax: {
                 url: '{{ route('exchange.get-orders') }}',
                 data: {
@@ -578,7 +578,7 @@
             searching: false,
             order: [[0, 'desc']],
             info: false,
-            scrollY: 300,
+            // scrollY: 300,
             scrollCollapse: true,
             ajax: {
                 url: '{{ route('exchange.get-my-trade') }}',
@@ -644,7 +644,7 @@
             searching: false,
             order: [[0, 'desc']],
             info: false,
-            scrollY: 300,
+            // scrollY: 300,
             scrollCollapse: true,
             ajax: {
                 url: '{{ route('exchange.get-trade-histories') }}',
@@ -690,7 +690,7 @@
             ]
         });
 
-        initScroller();
+        // initScroller();
     }
 
     function rowHighlight(row, className, animationTime = 1000) {

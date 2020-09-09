@@ -54,30 +54,28 @@
             </div>
         </div>
     </div>
-
-   
 @endsection
 
 
 @section('script')
-    <!-- for datatable and date picker -->
-    <script src="{{ asset('common/vendors/datepicker/datepicker.js') }}"></script>
-    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js"></script>
-    <script type="text/javascript">
-        //Init jquery Date Picker
+<!-- for datatable and date picker -->
+<script src="{{ asset('common/vendors/datepicker/datepicker.js') }}"></script>
+<script src="{{ asset('common/vendors/datatable_responsive/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('common/vendors/datatable_responsive/datatables/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('common/vendors/datatable_responsive/datatables/dataTables.responsive.min.js') }}"></script>
+<script src="{{ asset('common/vendors/datatable_responsive/datatables/responsive.bootstrap4.min.js') }}"></script>
+<script type="text/javascript">
+    //Init jquery Date Picker
         $('.datepicker').datepicker({
             format: 'yyyy-mm-dd',
             autoclose: true,
             orientation: 'bottom',
             todayHighlight: true,
         });
-    </script>
+</script>
 
-    <script>
-        $(document).ready(function(){
+<script>
+    $(document).ready(function(){
      // Upload
      $(document).on('click', '.show-struck', function() {
      // this part
@@ -85,9 +83,9 @@
    });
 
 });
-    </script>
+</script>
 
-    <script>
+<script>
         var table = $('#all-depositBank-trader').DataTable({
             processing: true,
             serverSide: true,
@@ -124,5 +122,5 @@
      //     .search( $(this).val() )
      //     .draw();
      // });
-    </script>
+</script>
 @endsection

@@ -41,7 +41,7 @@ class UserRoleManagementRepository extends BaseRepository implements UserRoleMan
                               <button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">
                                   <i class="fa fa-gear"></i>
                               </button>
-                              <ul class="dropdown-menu pull-right">';
+                              <ul class="dropdown-menu pull-right" style="min-width: 6rem;">';
 
 
                             if(has_permission('user-role-managements.edit')){

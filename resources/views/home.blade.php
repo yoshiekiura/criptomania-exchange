@@ -1,4 +1,34 @@
 @include('frontend.mobiris._header')
+<style>
+  .baner-img-coin{
+    margin-top:12px;
+  }
+
+  .baner-status{
+    margin-left:-65px;
+  }
+
+  .img-coin{
+    width:45%;
+  }
+
+
+  @media (max-width: 768px) { 
+    .baner-img-coin{
+    margin-top:12px;
+    margin-left:50px;
+    }
+
+    .baner-status{
+      margin-left:-145px;
+    }
+
+      .img-coin{
+      width:25%;
+    }
+ }
+</style>
+
 
 <body>
 
@@ -20,22 +50,28 @@
             @foreach($stockPairs as $stockPair)
 
             <li class="glide__slide">
+              <div class="row">
+                <div class="col-6 baner-img-coin">
+                  <img src="{{ get_item_emoji($stockPair->item_emoji) }}" class="img-coin">
+                </div>
+                <div class="col-6 baner-status">
+                   <h5 style="font-size:15px">{{ $stockPair->stock_item_abbr }}</h5>
+                    <h5 style="font-size:15px">{{ number_format($stockPair->last_price)  }} {{ $stockPair->base_item_abbr }}</h5>
+                    <h5 style="font-size:15px">
 
-              <h5 style="font-size:15px">{{ $stockPair->stock_item_abbr }}/{{ $stockPair->base_item_abbr }}</h5>
-              <h5 style="font-size:15px">Last Price: {{ number_format($stockPair->last_price) }}</h5>
-              <h5 style="font-size:15px">
-
-                @if($stockPair->change_24 > 0)
-                <i class="fa fa-sort-up text-green"></i>
-                @elseif($stockPair->change_24 < 0) <i class="fa fa-sort-down text-red"></i>
-                  @else
-                  <i class="fa fa-sort text-gray"></i>
-                  @endif
-                  <span style="font-size:15px">{{ number_format($stockPair->change_24,2) }}%</span>
+                      @if($stockPair->change_24 > 0)
+                      <i class="fa fa-sort-up text-green"></i>
+                      @elseif($stockPair->change_24 < 0) <i class="fa fa-sort-down text-red"></i>
+                        @else
+                        <i class="fa fa-sort text-gray"></i>
+                        @endif
+                        <span style="font-size:15px">{{ number_format($stockPair->change_24,2) }}%</span>
 
 
-              </h5>
-              <h5 style="font-size:15px">Volume: {{ number_format($stockPair->exchanged_base_item_volume_24, 3) }}</h5>
+                    </h5>
+                    <h5 style="font-size:15px">Volume: {{ number_format($stockPair->exchanged_base_item_volume_24, 3) }}</h5>
+                </div>
+              </div>
             </li>
             @endforeach
 

@@ -1,38 +1,44 @@
 @extends('backend.layouts.main_layout')
 @section('content')
 <h3 class="box-title">{{ __('RPC List') }}</h3>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="box box-primary box-borderless">
-                <div class="box-body">
-                    <table class="table datatable dt-responsive display nowrap dc-table" style="width: 100% !important;" id="rpc-list">
-                        <thead>
-                        <tr>
-                            <th class="all text-center">{{ __('Coin Name') }}</th>
-                            <th class="text-center">{{ __('Scheme') }}</th>
-                            <th class="text-center">{{ __('Host') }}</th>
-                            <th class="text-center">{{ __('Port') }}</th>
-                            <th class="text-center">{{ __('RPC User') }}</th>
-                            <th class="text-center">{{ __('RPC Password') }}</th>
-                            <th class="text-center">{{ __('Network Fee') }}</th>
-                            <th class="text-center">{{ __('CA') }}</th>
-                            <th class="text-center all no-sort">{{ __('Action') }}</th>
-                        </tr>
-                        </thead>
-                    </table>
+<div class="card">
+    <div class="card-body">
+        <div class="">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="box box-primary box-borderless">
+                        <div class="box-body">
+                            <table class="table datatable dt-responsive display nowrap dc-table" style="width: 100% !important;" id="rpc-list">
+                                <thead>
+                                <tr>
+                                    <th class="all text-center">{{ __('Coin Name') }}</th>
+                                    <th class="text-center">{{ __('Scheme') }}</th>
+                                    <th class="text-center">{{ __('Host') }}</th>
+                                    <th class="text-center">{{ __('Port') }}</th>
+                                    <th class="text-center">{{ __('RPC User') }}</th>
+                                    <th class="text-center">{{ __('RPC Password') }}</th>
+                                    <th class="text-center">{{ __('Network Fee') }}</th>
+                                    <th class="text-center">{{ __('CA') }}</th>
+                                    <th class="text-center all no-sort">{{ __('Action') }}</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 @endsection
 
 @section('script')
     <!-- for datatable and date picker -->
     <script src="{{ asset('common/vendors/datepicker/datepicker.js') }}"></script>
-    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.2.5/js/responsive.bootstrap4.min.js"></script>
+    <script src="{{ asset('common/vendors/datatable_responsive/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('common/vendors/datatable_responsive/datatables/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('common/vendors/datatable_responsive/datatables/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('common/vendors/datatable_responsive/datatables/responsive.bootstrap4.min.js') }}"></script>
     <script type="text/javascript">
         //Init jquery Date Picker
         $('.datepicker').datepicker({

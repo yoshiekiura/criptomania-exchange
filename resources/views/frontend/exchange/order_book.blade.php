@@ -1,49 +1,87 @@
-<div class="row">
-    <div class="col-md-6">
-        <div class="box box-borderless full-in-small">
-            <div class="box-header">
-                <h3 class="box-title text-uppercase">{{ __('Sell Orders') }}</h3>
-                <div class="pull-right text-bold">{{ __('Total') }}:
-                    <span id="total_sell_order_in_item"></span>
-                    <span class="stock_item"></span>
-                </div>
-            </div>
-            <div class="box-body pt-0" style="height: 465px">
-                <table id="sell_order_table"
-                       class="table table-hover table-striped table-responsive small exchange-table">
-                    <thead class="no-clicke-header">
-                    <tr>
-                        <th>{{ __('PRICE') }}</th>
-                        <th><span class="stock_item"></span></th>
-                        <th><span class="base_item"></span></th>
-                        <th class="hide_in_mobile_small">{{ __('SUM') }}(<span class="base_item"></span>)</th>
-                    </tr>
+<div class="col-md-3">
+    <div class="market-history" style="overflow:auto">
+        <ul class="nav nav-pills" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="pill" href="#market_trade" role="tab"
+                    aria-selected="true">{{ __('MARKET TRADES') }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="pill" href="#my_trade" role="tab"
+                    aria-selected="false">{{ __('MY TRADES') }}</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="market_trade" role="tabpanel">
+                <table id="trade_history_table" class="table table-hover table-responsive small exchange-table"
+                    style="width:100%">
+                    <thead>
+                        <tr>
+                            <th class="text-center">{{ __('PRICE') }}</th>
+                            <th class="text-center">{{ __('AMOUNT') }}</th>
+                            <th class="hide_in_mobile">{{ __('DATE') }}</th>
+                        </tr>
                     </thead>
                 </table>
             </div>
-        </div>
-    </div>
-
-    <div class="col-md-6">
-        <div class="box box-borderless full-in-small">
-            <div class="box-header">
-                <h3 class="box-title text-uppercase">{{ __('Buy Orders') }}</h3>
-                <div class="pull-right text-bold">{{ __('Total') }}:
-                    <span id="total_buy_order_in_base"></span>
-                    <span class="base_item"></span>
+            @auth
+            <div class="tab-pane fade show" id="my_trade" role="tabpanel">
+                <table id="my_trade_table" class="table table-hover table-responsive small exchange-table"
+                    style="width:100%">
+                    <thead>
+                        <tr>
+                            <th class="text-center">{{ __('PRICE') }}</th>
+                            <th class="text-center">{{ __('AMOUNT') }}</th>
+                            <th class="hide_in_mobile">{{ __('DATE') }}</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            @endauth
+            @guest
+            <div class="tab-pane fade show" id="my_trade" role="tabpanel">
+                <div class="text-center" style="margin-top: 50%; height: 240px">
+                    <a href="{{ route('login') }}">{{__('Login')}}</a> {{ __('or') }}
+                    <a href="{{ route('register.index') }}">{{ __('Register Now') }}</a>{{ __(' to trade') }}
                 </div>
             </div>
-
-            <div class="box-body pt-0" style="height: 465px">
-                <table id="buy_order_table"
-                       class="table table-hover table-striped table-responsive small exchange-table">
-                    <thead class="no-clicke-header">
-                    <tr>
-                        <th>{{ __('PRICE') }}</th>
-                        <th><span class="stock_item"></span></th>
-                        <th><span class="base_item"></span></th>
-                        <th class="hide_in_mobile_small">{{ __('SUM') }}(<span class="base_item"></span>)</th>
-                    </tr>
+            @endguest
+        </div>
+    </div>
+    <div class="active-order">
+        <ul class="nav nav-pills" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="pill" href="#buy_orders" role="tab"
+                    aria-selected="true">{{ __('BUY ORDERS') }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="pill" href="#sell_orders" role="tab"
+                    aria-selected="false">{{ __('SELL ORDERS') }}</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="buy_orders" role="tabpanel">
+                <table id="buy_order_table" class="table table-hover table-responsive small exchange-table"
+                    style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>{{ __('PRICE') }}</th>
+                            <th><span class="stock_item"></span></th>
+                            <th><span class="base_item"></span></th>
+                            <th class="hide_in_mobile_small">{{ __('SUM') }}(<span class="base_item"></span>)</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="tab-pane fade show" id="sell_orders" role="tabpanel">
+                <table id="sell_order_table" class="table table-hover table-responsive small exchange-table"
+                    style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>{{ __('PRICE') }}</th>
+                            <th><span class="stock_item"></span></th>
+                            <th><span class="base_item"></span></th>
+                            <th class="hide_in_mobile_small">{{ __('SUM') }}(<span class="base_item"></span>)</th>
+                        </tr>
                     </thead>
                 </table>
             </div>
