@@ -70,7 +70,7 @@ class RpcSettingRepository extends BaseRepository implements RpcInterface
                                 <button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">
                                     <i class="fa fa-gear"></i>
                                 </button>
-                                <ul class="dropdown-menu pull-right">';
+                                <ul class="dropdown-menu pull-right dropdown-menu-stock-pair">';
 
 
                               if(has_permission('rpcport.edit')){

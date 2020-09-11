@@ -1,6 +1,6 @@
 let eChart;
 const chartProperties = {
-    width: 675,
+    width: 875,
     height: 550,
     timeScale: {
         timeVisible: true,
@@ -104,14 +104,27 @@ function makeChart(element, data) {
     const cdata = data.map(d => {
         var date = new Date(d[0]);
         var milliseconds = date.getTime();
-        return {
-            time: milliseconds / 1000,
-            open: parseFloat(d[1]),
-            high: parseFloat(d[2]),
-            low: parseFloat(d[3]),
-            close: parseFloat(d[4])
+
+        var open = parseFloat(d[1])
+        var high = parseFloat(d[4])
+        var low = parseFloat(d[3])
+        var close = parseFloat(d[2])
+
+        if (open > 0 && high > 0 && low > 0 && close > 0) {
+            return {
+                time: milliseconds / 1000,
+                open: parseFloat(d[1]),
+                high: parseFloat(d[4]),
+                low: parseFloat(d[3]),
+                close: parseFloat(d[2])
+            }
+        } else {
+            return {
+                time: milliseconds / 1000,
+            }
         }
     });
+    console.log(cdata)
     candleSeries.setData(cdata);
 }
 

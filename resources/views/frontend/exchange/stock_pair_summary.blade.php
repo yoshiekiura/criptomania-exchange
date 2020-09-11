@@ -1,5 +1,5 @@
 <div class="summary-padding-fixer">
-<div class="row dc-clear">
+<div class="row-exchange-title dc-clear">
     <div class="col-md-4 col-sm-6 col-lg-2 text-center">
         <h3 class="box-title text-uppercase"><span class="stock_item"></span> {{ __('Exchange') }}
         </h3>

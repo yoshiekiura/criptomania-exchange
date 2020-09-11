@@ -15,6 +15,7 @@ Route::group(['namespace' => 'Reports\Admin'], function () {
         Route::get('open-orders/{userId?}', 'ReportsController@openOrders')->name('reports.admin.open-orders');
         Route::get('open-orders-json/{userId?}', 'ReportsController@openOrdersJson')->name('reports.admin.open-orders.json');
         Route::get('coins-pairs/{id}/open-orders', 'ReportsController@openOrdersByStockPairId')->name('reports.admin.stock-pairs.open-orders');
+        Route::get('coins-pairs/{id}/stock-pair-open-orders-json', 'ReportsController@openOrdersStockPairJson')->name('reports.admin.stock-pairs-id.open-orders');
         Route::get('transactions/{journalType?}', 'TransactionController@allUser')->name('reports.admin.transaction.all-users');
         Route::get('transactions/{id}/{journalType?}', 'TransactionController@user')->name('reports.admin.transaction.user');
     });

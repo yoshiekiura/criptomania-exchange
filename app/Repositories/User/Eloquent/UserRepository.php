@@ -61,7 +61,7 @@ class UserRepository extends BaseRepository implements UserInterface
                               <button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">
                                   <i class="fa fa-gear"></i>
                               </button>
-                              <ul class="dropdown-menu pull-right">';
+                              <ul class="dropdown-menu pull-right dropdown-menu-action-user">';
 
 
                             if(has_permission('users.edit')){

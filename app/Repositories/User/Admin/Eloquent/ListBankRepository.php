@@ -28,7 +28,7 @@ class ListBankRepository extends BaseRepository implements ListBankInterface
                                                 data-toggle="dropdown">
                                             <i class="fa fa-gear"></i>
                                         </button>
-                                        <ul class="dropdown-menu pull-right">';
+                                        <ul class="dropdown-menu dropdown-menu-stock-pair pull-right">';
 
                                             if(has_permission('admin.list-bank.edit')){
                                              $btn .= '<li>

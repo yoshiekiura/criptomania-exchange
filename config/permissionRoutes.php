@@ -200,6 +200,7 @@ return [
                     'reports.admin.open-orders',
                     'reports.admin.stock-pairs.trades',
                     'reports.admin.stock-pairs.open-orders',
+                    'reports.admin.stock-pairs-id.open-orders',
                     'reports.admin.transaction.all-users',
                     'reports.admin.transaction.user',
                     // 'reports.admin.transaction.user.json',

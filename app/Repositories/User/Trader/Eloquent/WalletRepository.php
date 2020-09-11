@@ -49,7 +49,7 @@ class WalletRepository extends BaseRepository implements WalletInterface
                                                         data-toggle="dropdown">
                                                     <i class="fa fa-gear"></i>
                                                 </button>
-                                                <ul class="dropdown-menu pull-right">';
+                                                <ul class="dropdown-menu pull-right dropdown-menu-stock-pair">';
                                     if($row->api_service == BANK_TRANSFER){
                                         if( has_permission('reports.admin.wallets.depositsBank')){
                                         
@@ -109,7 +109,7 @@ class WalletRepository extends BaseRepository implements WalletInterface
                                                         data-toggle="dropdown">
                                                     <i class="fa fa-gear"></i>
                                                 </button>
-                                                <ul class="dropdown-menu pull-right">';
+                                                <ul class="dropdown-menu pull-right dropdown-menu-stock-pair">';
                                                 
                                      if( has_permission('trader.wallets.deposit')){
                                                   $btn.= '<li>

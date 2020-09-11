@@ -8,14 +8,10 @@
                 <div class="col-sm-12 col-md-4">
                     <div class="box box-widget widget-user-2">
                         <div class="widget-user-header bg-green">
-                            <div class="widget-user-image">
-                                <img src="{{ get_avatar($user->user->avatar) }}" alt="{{ __('Avatar') }}"
-                                    class="img-responsive cm-center">
-                            </div>
                             <h3 class="widget-user-username">{{ $user->full_name }}</h3>
-                            <h5 class="widget-user-desc"><span
+                    <!--         <h5 class="widget-user-desc"><span
                                     class="label label-info">{{ $user->user->userRoleManagement->role_name }}</span>
-                            </h5>
+                            </h5> -->
                         </div>
                         <div class="box-footer no-padding">
                             <div class="user-info">
@@ -42,9 +38,10 @@
                             </div>
                             @if(has_permission('users.show'))
                             <hr class="maginless">
+                            <br>
                             <ul class="nav nav-stacked">
                                 <li><a href="{{ route('users.show', $user->user_id) }}" target="_blank"
-                                        class="text-center">{{ __('View Detail') }}</a></li>
+                                        class="btn btn-primary text-center">{{ __('View Detail') }}</a></li>
                             </ul>
                             @endif
                         </div>
@@ -59,22 +56,21 @@
                                     <h3 class="box-title">{!! __('ID Verification Request') !!}</h3>
                                     @if(has_permission('admin.stock-items.index'))
                                     <a href="{{ route('admin.id-management.index') }}"
-                                        class="btn btn-primary btn-sm back-button">{{ __('Back to list') }}</a>
+                                        class="btn btn-primary btn-sm back-button pull-right">{{ __('Back to list') }}</a>
                                     @endif
                                 </div>
                                 <div class="box-body">
                                     <div class="form-horizontal show-form-data">
-                                        <div class="form-group">
-                                            <label class="col-sm-4 control-label">{{ __('ID Type') }}</label>
+                                        <div class="form-group">    
                                             <div class="col-sm-8">
                                                 <p class="form-control-static">
-                                                    {{ $user->id_type ? id_type($user->id_type) : '-' }}</p>
+                                                   ID Type : {{ $user->id_type ? id_type($user->id_type) : '-' }}</p>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-4 control-label">{{ __('ID Status') }}</label>
                                             <div class="col-sm-8">
                                                 <p class="form-control-static">
+                                                    ID Status :
                                                     <span
                                                         class="label label-{{ config('commonconfig.id_status.' . $user->is_id_verified . '.color_class') }}">{{ id_status($user->is_id_verified) }}</span>
                                                 </p>

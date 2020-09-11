@@ -1,27 +1,35 @@
 @extends('backend.layouts.main_layout')
 @section('content')
-    <h3 class="page-header">{{ __('Open Orders') }}</h3>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="nav-tabs-custom">
-                <div class="tab-content">
-                    <table class="table datatable dt-responsive display nowrap dc-table" style="width:100% !important;" id="open-orders-trader">
-                        <thead>
-                        <tr>
-                            <th class="all">{{ __('Market') }}</th>
-                            <th class="min-desktop">{{ __('Type') }}</th>
-                            <th class="min-desktop">{{ __('Category') }}</th>
-                            <th class="all">{{ __('Price') }}</th>
-                            <th class="min-desktop">{{ __('Amount') }}</th>
-                            <th class="min-desktop">{{ __('Total') }}</th>
-                            <th class="min-desktop">{{ __('Stop/Rate') }}</th>
-                            <th class="min-desktop">{{ __('Date') }}</th>
-                            @if(has_permission('trader.orders.destroy'))
-                                <th class="all">{{ __('Action') }}</th>
-                            @endif
-                        </tr>
-                        </thead>
-                    </table>
+<br>
+    <h5 class="page-header">{{ __('Open Orders') }}</h5>
+    <hr>
+    <div class="card">
+        <div class="card-body">
+            <div class="">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="nav-tabs-custom">
+                            <div class="tab-content">
+                                <table class="table datatable dt-responsive display nowrap dc-table" style="width:100% !important;" id="open-orders-trader">
+                                    <thead>
+                                    <tr>
+                                        <th class="all">{{ __('Market') }}</th>
+                                        <th class="min-desktop">{{ __('Type') }}</th>
+                                        <th class="min-desktop">{{ __('Category') }}</th>
+                                        <th class="all">{{ __('Price') }}</th>
+                                        <th class="min-desktop">{{ __('Amount') }}</th>
+                                        <th class="min-desktop">{{ __('Total') }}</th>
+                                        <th class="min-desktop">{{ __('Stop/Rate') }}</th>
+                                        <th class="min-desktop">{{ __('Date') }}</th>
+                                        @if(has_permission('trader.orders.destroy'))
+                                            <th class="all">{{ __('Action') }}</th>
+                                        @endif
+                                    </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,27 +1,34 @@
 @extends('backend.layouts.main_layout')
 @section('content')
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="box box-primary box-borderless">
-                <div class="box-body">
-                    <table class="table datatable dt-responsive display nowrap dc-table" style="width: 100% !important;" id="stock-pair">
-                        <thead>
-                        <tr>
-                            <th class="all text-center">{{ __('Stock Pair') }}</th>
-                            <th class="text-center">{{ __('Exchangeable Item') }}</th>
-                            <th class="text-center">{{ __('Base Item') }}</th>
-                            <th class="text-center">{{ __('Last Price') }}</th>
-                            <th class="text-center">{{ __('Active Status') }}</th>
-                            <th class="text-center">{{ __('Default Status') }}</th>
-                            <th class="text-center">{{ __('Created Date') }}</th>
-                            <th class="text-center all no-sort">{{ __('Action') }}</th>
-                        </tr>
-                        </thead>
-                    </table>
+<div class="card">
+    <div class="card-body">
+        <div class="">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="box box-primary box-borderless">
+                        <div class="box-body">
+                            <table class="table datatable dt-responsive display nowrap dc-table" style="width: 100% !important;" id="stock-pair">
+                                <thead>
+                                <tr>
+                                    <th class="text-center min-desktop">{{ __('Stock Pair') }}</th>
+                                    <th class="text-center">{{ __('Exchangeable Item') }}</th>
+                                    <th class="text-center">{{ __('Base Item') }}</th>
+                                    <th class="text-center">{{ __('Last Price') }}</th>
+                                    <th class="text-center no-sort">{{ __('Active Status') }}</th>
+                                    <th class="text-center no-sort">{{ __('Default Status') }}</th>
+                                    <th class="text-center">{{ __('Created Date') }}</th>
+                                    <th class="text-center all no-sort">{{ __('Action') }}</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-     </div>
+    </div>
+</div>
+
 @endsection
 @section('script')
     <!-- for datatable and date picker -->

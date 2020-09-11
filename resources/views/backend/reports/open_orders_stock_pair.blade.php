@@ -1,7 +1,7 @@
 @extends('backend.layouts.main_layout')
 @section('content')
 <hr>
-    <h5 class="page-header">{{ __('Open Orders') }}</h5>
+    <h5 class="page-header">{{ __('Stock Pair Open Orders') }}</h5>
 <div class="card">
     <div class="card-body">
         <div class="">
@@ -61,7 +61,7 @@
           // bInfo: false,
 
           language: {search: "", searchPlaceholder: "{{ __('Search...') }}"},
-          ajax: "{{ route('reports.admin.open-orders.json',$hideUser) }}",
+          ajax: "{{ route('reports.admin.stock-pairs-id.open-orders',$stockPairId) }}",
 
           order : [8, 'desc'],
 

@@ -1,10 +1,10 @@
 @extends('backend.layouts.main_layout')
 @section('content')
+<br>
+<h3 class="page-header">{{ __('User Role List') }}</h3>
 <div class="card">
     <div class="card-body">
         <div class="">
-            <h3 class="page-header">{{ __('User Role List') }}</h3>
-
             <div class="row">
                 <div class="col-lg-12">
                     <div class="box box-primary box-borderless">

@@ -7,14 +7,15 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="box box-primary">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">{!! __('Details of :stockItem', ['stockItem' => '<strong>' .
+                        <h3 class="box-title">{!! __('Details of :stockItem', ['stockItem' => '<strong>' .
                                     $stockItem->item . '</strong>']) !!}</h3>
+                        <div class="box-header with-border pull-right">
                             @if(has_permission('admin.stock-items.index'))
                             <a href="{{ route('admin.stock-items.index') }}"
                                 class="btn btn-primary btn-sm back-button">{{ __('Back to list') }}</a>
                             @endif
                         </div>
+                        <br>
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-6">
@@ -164,7 +165,13 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
 
+<div class="card">
+    <div class="card-body">
+        <div class="">
             @if(in_array($stockItem->item_type, config('commonconfig.currency_transferable')))
             <div class="row">
                 <div class="col-md-12">

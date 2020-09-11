@@ -93,12 +93,12 @@
                 <li class="nav-item dropdown img-profile header-img-icon">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
-                        <img src=" {{ asset('newAssets/img/avatar.svg') }} " alt="avatar">
+                        <img src="{{ get_avatar(Auth::user()->avatar) }} " style="border-radius:50%;" alt="avatar">
                     </a>
                     <div class="dropdown-menu">
                         <div class="dropdown-header d-flex flex-column align-items-center">
                             <div class="figure mb-3">
-                                <img src="{{ asset('newAssets/img/avatar.svg') }}" alt="">
+                                <img src="{{ get_avatar(Auth::user()->avatar) }}" style="border-radius:50%;" alt="">
                             </div>
                             <div class="info text-center">
                                 <p class="name font-weight-bold mb-0">{{ Auth::user()->userInfo->full_name }}</p>

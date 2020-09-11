@@ -144,7 +144,7 @@ class ReportsController extends Controller
                                                       data-toggle="dropdown">
                                                   <i class="fa fa-gear"></i>
                                               </button>
-                                          <ul class="dropdown-menu pull-right">';
+                                          <ul class="dropdown-menu dropdown-menu-stock-pair pull-right">';
                                           if(has_permission('admin.users.wallets.editBankBalance')){
                                             $btn .= '<li>
                                                       <a href='.route('admin.users.wallets.editBankBalance', [$row->users_id, $row->wallet_id, $row->id]).'"><i
@@ -493,6 +493,7 @@ class ReportsController extends Controller
                             ->join('stock_items as base_items', 'base_items.id', '=', 'stock_pairs.base_item_id')
                             ->join('users', 'users.id', '=', 'stock_exchanges.user_id')
                             ->where('stock_orders.stock_pair_id',$stockPairId)
+                            // ->where('stock_orders.status', '<', STOCK_ORDER_COMPLETED)
                             ->select([
 
                                   'stock_exchanges.*',
@@ -551,18 +552,112 @@ class ReportsController extends Controller
                                       $email = $user->email;
                                     }
                                     return $email;
-                                })->rawColumns(['coin-pair','exchange_type','category','referral','email'])
+                                })
+                                ->editColumn('stop-limit',function($limit){
+                                      if(!is_null($limit->stop_limit))
+                                      {
+                                       $span = $limit->stop_limit.' '.'<span class="strong">'.$limit->base_item_abbr.'</span>';
+                                      }
+                                      else{
+                                        $span = '-';
+                                      }
+
+                                      return $span;
+                                      
+                                })
+                                ->rawColumns(['coin-pair','exchange_type','category','referral','email','stop-limit'])
                                 ->make(true);
 
     }
 
+    public function openOrdersStockPairJson($stockPairId)
+    {
+      $query = $this->stockOrder->join('stock_pairs', 'stock_pairs.id', '=', 'stock_orders.stock_pair_id')
+                            ->join('stock_items', 'stock_items.id', '=', 'stock_pairs.stock_item_id')
+                            ->join('stock_items as base_items', 'base_items.id', '=', 'stock_pairs.base_item_id')
+                            ->join('users', 'users.id', '=', 'stock_orders.user_id')
+                            ->where('stock_orders.stock_pair_id',$stockPairId)
+                            ->where('stock_orders.status', '<', STOCK_ORDER_COMPLETED);
+                           $data = $query->select([
+                                    'stock_orders.*',
+                                    // stock item
+                                    'stock_items.id as stock_item_id',
+                                    'stock_items.item as stock_item_abbr',
+                                    'stock_items.item_name as stock_item_name',
+                                    'stock_items.item_type as stock_item_type',
+                                    // base item
+                                    'base_items.id as base_item_id',
+                                    'base_items.item as base_item_abbr',
+                                    'base_items.item_name as base_item_name',
+                                    'base_items.item_type as base_item_type',
+                                    'email',
+                                ])->get();
+
+                                // dd($data);
+
+
+                            // $dec = json_decode($data);
+
+              return Datatables::of($data)
+                                ->addIndexColumn()
+                                ->addColumn('coin-pair',function($pair){
+                                  return $pair->stock_item_abbr.'/'.$pair->base_item_abbr;
+                                })
+                                ->editColumn('exchange_type',function($exchange){
+                                  return exchange_type($exchange->exchange_type);
+                                })
+                                ->editColumn('category',function($category){
+
+                                    $row = category_type($category->category);
+            
+                                  return $row;
+
+                                })
+                                ->editColumn('price',function($price){
+                                  $span = $price->price.' '.'<span class="strong">'.$price->base_item_abbr.'</span>';
+                                  return $span;
+                                })
+                                ->editColumn('amount',function($amount){
+                                  $span = $amount->amount.' '.'<span class="strong">'.$amount->stock_item_abbr.'</span>';
+                                  return $span;
+                                })
+                                ->editColumn('total',function($total){
+                                  $span = bcmul($total->amount, $total->price).' '.'<span class="strong">'.$total->base_item_abbr.'</span>';
+
+                                  return $span;
+                                })
+                                ->editColumn('email',function($user){
+                                    if(has_permission('users.show')){
+                                      $email = '<a href="'.route('users.show', $user->id).'">'.$user->email.'</a>';
+                                    }
+                                    else{
+                                      $email = $user->email;
+                                    }
+                                    return $email;
+                                })->editColumn('stop-limit',function($limit){
+                                      if(!is_null($limit->stop_limit))
+                                      {
+                                       $span = $limit->stop_limit.' '.'<span class="strong">'.$limit->base_item_abbr.'</span>';
+                                      }
+                                      else{
+                                        $span = '-';
+                                      }
+
+                                      return $span;
+                                      
+                                })
+                                ->rawColumns(['coin-pair','exchange_type','category','price','amount','total','email','stop-limit'])
+                                ->make(true);
+
+    }
     public function openOrdersByStockPairId($id)
     {
-        $data['list'] = $this->reportsService->openOrders(null, null, $id);
-        $data['title'] = __('Open Orders');
+        // $data['list'] = $this->reportsService->openOrders(null, null, $id);
+        // $data['title'] = __('Open Orders');
         $data['hideUser'] = false;
+        $data['stockPairId'] = $id;
 
-        return view('backend.reports.open_orders', $data);
+        return view('backend.reports.open_orders_stock_pair', $data);
     }
 
 

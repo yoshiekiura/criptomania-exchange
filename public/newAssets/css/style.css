@@ -876,12 +876,22 @@ tbody.ob-heading {
 
 /* *myCSS */
 
+.row-exchange-title
+{
+    /*display: -ms-flexbox;*/
+    display: flex;
+    /*-ms-flex-wrap: wrap;*/
+    flex-wrap: wrap;
+    margin-left: -15px;
+
+}
+
 #my_open_order_table tbody tr {
   text-align: center;
 }
 
 .market-trade .tab-content {
-  height: 357px;
+  height: auto;
   overflow: hidden;
   padding: 14px;
 }

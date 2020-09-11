@@ -58,7 +58,7 @@ class UserInfoRepository extends BaseRepository implements UserInfoInterface
                                         <button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">
                                             <i class="fa fa-gear"></i>
                                         </button>
-                                       <ul class="dropdown-menu pull-right">';
+                                       <ul class="dropdown-menu pull-right dropdown-menu-stock-pair">';
                             if(has_permission('admin.id-management.show')){
                             	$btn .= '<li><a href='.route('admin.id-management.show',$user->id).'><i class="fa fa-eye"></i>'.__('Show'		).'</a></li>';
                             }

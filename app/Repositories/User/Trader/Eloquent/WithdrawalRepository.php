@@ -67,7 +67,7 @@ class WithdrawalRepository extends BaseRepository implements WithdrawalInterface
                                         <button class="btn green btn-xs btn-outline dropdown-toggle" data-toggle="dropdown">
                                             <i class="fa fa-gear"></i>
                                         </button>
-                                          <ul class="dropdown-menu pull-right">';
+                                          <ul class="dropdown-menu dropdown-menu-stock-pair pull-right">';
                                           if(has_permission('admin.review-withdrawals.show')){
                                               $btn .= '<li><a href="'.route('admin.review-withdrawals.show', $row->id).'">
                                                           <i class="fa fa-eye"></i>'.__('Show').'</a>

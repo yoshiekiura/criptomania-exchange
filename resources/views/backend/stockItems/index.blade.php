@@ -1,25 +1,31 @@
 @extends('backend.layouts.main_layout')
 @section('content')
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="box box-primary box-borderless">
-                <div class="box-body">
-                    <table class="table datatable dt-responsive display nowrap dc-table" style="width: 100% !important;" id="stock-item">
-                        <thead>
-                        <tr>
-                            <th class="text-center">{{ __('Emoji') }}</th>
-                            <th class="all text-center">{{ __('Stock Item') }}</th>
-                            <th class="text-center">{{ __('Stock Item Name') }}</th>
-                            <th class="text-center">{{ __('Stock Item Type') }}</th>
-                            <th class="text-center">{{ __('Active Status') }}</th>
-                            <th class="text-center">{{ __('Created Date') }}</th>
-                            <th class="text-center all no-sort">{{ __('Action') }}</th>
-                        </tr>
-                        </thead>
-                    </table>
+    <div class="card">
+      <div class="card-body">
+        <div class="">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="box box-primary box-borderless">
+                        <div class="box-body">
+                            <table class="table datatable dt-responsive display nowrap dc-table" style="width: 100% !important;" id="stock-item">
+                                <thead>
+                                <tr>
+                                    <th class="text-center min-desktop no-sort">{{ __('Emoji') }}</th>
+                                    <th class="all text-center">{{ __('Stock Item') }}</th>
+                                    <th class="text-center">{{ __('Stock Item Name') }}</th>
+                                    <th class="text-center">{{ __('Stock Item Type') }}</th>
+                                    <th class="text-center">{{ __('Active Status') }}</th>
+                                    <th class="text-center">{{ __('Created Date') }}</th>
+                                    <th class="text-center all no-sort">{{ __('Action') }}</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+      </div>
     </div>
 @endsection
 

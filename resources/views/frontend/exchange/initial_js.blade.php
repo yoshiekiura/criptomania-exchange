@@ -53,6 +53,7 @@
                 style: 'single',
                 selector: 'tr:not(.selected)'
             },
+            responsive: true,
             scrollY: 500,
             scrollCollapse: true,
             language: {search: "", searchPlaceholder: "{{ __('Search...') }}"},
@@ -104,18 +105,25 @@
             columns: [
                 {
                     data: "stock_item_abbr",
+                    className: "text-center",
                 },
                 {
                     data: "last_price",
+                    className: "text-center",
+
                 },
                 {
                     data: "exchanged_base_item_volume_24",
+                    className: "text-center",
+
                     render: function (data) {
                         return number_format(data, 3)
                     }
                 },
                 {
                     data: "change_24",
+                    className: "text-center",
+
                     render: function (data) {
                         let change = '';
                         if (parseFloat(data) > 0) {
@@ -127,10 +135,6 @@
                         }
                         return change + number_format(Math.abs(data), 2);
                     }
-                },
-                {
-                    data: "base_item_id",
-                    visible: false
                 }
             ]
         });

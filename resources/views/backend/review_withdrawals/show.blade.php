@@ -8,19 +8,22 @@
                 <div class="col-md-3">
                     <!-- Profile Image -->
                     @include('backend.profile.avatar', ['profileRouteInfo' => profileRoutes('admin', $user->id)])
-                    @php
-                    $bankName = \App\Models\User\BankName::select('bank_name')->where('account_number',
-                    $withdrawal->address)->first()->bank_name;
-                    @endphp
+                    @if($withdrawal->stockItem->api_service == BANK_TRANSFER)
+                        @php
+                            $bankName = \App\Models\User\BankName::select('bank_name')->where('account_number',
+                            $withdrawal->address)->first()->bank_name;
+                        @endphp
+                    @endif
                 </div>
                 <div class="col-md-9">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">{!! __('Withdrawal Details of :user for :stockItem', ['user' =>
+                            <h5 class="box-title">{!! __('Withdrawal Details of :user for :stockItem', ['user' =>
                                 '<strong>' . $user->userInfo->full_name . '</strong>', 'stockItem' => '<strong>' .
-                                    $withdrawal->stockItem->item . '</strong>']) !!}</h3>
+                                    $withdrawal->stockItem->item . '</strong>']) !!}</h5>
+                                    <hr>
                             <a href="{{ route('admin.review-withdrawals.index') }}"
-                                class="btn btn-primary btn-sm back-button">{{ __('Back') }}</a>
+                                class="btn btn-primary btn-sm back-button pull-right">{{ __('Back') }}</a>
                         </div>
                         <div class="box-body">
                             <div class="form-horizontal show-form-data">

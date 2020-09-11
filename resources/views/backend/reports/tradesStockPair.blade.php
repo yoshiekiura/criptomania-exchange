@@ -1,48 +1,61 @@
 @extends('backend.layouts.main_layout')
 @section('content')
-    <h3 class="page-header">{{ __('My Trades') }}</h3>
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="box box-primary box-borderless">
-          <div class="box-body">
-            <div class="cm-filter clearfix">
-                <div class="cm-order-filter">
-                  <label for="filter-satuan"> Filter By Category :</label>
-                   <select data-column="2" class="form-control filter-satuan" placeholder="Filter By Category" style="width:30%;">
-                     <option value=""> All </option>
-                     <option value="{{category_type(CATEGORY_EXCHANGE)}}"> Exchange </option>
-                     <option value="{{category_type(CATEGORY_ICO)}}"> ICO </option>
-                   </select>
-                 </div>
+<br>
+    <h5 class="page-header">{{ __('Stock Pair Trades') }}</h5>
+<div class="card">
+    <div class="card-body">
+        <div class="">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="box box-primary box-borderless">
+                  <div class="box-body">
+                    <div class="cm-filter clearfix">
+                        <div class="cm-order-filter">
+                          <label for="filter-satuan"> Filter By Category :</label>
+                           <select data-column="2" class="form-control filter-satuan" placeholder="Filter By Category" style="width:30%;">
+                             <option value=""> All </option>
+                             <option value="{{category_type(CATEGORY_EXCHANGE)}}"> Exchange </option>
+                             <option value="{{category_type(CATEGORY_ICO)}}"> ICO </option>
+                           </select>
+                         </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
+</div>
 
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="nav-tabs-custom">
-                <div class="tab-content">
-                    <table class="table datatable dt-responsive display nowrap dc-table" style="width:100% !important;" id="trade-stockpair-history">
-                        <thead>
-                        <tr>
-                            <th class="all">{{ __('Market') }}</th>
-                            <th class="all">{{ __('Type') }}</th>
-                            <th class="min-desktop">{{ __('Category') }}</th>
-                            <th class="min-desktop">{{ __('Price') }}</th>
-                            <th class="min-desktop">{{ __('Amount') }}</th>
-                            <th class="min-desktop">{{ admin_settings('referral') ? __('Fee + Referral Earning') : __('Fee') }}</th>
-                            <th class="min-desktop">{{ __('Total') }}</th>
-                            <th class="all">{{ __('User') }}</th>
-                            <th class="min-desktop">{{ __('Date') }}</th>
-                        </tr>
-                        </thead>
-                    </table>
+<div class="card">
+    <div class="card-body">
+        <div class="">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="nav-tabs-custom">
+                        <div class="tab-content">
+                            <table class="table datatable dt-responsive display nowrap dc-table" style="width:100% !important;" id="trade-stockpair-history">
+                                <thead>
+                                <tr>
+                                    <th class="all">{{ __('Market') }}</th>
+                                    <th class="all">{{ __('Type') }}</th>
+                                    <th class="min-desktop">{{ __('Category') }}</th>
+                                    <th class="none">{{ __('Price') }}</th>
+                                    <th class="none">{{ __('Amount') }}</th>
+                                    <th class="none">{{ admin_settings('referral') ? __('Fee + Referral Earning') : __('Fee') }}</th>
+                                    <th class="min-desktop">{{ __('Total') }}</th>
+                                    <th class="all">{{ __('User') }}</th>
+                                    <th class="min-desktop">{{ __('Date') }}</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 @endsection
 
 @section('script')

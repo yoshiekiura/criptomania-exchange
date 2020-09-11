@@ -1,22 +1,28 @@
 @extends('backend.layouts.main_layout')
 @section('content')
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="box box-primary box-borderless">
-                <div class="box-body">
-                    <table class="table datatable dt-responsive display nowrap dc-table" style="width: 100% !important;" id="api-service">
-                        <thead>
-                        <tr>
-                            <!-- <th class="all text-center">{{ __('Api Core') }}</th> -->
-                            <th class="text-center">{{ __('Api Name') }}</th>
-                            <th class="text-center">{{ __('Created At') }}</th>
-                            <!-- <th class="text-center all no-sort">{{ __('Action') }}</th> -->
-                        </tr>
-                        </thead>
-                    </table>
+    <div class="card">
+      <div class="card-body">
+        <div class="">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="box box-primary box-borderless">
+                        <div class="box-body">
+                            <table class="table datatable dt-responsive display nowrap dc-table" style="width: 100% !important;" id="api-service">
+                                <thead>
+                                <tr>
+                                    <!-- <th class="all text-center">{{ __('Api Core') }}</th> -->
+                                    <th class="text-center">{{ __('Api Name') }}</th>
+                                    <th class="text-center">{{ __('Created At') }}</th>
+                                    <!-- <th class="text-center all no-sort">{{ __('Action') }}</th> -->
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+      </div>
     </div>
 @endsection
 

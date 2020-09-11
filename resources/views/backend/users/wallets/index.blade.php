@@ -3,25 +3,31 @@
 $bankName = \App\Models\User\DepositBankTransfer::all();
 @endphp
 @section('content')
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="box box-primary box-borderless">
-                <div class="box-body">
-                    <table class="table datatable dt-responsive display nowrap dc-table" style="width: 100% !important;" id="wallet-table-trader">
-                        <thead>
-                            <tr>
-                                <th class="all text-center">{{ __('Wallet') }}</th>
-                                <th class="text-center">{{ __('Wallet Name') }}</th>
-                                <th class="text-center">{{ __('Total Balance') }}</th>
-                                <th class="text-center">{{ __('On Order') }}</th>
-                                <th class="text-center all no-sort">{{ __('Action') }}</th>
-                            </tr>
-                        </thead>
-                    </table>
+<div class="card">
+    <div class="card-body">
+        <div class="">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="box box-primary box-borderless">
+                        <div class="box-body">
+                            <table class="table datatable dt-responsive display nowrap dc-table" style="width: 100% !important;" id="wallet-table-trader">
+                                <thead>
+                                    <tr>
+                                        <th class="all text-center">{{ __('Wallet') }}</th>
+                                        <th class="text-center">{{ __('Wallet Name') }}</th>
+                                        <th class="text-center">{{ __('Total Balance') }}</th>
+                                        <th class="text-center">{{ __('On Order') }}</th>
+                                        <th class="text-center all no-sort">{{ __('Action') }}</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 @endsection
 
 @section('script')
