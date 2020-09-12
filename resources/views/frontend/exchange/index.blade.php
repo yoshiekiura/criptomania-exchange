@@ -3,6 +3,10 @@
 @section('after-style')
 <!-- {{-- <link rel="stylesheet" href="{{ asset('common/vendors/mCustomScrollbar/jquery.mCustomScrollbar.min.css') }}"> --}} -->
 <style>
+    body {
+        overflow-X: hidden;
+    }
+
     .container-market {
         padding: 5px 0;
     }
@@ -16,7 +20,7 @@
         box-sizing: border-box;
         min-width: 0px;
         height: 40px;
-        margin: 120px 0 -100px 0;
+        /* margin: 120px 0 -100px 0; */
         border-width: 1px;
         border-style: solid;
         border-image: initial;
@@ -29,7 +33,7 @@
         box-sizing: border-box;
         min-width: 0px;
         height: 40px;
-        margin: 119px 0 -100px 0;
+        /* margin: 119px 0 -100px 0; */
         border-width: 1px;
         border-style: solid;
         border-image: initial;
@@ -58,6 +62,37 @@
 
         .dataTables_filter {
             margin: 0 30%;
+        }
+
+        .filter {
+            width: 470px;
+            position: relative;
+        }
+
+        .border-btn {
+            box-sizing: border-box;
+            min-width: 0px;
+            height: auto;
+            /* margin: 120px 0 -100px 0; */
+            border-width: 1px;
+            border-style: solid;
+            border-image: initial;
+            border-radius: 3px;
+            border-color: rgb(71, 77, 87);
+            padding-top: 10px;
+        }
+
+        .border-btn-sell {
+            box-sizing: border-box;
+            min-width: 0px;
+            height: auto;
+            /* margin: 119px 0 -100px 0; */
+            border-width: 1px;
+            border-style: solid;
+            border-image: initial;
+            border-radius: 3px;
+            border-color: rgb(71, 77, 87);
+            padding-top: 10px;
         }
     }
 
@@ -156,9 +191,11 @@
         margin-right: 10px;
     }
 
-    .filter {
-        width: 310px;
-        position: relative;
+    @media(min-width: 1336px) {
+        .filter {
+            width: 310px;
+            position: relative;
+        }
     }
 
     .filter::after {
@@ -406,7 +443,7 @@
             </div>
             <div class="market-trade">
                 <ul class="nav nav-pills" role="tablist">
-               <!--      {{-- <li class="nav-item">
+                    <!--      {{-- <li class="nav-item">
                         <a class="nav-link active" data-toggle="pill" href="#pills-trade-limit" role="tab"
                             aria-selected="true">Limit</a>
                     </li> --}} -->
@@ -419,14 +456,14 @@
                             aria-selected="false">Stop
                             Limit</a>
                     </li>
-            <!--         {{-- <li class="nav-item">
+                    <!--         {{-- <li class="nav-item">
                         <a class="nav-link" data-toggle="pill" href="#pills-stop-market" role="tab"
                             aria-selected="false">Stop
                             Market</a>
                     </li> --}} -->
                 </ul>
                 <div class="tab-content">
-               <!--      {{-- <div class="tab-pane fade show active" id="pills-trade-limit" role="tabpanel">
+                    <!--      {{-- <div class="tab-pane fade show active" id="pills-trade-limit" role="tabpanel">
                         <div class="d-flex justify-content-between">
                             @include('frontend.exchange.trading.buy_trade_limit_form')
                             @include('frontend.exchange.trading.sell_trade_limit_form')
@@ -443,7 +480,7 @@
                             @include('frontend.exchange.trading.buy_stop_limit_form')
                         </div>
                     </div>
-  <!--                   {{-- <div class="tab-pane fade" id="pills-stop-market" role="tabpanel">
+                    <!--                   {{-- <div class="tab-pane fade" id="pills-stop-market" role="tabpanel">
                         <div class="d-flex justify-content-between">
                             @include('frontend.exchange.trading.buy_stop_market_form')
                             @include('frontend.exchange.trading.sell_stop_market_form')

@@ -1,6 +1,6 @@
 let eChart;
 const chartProperties = {
-    width: 875,
+    width: 675,
     height: 550,
     timeScale: {
         timeVisible: true,
@@ -10,6 +10,15 @@ const chartProperties = {
 
 const domElement = document.getElementById('echart');
 const chart = LightweightCharts.createChart(domElement, chartProperties);
+if (screen.width > 1366) {
+    console.log('desktop lebar')
+    chart.resize(875, 550);
+} else if (screen.width <= 700) {
+    console.log('desktop hp')
+    chart.resize(500, 550);
+} else {
+    console.log('desktop saya')
+}
 const candleSeries = chart.addCandlestickSeries();
 
 
