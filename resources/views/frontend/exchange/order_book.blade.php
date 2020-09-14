@@ -12,26 +12,26 @@
         </ul>
         <div class="tab-content">
             <div class="tab-pane fade show active" id="market_trade" role="tabpanel">
-                <table id="trade_history_table" class="table table-hover table-responsive small exchange-table"
+                <table id="trade_history_table" class="table datatable dt-responsive display nowrap dc-table"
                     style="width:100%">
                     <thead>
                         <tr>
-                            <th class="text-center">{{ __('PRICE') }}</th>
+                            <th class="all text-center" style="width:100px;">{{ __('PRICE') }}</th>
                             <th class="text-center">{{ __('AMOUNT') }}</th>
-                            <th class="hide_in_mobile">{{ __('DATE') }}</th>
+                            <th class="min-desktop">{{ __('DATE') }}</th>
                         </tr>
                     </thead>
                 </table>
             </div>
             @auth
-            <div class="tab-pane fade show" id="my_trade" role="tabpanel">
-                <table id="my_trade_table" class="table table-hover table-responsive small exchange-table"
+            <div class="tab-pane fade" id="my_trade" role="tabpanel">
+                <table id="my_trade_table" class="table datatable dt-responsive display nowrap dc-table"
                     style="width:100%">
                     <thead>
                         <tr>
-                            <th class="text-center">{{ __('PRICE') }}</th>
+                            <th class="all" style="width:100px;">{{ __('PRICE') }}</th>
                             <th class="text-center">{{ __('AMOUNT') }}</th>
-                            <th class="hide_in_mobile">{{ __('DATE') }}</th>
+                            <th class="min-desktop">{{ __('DATE') }}</th>
                         </tr>
                     </thead>
                 </table>
@@ -60,14 +60,14 @@
         </ul>
         <div class="tab-content">
             <div class="tab-pane fade show active" id="buy_orders" role="tabpanel">
-                <table id="buy_order_table" class="table table-hover table-responsive small exchange-table"
+                <table id="buy_order_table" class="table datatable dt-responsive display nowrap dc-table"
                     style="width:100%">
                     <thead>
                         <tr>
-                            <th>{{ __('PRICE') }}</th>
-                            <th><span class="stock_item"></span></th>
-                            <th><span class="base_item"></span></th>
-                            <th class="hide_in_mobile_small">{{ __('SUM') }}(<span class="base_item"></span>)</th>
+                            <th class="all" style="width:100px;">{{ __('PRICE') }}</th>
+                            <th class="all" style="width:150px;"><span class="stock_item"></span></th>
+                            <th class="text-center" style="width:100px;"><span class="base_item"></span></th>
+                            <th class="min-desktop">{{ __('SUM') }}(<span class="base_item"></span>)</th>
                         </tr>
                     </thead>
                 </table>

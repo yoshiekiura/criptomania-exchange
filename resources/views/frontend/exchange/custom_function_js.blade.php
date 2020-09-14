@@ -300,6 +300,10 @@
             order: [[0, 'desc']],
             paging: false,
             searching: false,
+            fixedColumn: true,
+            fixedHeader: true,
+            responsive: true,
+            scrollCollapse: true,
             info: false,
             // scrollY: 385,
             ajax: {
@@ -352,8 +356,8 @@
                 if (rowCount > orderBookRowPerPage) {
                     if ($('#buy_order_load_more').length == 0 && buyOrderTableLoadMore) {
                         let tbody = '<tbody id="buy_order_load_more">' +
-                            '<tr style="background-color: #a3ddd7">' +
-                            '<td colspan="4"><a onClick="loadMoreData(' + exchangeTypeBuy + ')" style="color:#08534c;float:right" href="javascript:;">{{ __('Load :loadCount more',['loadCount' => 50]) }}</a></td>' +
+                            '<tr class="all" style="background-color: #a3ddd7">' +
+                            '<td class="text-center" colspan="4"><a onClick="loadMoreData(' + exchangeTypeBuy + ')" style="color:#08534c;float:right" href="javascript:;">{{ __('Load :loadCount more',['loadCount' => 50]) }}</a></td>' +
                             '</tr>' +
                             '</tbody>';
                         $('#buy_order_table').append(tbody);
@@ -373,22 +377,34 @@
                 {
                     data: 'price',
                     orderable: false,
+                    className: 'all',
+                    // render: function (data) {
+                    //     return number_format(data, 4);
+                    // }
 
                 },
                 {
                     data: "amount",
                     orderable: false,
+                    className:"text-center",
+                    render: function (data) {
+                        return number_format(data, 4);
+                    }
                 },
                 {
                     data: 'total',
                     orderable: false,
+                    className:"all",
+                    render: function (data) {
+                        return number_format(data, 4);
+                    }
                 },
                 {
                     data: 'total_base_item',
                     orderable: false,
-                    className: 'hide_in_mobile_small',
+                    className: 'text-center min-desktop',
                     render: function (data) {
-                        return number_format(data);
+                        return number_format(data, 2);
                     }
                 }
             ]
@@ -488,9 +504,9 @@
                 {
                     data: 'total_base_item',
                     orderable: false,
-                    className: 'hide_in_mobile_small',
+                    className: 'min-desktop',
                     render: function (data) {
-                        return number_format(data);
+                        return number_format(data, 2);
                     }
                 }
             ]
@@ -577,6 +593,9 @@
             paging: false,
             searching: false,
             order: [[0, 'desc']],
+            fixedHeader: true,
+            fixedColumn: true,
+            responsive: true,
             info: false,
             // scrollY: 300,
             scrollCollapse: true,
@@ -597,43 +616,42 @@
                 {
                     data: null,
                     orderable: true,
-                    className: 'dt-body-center',
+                    className: 'all',
                     render: function (data) {
-                        let html = '<td style="color:red;"><a style="color:red">' + data.price + '</a></td>';
+                        let html = '<td style="color:red; width: 100px;"><a style="color:red">' + data.price + '</a></td>';
 
                         if (data.exchange_type == exchangeTypeBuy) {
-                        html = '<td style="color:red;"><a style="color:green">' + data.price + '</a></td>';
+                        html = '<td style="color:red; width: 100px;"><a style="color:green">' + data.price + '</a></td>';
                            
                         }
 
                         return html;
                     }
                 },
-                // {
-                //     data: "price",
-                //     orderable: false,
-                //     className: 'dt-body-center'
-                // },
+ 
                 {
-                    data: "amount",
+                    data: null,
                     orderable: false,
-                    className: 'dt-body-center'
+                    className: 'all',
+                    render: function (data) {
+                        let html = '<td style="text-align:left;">' + data.amount + '</td>';
+                        return html;
+                    }
                 },
-                // {
-                //     data: null,
-                //     orderable: false,
-                //     className: 'dt-body-center hide_in_mobile_small',
-                //     render: function (data) {
-                //         return bcmul(data.amount, data.price);
-                //     }
-                // }
-                 {
+
+                {
                     data: "date",
                     orderable: false,
-                    className: 'hide_in_mobile'
+                    className: 'min-desktop'
                 }
             ]
         });
+
+        $('a[data-toggle="pill"]').on('shown.bs.tab', function(e){
+   if (e.target.hash == '#my_trade') {
+    myTradeHistoryTable.columns.adjust().draw()
+  }
+});
 
     }
 
@@ -644,6 +662,8 @@
             searching: false,
             order: [[0, 'desc']],
             info: false,
+            // fixedHeader: true,
+            fixedColumn: true,
             // scrollY: 300,
             scrollCollapse: true,
             ajax: {
@@ -663,11 +683,11 @@
                 {
                     data: null,
                     orderable: false,
-                    className: 'dt-body-center',
+                    className: 'all',
                     render: function (data) {
-                        let html = '<td style="color:red;"><a style="color:red">' + data.price + '</a></td>';
+                        let html = '<td style="color:red; width: 100px;"><a style="color:red">' + data.price + '</a></td>';
                         if (data.exchange_type == exchangeTypeBuy) {
-                        html = '<td style="color:red;"><a style="color:green">' + data.price + '</a></td>';
+                        html = '<td style="color:red; width: 100px;"><a style="color:green">' + data.price + '</a></td>';
                             
                            
                         }
@@ -676,14 +696,18 @@
                     }
                 },
                 {
-                    data: "amount",
+                    data: null,
                     orderable: false,
-                    className: 'dt-body-center'
+                    className: 'all',
+                    render: function (data) {
+                        let html = '<td style="text-align:left;">' + data.amount + '</td>';
+                        return html;
+                    }
                 },
                 {
                     data: "date",
                     orderable: false,
-                    className: 'hide_in_mobile',
+                    className: 'min-desktop',
                    
                 }
                
