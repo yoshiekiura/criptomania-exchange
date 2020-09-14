@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\User\Notification;
 use App\Repositories\User\Interfaces\NotificationInterface;
 use App\Services\Core\DataListService;
 use Illuminate\Support\Facades\Auth;
@@ -28,7 +29,8 @@ class NotificationController extends Controller
     public function index()
     {
 
-        return view('backend.notices.index');
+        $data['notif'] = Notification::where('user_id', Auth::id())->get();
+        return view('backend.notices.index',$data);
     }
 
     public function markAsRead($id)
@@ -51,6 +53,14 @@ class NotificationController extends Controller
         return redirect()->back()->with(SERVICE_RESPONSE_ERROR, __('Failed to mark as unread.'));
     }
 
+    public function markAllAsRead()
+    {
+        if ($this->notification->readAll()) {
+            return redirect()->back()->with(SERVICE_RESPONSE_SUCCESS, __('The notice has been marked all as read.'));
+        }
+
+        return redirect()->back()->with(SERVICE_RESPONSE_ERROR, __('Failed to mark as read.'));
+    }
   
 
 }

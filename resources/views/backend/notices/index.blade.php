@@ -1,4 +1,7 @@
 @extends('backend.layouts.main_layout')
+@php
+  $notif = App\Models\User\Notification::where('user_id',Auth::id())->get();
+@endphp
 @section('content')
 <div class="card">
     <div class="card-body">
@@ -25,6 +28,15 @@
           </div>
       </div>
 </div>
+<div class="card">
+      <div class="card-body">
+          <div class="">
+            <a href="{{route('notices.mark-all-as-read')}}"><i
+                        class="fa fa-dot-circle-o text-green"></i>
+                        {{__('Read All')}}</a>
+</div>
+      </div>
+          </div>
 @endsection
 @section('script')
 <!-- for datatable and date picker -->

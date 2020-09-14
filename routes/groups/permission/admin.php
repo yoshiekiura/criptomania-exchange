@@ -40,9 +40,6 @@ Route::group(['namespace' => 'User\Admin'], function () {
     Route::put('review-withdrawals/{id}/decline', 'WithdrawalController@decline')->name('admin.review-withdrawals.decline');
     Route::put('review-withdrawals/declineBank/{id}', 'WithdrawalController@declineBank')->name('admin.review-withdrawals.declineBank');
 
-
-
-
     Route::put('id-management/{id}/approve', 'IdManagementController@approve')->name('admin.id-management.approve');
     Route::put('id-management/{id}/decline', 'IdManagementController@decline')->name('admin.id-management.decline');
     Route::resource('id-management', 'IdManagementController')->only(['index', 'show'])->parameter('id-management', 'id')->names('admin.id-management');

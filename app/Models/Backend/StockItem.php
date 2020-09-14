@@ -8,6 +8,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 use App\Models\Core\Rpcport;
 use App\Models\Backend\ApiService;
 use App\Models\User\Deposit;
+use App\Models\Backend\Transaction;
 
 
 class StockItem extends Model implements Auditable
@@ -49,5 +50,9 @@ class StockItem extends Model implements Auditable
 
     public function depositTrader(){
         return $this->belongsTo(Deposit::class);
+    }
+
+    public function toTransactions(){
+        return $this->belongsTo(Transactions::class);
     }
 }

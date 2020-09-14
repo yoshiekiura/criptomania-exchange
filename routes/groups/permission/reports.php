@@ -16,6 +16,8 @@ Route::group(['namespace' => 'Reports\Admin'], function () {
         Route::get('open-orders-json/{userId?}', 'ReportsController@openOrdersJson')->name('reports.admin.open-orders.json');
         Route::get('coins-pairs/{id}/open-orders', 'ReportsController@openOrdersByStockPairId')->name('reports.admin.stock-pairs.open-orders');
         Route::get('coins-pairs/{id}/stock-pair-open-orders-json', 'ReportsController@openOrdersStockPairJson')->name('reports.admin.stock-pairs-id.open-orders');
+
+        Route::get('transactionsJson/{id?}/{journalType?}', 'TransactionController@generateTransaction')->name('reports.admin.transaction.user.json');
         Route::get('transactions/{journalType?}', 'TransactionController@allUser')->name('reports.admin.transaction.all-users');
         Route::get('transactions/{id}/{journalType?}', 'TransactionController@user')->name('reports.admin.transaction.user');
     });
@@ -63,6 +65,8 @@ Route::group(['namespace' => 'Reports\Trader'], function () {
     Route::get('my-trades/{categoryType?}', 'ReportsController@trades')->name('reports.trader.trades');
     //my trades Json
     Route::get('my-trades-json/{categoryType?}', 'ReportsController@tradesJson')->name('reports.trader.trades.json');
+    //referral json
+    Route::get('my-referral-users-json', 'ReportsController@referralUsersJson')->name('reports.trader.referral.json');
     Route::get('my-referral-users', 'ReportsController@referralUsers')->name('reports.trader.referral');
     Route::get('my-referral-users/referral-earning', 'ReportsController@referralEarning')->name('reports.trader.referral-earning');
 });

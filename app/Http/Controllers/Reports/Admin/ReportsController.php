@@ -39,125 +39,15 @@ class ReportsController extends Controller
 
     }
 
-    public function allDeposits($paymentTransactionType = null)
-    {
-        $data['status'] = $paymentTransactionType;
+    /*
 
-        return view('backend.reports.all_deposit', $data);
-    }
+    * @desc   : Every function which end with "Json" is for send data to datatable
+      @param  : parameter $id = null for checking withraw id is null or not, parameter $userId for checking user id is null or not
+                parameter $transactionType and $paymentType for checking transaction type is null or not
+                parameter $stockPairId for stock pair id 
+      @return : all of function which end with "Json" will returning data for DataTables.
 
-    public function deposits($id, $paymentTransactionType = null)
-    {
-        $data['wallet'] = app(WalletInterface::class)->firstOrFail(['id' => $id], 'stockItem');
-        $data['status'] = $paymentTransactionType;
-        $data['walletId'] = $id;
-
-        return view('backend.reports.deposit', $data);
-    }
-
-     public function editBankDepoStatus($id)
-    {
-        $data['title'] = __('Edit Status');
-        $data['list'] = $this->depoBankRepo->findOrFailById($id);
-
-        return view('backend.reports.changeStatus', $data);
-    }
-
-    public function allDepositsBank($paymentTransactionType = null)
-    {
-        // $data['list'] = $this->reportsService->depositBankTransfer(null, null, $paymentTransactionType);
-        // $data['title'] = __('Deposits');
-        $data['status'] = $paymentTransactionType;
-
-        return view('backend.reports.all_deposit_bank', $data);
-    }
-
-    public function depositBankTraderJson($id = null, $userId = null, $transactionType = null)
-    {
-
-        $query = DB::table('deposit_bank_transfer')->join('stock_items', 'stock_items.id', '=', 'deposit_bank_transfer.stock_item_id')
-                                    ->join('users', 'users.id', '=', 'deposit_bank_transfer.users_id')
-                                    ->join('list_bank','list_bank.id', '=' ,'deposit_bank_transfer.admin_bank_id');
-                                    if(!is_null($userId)){
-                                        $query->where('users_id',$userId);
-                                    }
-                                    if(!is_null($id)){
-                                        $query->where('wallet_id',$id);
-                                    }
-                                    if(!is_null($transactionType)){
-                                        $query->where('status',config('commonconfig.payment_slug.' . $transactionType));
-                                    }
-                $data = $query->select([
-                         'deposit_bank_transfer.*',
-                         'item', 
-                         'item_name',
-                         'email',
-                         'bank_name',
-                         'account_number',
-                         'payment_prove'
-                ])->orderBy('created_at', 'desc')->get();
-
-        return Datatables::of($data)
-                          ->addIndexColumn()
-                          ->editColumn('amount',function($amount){
-                            $span = $amount->amount.' '.'<span class="strong">'.$amount->item.'</span>';
-                            return $span;
-                          })
-                          ->editColumn('status',function($status){
-                            $span = '<span class="label label-'.config('commonconfig.payment_status.' . $status->status . '.color_class').'">'.payment_status($status->status).'
-                                    </span>';
-                            return $span;
-                          })
-                          ->editColumn('email',function($user){
-                                    if(has_permission('users.show')){
-                                            $href = "<a href=".route('users.show', $user->users_id).">".$user->email."</a>";
-                                    }
-                                    else{
-                                         $href = $user->email;
-                                    }
-
-                                    return $href;
-                                    
-                          })->editColumn('bank-admin',function($admin){
-                                    if(has_permission('admin.list-bank.show')){
-                                     $href = '<a href='.route('admin.list-bank.show', $admin->admin_bank_id).'>'.$admin->bank_name.'</a>';
-                                    }
-                                    else{
-                                     $href = $admin->bank_name;
-                                    }
-
-                                    return $href;
-                          })->editColumn('payment-prove',function($payment){
-                                    if($payment->payment_prove != NULL){
-                                       $show = '<a href="#" data-id='.$payment->id.' data-struck='.get_struck($payment->payment_prove).'
-                                                            data-toggle="modal" data-target="#modal-insert" class="show-struck">'.$payment->payment_prove.'</a>';
-                                      }
-                                    else{
-                                    $show = "<span class='strong'>The User Doesn't have a Payment Prove</span>";
-                                    }
-
-                                    return $show;
-                          })
-                          ->addColumn('action', function($row){
-                                  $btn = '<div class="btn-group pull-right">
-                                              <button class="btn green btn-xs btn-outline dropdown-toggle"
-                                                      data-toggle="dropdown">
-                                                  <i class="fa fa-gear"></i>
-                                              </button>
-                                          <ul class="dropdown-menu dropdown-menu-stock-pair pull-right">';
-                                          if(has_permission('admin.users.wallets.editBankBalance')){
-                                            $btn .= '<li>
-                                                      <a href='.route('admin.users.wallets.editBankBalance', [$row->users_id, $row->wallet_id, $row->id]).'"><i
-                                                                  class="fa fa-eye"></i>'.__('Reviews').'</a>
-                                                    </li>';
-                                          }
-                                          return $btn;
-                          })
-                          ->rawColumns(['amount','status','email','bank-admin','payment-prove','action'])->make(true);
-        
-    }
-
-
+    */
     public function withdrawalsTraderJson($id = null, $userId = null, $transactionType = null)
     {
 
@@ -251,46 +141,90 @@ class ReportsController extends Controller
         
     }
 
-    public function depositsBank($id, $paymentTransactionType = null)
+
+    public function depositBankTraderJson($id = null, $userId = null, $transactionType = null)
     {
-        $data['wallet'] = app(WalletInterface::class)->firstOrFail(['id' => $id], 'stockItem');
-        $data['walletId'] = $id;
 
-        return view('backend.reports.deposit_bank', $data);
-    }
+        $query = DB::table('deposit_bank_transfer')->join('stock_items', 'stock_items.id', '=', 'deposit_bank_transfer.stock_item_id')
+                                    ->join('users', 'users.id', '=', 'deposit_bank_transfer.users_id')
+                                    ->join('list_bank','list_bank.id', '=' ,'deposit_bank_transfer.admin_bank_id');
+                                    if(!is_null($userId)){
+                                        $query->where('users_id',$userId);
+                                    }
+                                    if(!is_null($id)){
+                                        $query->where('wallet_id',$id);
+                                    }
+                                    if(!is_null($transactionType)){
+                                        $query->where('status',config('commonconfig.payment_slug.' . $transactionType));
+                                    }
+                $data = $query->select([
+                         'deposit_bank_transfer.*',
+                         'item', 
+                         'item_name',
+                         'email',
+                         'bank_name',
+                         'account_number',
+                         'payment_prove'
+                ])->orderBy('created_at', 'desc')->get();
 
-    public function allWithdrawals($paymentTransactionType = null) {
-        $data['status'] = $paymentTransactionType;
+        return Datatables::of($data)
+                          ->addIndexColumn()
+                          ->editColumn('amount',function($amount){
+                            $span = $amount->amount.' '.'<span class="strong">'.$amount->item.'</span>';
+                            return $span;
+                          })
+                          ->editColumn('status',function($status){
+                            $span = '<span class="label label-'.config('commonconfig.payment_status.' . $status->status . '.color_class').'">'.payment_status($status->status).'
+                                    </span>';
+                            return $span;
+                          })
+                          ->editColumn('email',function($user){
+                                    if(has_permission('users.show')){
+                                            $href = "<a href=".route('users.show', $user->users_id).">".$user->email."</a>";
+                                    }
+                                    else{
+                                         $href = $user->email;
+                                    }
 
-        return view('backend.reports.all_withdrawal', $data);
-    }
+                                    return $href;
+                                    
+                          })->editColumn('bank-admin',function($admin){
+                                    if(has_permission('admin.list-bank.show')){
+                                     $href = '<a href='.route('admin.list-bank.show', $admin->admin_bank_id).'>'.$admin->bank_name.'</a>';
+                                    }
+                                    else{
+                                     $href = $admin->bank_name;
+                                    }
 
-    public function withdrawals($id, $paymentTransactionType = null) {
-        $data['wallet'] = app(WalletInterface::class)->firstOrFail(['id' => $id], 'stockItem');
-        $data['status'] = $paymentTransactionType;
-        $data['walletId'] = $id;
+                                    return $href;
+                          })->editColumn('payment-prove',function($payment){
+                                    if($payment->payment_prove != NULL){
+                                       $show = '<a href="#" data-id='.$payment->id.' data-struck='.get_struck($payment->payment_prove).'
+                                                            data-toggle="modal" data-target="#modal-insert" class="show-struck">'.$payment->payment_prove.'</a>';
+                                      }
+                                    else{
+                                    $show = "<span class='strong'>The User Doesn't have a Payment Prove</span>";
+                                    }
 
-        return view('backend.reports.withdrawal', $data);
-    }
-
-    public function allTrades($categoryType = null) {
-        // $data['list'] = $this->reportsService->trades(null, $categoryType);
-        // $data['title'] = __('Trades');
-        $userId = null;
-        $stockPairId = null;
-        $data['categoryType'] = $categoryType;
-        $data['user'] = $userId;
-        if(!$stockPairId){
-          $data['stockPairId'] = $stockPairId;
-        }
-        $data['stockPair'] = DB::table('stock_pairs')->leftJoin('stock_items as base_item', 'base_item.id', '=', 'stock_pairs.base_item_id')
-                                                     ->leftJoin('stock_items as stock_item', 'stock_item.id', '=', 'stock_pairs.stock_item_id')
-                                                     ->select([
-                                                                  'stock_item.item as stock_item_abbr',
-                                                                  'base_item.item as base_item_abbr',
-                                                     ])->get();
-
-        return view('backend.reports.trades', $data);
+                                    return $show;
+                          })
+                          ->addColumn('action', function($row){
+                                  $btn = '<div class="btn-group pull-right">
+                                              <button class="btn green btn-xs btn-outline dropdown-toggle"
+                                                      data-toggle="dropdown">
+                                                  <i class="fa fa-gear"></i>
+                                              </button>
+                                          <ul class="dropdown-menu dropdown-menu-stock-pair pull-right">';
+                                          if(has_permission('admin.users.wallets.editBankBalance')){
+                                            $btn .= '<li>
+                                                      <a href='.route('admin.users.wallets.editBankBalance', [$row->users_id, $row->wallet_id, $row->id]).'"><i
+                                                                  class="fa fa-eye"></i>'.__('Reviews').'</a>
+                                                    </li>';
+                                          }
+                                          return $btn;
+                          })
+                          ->rawColumns(['amount','status','email','bank-admin','payment-prove','action'])->make(true);
+        
     }
 
     public function tradesJson($userId, $categoryType = null)
@@ -368,32 +302,6 @@ class ReportsController extends Controller
                                 })->rawColumns(['coin-pair','exchange_type','category','referral','email'])
                                 ->make(true);
 
-    }
-
-    public function trades($userId, $categoryType = null) {
-        // $data['list'] = $this->reportsService->trades($userId, $categoryType);
-        $data['title'] = __('Trades');
-        $data['categoryType'] = $categoryType;
-        $data['user'] = $userId;
-        $data['stockPair'] = DB::table('stock_pairs')->leftJoin('stock_items as base_item', 'base_item.id', '=', 'stock_pairs.base_item_id')
-                                                     ->leftJoin('stock_items as stock_item', 'stock_item.id', '=', 'stock_pairs.stock_item_id')
-                                                     ->select([
-                                                                  'stock_item.item as stock_item_abbr',
-                                                                  'base_item.item as base_item_abbr',
-                                                     ])->get();
-        return view('backend.reports.trades', $data);
-    }
-
-    public function openOrders($userId = null)
-    {
-        if(!is_null($userId)){
-          $data['hideUser'] = $userId;
-        }
-        else{
-          $data['hideUser'] = null;
-        }
-
-        return view('backend.reports.open_orders', $data);
     }
 
     public function openOrdersJson($userId = null)
@@ -477,12 +385,6 @@ class ReportsController extends Controller
                                 ->rawColumns(['coin-pair','exchange_type','category','price','amount','total','email','stop-limit'])
                                 ->make(true);
 
-    }
-
-    public function tradesByStockPairId($id) {
-        $data['stockPairId'] = $id;
-
-        return view('backend.reports.tradesStockPair', $data);
     }
 
     public function stockPairTraderJson($stockPairId)
@@ -650,6 +552,118 @@ class ReportsController extends Controller
                                 ->make(true);
 
     }
+
+
+
+
+    public function allDeposits($paymentTransactionType = null)
+    {
+        $data['status'] = $paymentTransactionType;
+
+        return view('backend.reports.all_deposit', $data);
+    }
+
+    public function deposits($id, $paymentTransactionType = null)
+    {
+        $data['wallet'] = app(WalletInterface::class)->firstOrFail(['id' => $id], 'stockItem');
+        $data['status'] = $paymentTransactionType;
+        $data['walletId'] = $id;
+
+        return view('backend.reports.deposit', $data);
+    }
+
+     public function editBankDepoStatus($id)
+    {
+        $data['title'] = __('Edit Status');
+        $data['list'] = $this->depoBankRepo->findOrFailById($id);
+
+        return view('backend.reports.changeStatus', $data);
+    }
+
+    public function allDepositsBank($paymentTransactionType = null)
+    {
+        // $data['list'] = $this->reportsService->depositBankTransfer(null, null, $paymentTransactionType);
+        // $data['title'] = __('Deposits');
+        $data['status'] = $paymentTransactionType;
+
+        return view('backend.reports.all_deposit_bank', $data);
+    }
+
+    public function depositsBank($id, $paymentTransactionType = null)
+    {
+        $data['wallet'] = app(WalletInterface::class)->firstOrFail(['id' => $id], 'stockItem');
+        $data['walletId'] = $id;
+
+        return view('backend.reports.deposit_bank', $data);
+    }
+
+    public function allWithdrawals($paymentTransactionType = null) {
+        $data['status'] = $paymentTransactionType;
+
+        return view('backend.reports.all_withdrawal', $data);
+    }
+
+    public function withdrawals($id, $paymentTransactionType = null) {
+        $data['wallet'] = app(WalletInterface::class)->firstOrFail(['id' => $id], 'stockItem');
+        $data['status'] = $paymentTransactionType;
+        $data['walletId'] = $id;
+
+        return view('backend.reports.withdrawal', $data);
+    }
+
+    public function allTrades($categoryType = null) {
+        // $data['list'] = $this->reportsService->trades(null, $categoryType);
+        // $data['title'] = __('Trades');
+        $userId = null;
+        $stockPairId = null;
+        $data['categoryType'] = $categoryType;
+        $data['user'] = $userId;
+        if(!$stockPairId){
+          $data['stockPairId'] = $stockPairId;
+        }
+        $data['stockPair'] = DB::table('stock_pairs')->leftJoin('stock_items as base_item', 'base_item.id', '=', 'stock_pairs.base_item_id')
+                                                     ->leftJoin('stock_items as stock_item', 'stock_item.id', '=', 'stock_pairs.stock_item_id')
+                                                     ->select([
+                                                                  'stock_item.item as stock_item_abbr',
+                                                                  'base_item.item as base_item_abbr',
+                                                     ])->get();
+
+        return view('backend.reports.trades', $data);
+    }
+
+
+    public function trades($userId, $categoryType = null) {
+        // $data['list'] = $this->reportsService->trades($userId, $categoryType);
+        $data['title'] = __('Trades');
+        $data['categoryType'] = $categoryType;
+        $data['user'] = $userId;
+        $data['stockPair'] = DB::table('stock_pairs')->leftJoin('stock_items as base_item', 'base_item.id', '=', 'stock_pairs.base_item_id')
+                                                     ->leftJoin('stock_items as stock_item', 'stock_item.id', '=', 'stock_pairs.stock_item_id')
+                                                     ->select([
+                                                                  'stock_item.item as stock_item_abbr',
+                                                                  'base_item.item as base_item_abbr',
+                                                     ])->get();
+        return view('backend.reports.trades', $data);
+    }
+
+    public function openOrders($userId = null)
+    {
+        if(!is_null($userId)){
+          $data['hideUser'] = $userId;
+        }
+        else{
+          $data['hideUser'] = null;
+        }
+
+        return view('backend.reports.open_orders', $data);
+    }
+
+    public function tradesByStockPairId($id) {
+        $data['stockPairId'] = $id;
+
+        return view('backend.reports.tradesStockPair', $data);
+    }
+
     public function openOrdersByStockPairId($id)
     {
         // $data['list'] = $this->reportsService->openOrders(null, null, $id);
