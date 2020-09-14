@@ -203,7 +203,7 @@ return [
                     'reports.admin.stock-pairs-id.open-orders',
                     'reports.admin.transaction.all-users',
                     'reports.admin.transaction.user',
-                    // 'reports.admin.transaction.user.json',
+                    'reports.admin.transaction.user.json',
                     // 'reports.admin.sum-transaction.user.json',
                     'reports.admin.trades.json',
                     'reports.admin.all-deposits-bank',
@@ -362,6 +362,7 @@ return [
             'referral' => [
                 ROUTE_GROUP_READER_ACCESS => [
                     'reports.trader.referral',
+                    'reports.trader.referral.json',
                     'reports.trader.referral-earning',
                     'profile.referral',
                 ],
@@ -433,7 +434,6 @@ return [
         'notices.mark-as-read',
         'notices.mark-all-as-read',
         'notices.mark-as-unread',
-        'notices.mark-all-as-read',
         'user_setting.change_password',
         'user_setting.update_password',
         'user_setting.change_pin',
