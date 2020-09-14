@@ -12,7 +12,7 @@ const domElement = document.getElementById('echart');
 const chart = LightweightCharts.createChart(domElement, chartProperties);
 if (screen.width > 1366) {
     console.log('desktop lebar')
-    chart.resize(875, 550);
+    chart.resize(825, 550);
 } else if (screen.width <= 700) {
     console.log('desktop hp')
     chart.resize(500, 550);
