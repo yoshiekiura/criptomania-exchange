@@ -63,6 +63,28 @@
                 </div>
             </div>
             @endauth
+            @guest
+            <div class="form-horizontal show-form-data">
+                <div class="form-group margin-bottom-none">
+                    <div class="row">
+                        <label class="col-4 font-light margin-bottom-none"></label>
+                        <div class="col-8">
+                            <div class="text-right">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group margin-bottom-none">
+                    <div class="row">
+                        <label class="col-4 font-light margin-bottom-none"></label>
+                        <div class="col-8">
+                            <div class=" text-right">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endguest
 
             @auth
             <div class="row" style="margin-top: -35px">

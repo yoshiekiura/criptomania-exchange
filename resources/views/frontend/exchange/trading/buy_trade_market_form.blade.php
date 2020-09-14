@@ -65,6 +65,35 @@
                 </div>
             </div>
             @endauth
+            @guest
+            <div class="row">
+                <div class="col-12 box-tools text-center" style="margin-top: 16.5px">
+                    <a class="btn btn-box-tool" href="depositPageLink">
+                    </a>
+                </div>
+            </div>
+            <div class="form-horizontal show-form-data">
+                <div class="form-group margin-bottom-none">
+                    <div class="row">
+                        <label class="col-4 font-light margin-bottom-none"></label>
+                        <div class="col-8">
+                            <div class="text-right">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group margin-bottom-none">
+                    <div class="row">
+                        <label class="col-4 font-light margin-bottom-none"></label>
+                        <div class="col-8">
+                            <div class=" text-right">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endguest
 
             <div style="margin-top: -10px">
                 {{ __('Fee: :makerFee/:takerFee%',['makerFee' =>admin_settings('exchange_maker_fee'),'takerFee' => admin_settings('exchange_taker_fee')]) }}

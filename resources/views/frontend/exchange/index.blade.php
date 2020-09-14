@@ -46,7 +46,7 @@
         box-sizing: border-box;
         min-width: 0px;
         height: 40px;
-        margin: 100px 0 -100px 0;
+        /* margin: 100px 0 -100px 0; */
         border-width: 1px;
         border-style: solid;
         border-image: initial;
