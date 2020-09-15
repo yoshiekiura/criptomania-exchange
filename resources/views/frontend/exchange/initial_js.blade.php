@@ -135,6 +135,10 @@
                         }
                         return change + number_format(Math.abs(data), 2);
                     }
+                },
+                {
+                    data: "base_item_id",
+                    visible: false
                 }
             ]
         });

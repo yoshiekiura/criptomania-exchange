@@ -503,11 +503,8 @@
 <script src="{{asset('common/vendors/bcmath/bcmath.js')}}"></script>
 <script src="{{asset('common/vendors/mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js')}}"></script>
 <script src="{{asset('common/vendors/datatable_responsive/datatables/datatables.min.js')}}"></script>
-<!-- <script src="{{ asset('common/vendors/datatable_responsive/datatables/jquery.dataTables.min.js') }}"></script> -->
-<script src="{{ asset('common/vendors/datatable_responsive/datatables/dataTables.bootstrap4.min.js') }}"></script>
-<script src="{{ asset('common/vendors/datatable_responsive/datatables/dataTables.responsive.min.js') }}"></script>
-<script src="{{ asset('common/vendors/datatable_responsive/datatables/responsive.bootstrap4.min.js') }}"></script>
-
+<script src="{{asset('common/vendors/datatable_responsive/datatables/plugins/bootstrap/datatables.bootstrap.js')}}">
+</script>
 <script src="{{asset('common/vendors/echart/echarts.min.js')}}"></script>
 <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
 <script src="{{asset('js/chart.js')}}"></script>

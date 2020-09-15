@@ -295,17 +295,19 @@
     }
 
     function initBuyStockOrderTable() {
-        buyOrderTable = $('#buy_order_table').DataTable({
+        buyOrderTable = $('#buy_order_table').removeAttr('width').DataTable({
             destroy: true,
             order: [[0, 'desc']],
             paging: false,
             searching: false,
-            fixedColumn: true,
+            // fixedColumns: true,
             fixedHeader: true,
             responsive: true,
-            scrollCollapse: true,
+            autoWidth: true, 
             info: false,
-            // scrollY: 385,
+            // scrollY:        "300px",
+            scrollX:        true,
+            scrollCollapse: true,
             ajax: {
                 url: '{{ route('exchange.get-orders') }}',
                 data: {
@@ -378,140 +380,161 @@
                     data: 'price',
                     orderable: false,
                     className: 'all',
-                    // render: function (data) {
-                    //     return number_format(data, 4);
-                    // }
 
                 },
                 {
                     data: "amount",
                     orderable: false,
-                    className:"text-center",
-                    render: function (data) {
-                        return number_format(data, 4);
-                    }
-                },
-                {
-                    data: 'total',
-                    orderable: false,
                     className:"all",
+                    sWidth: "100px",
                     render: function (data) {
-                        return number_format(data, 4);
+                        return number_format(data, 10);
                     }
                 },
+                // {
+                //     data: 'total',
+                //     orderable: false,
+                //     className:"all",
+                //     render: function (data) {
+                //         return number_format(data, 4);
+                //     }
+                // },
                 {
                     data: 'total_base_item',
                     orderable: false,
-                    className: 'text-center min-desktop',
+                    className: 'all',
                     render: function (data) {
-                        return number_format(data, 2);
+                        return number_format(data, 10);
                     }
                 }
-            ]
+            // buyOrderTable.columns.adjust().draw();
+            ],
+
+             
+
         });
+ 
+        buyOrderTable.columns.adjust().draw()
+
 
     }
 
     function initSellStockOrderTable() {
-        sellOrderTable = $('#sell_order_table').DataTable({
-            destroy: true,
-            paging: false,
-            order: [[0, 'asc']],
-            searching: false,
-            info: false,
-            // scrollY: 385,
-            ajax: {
-                url: '{{ route('exchange.get-orders') }}',
-                data: {
-                    stock_pair_id: defaultStockPairId,
-                    last_price: null,
-                    exchange_type: exchangeTypeSell,
-                    exchange_category: exchangeCategory
-                },
-                dataSrc: function (data) {
-                    let stockItemTotal = data.totalStockOrder.item_total || 0;
-                    $('#total_sell_order_in_item').text(number_format(stockItemTotal));
-                    return data.stockOrders;
-                }
-            },
-            language: {
-                sLoadingRecords: '<span style="width:100%;"><img src="{{ asset('common/images/loader.svg')}}"></span>'
-            },
-            drawCallback: function () {
-                let api = this.api();
-
-                let totalStockItem = '0';
-                let totalBaseItem = '0';
-                let lowestAsk = 0;
-                let rowCount = 0;
-                api.rows().every(function (rowId) {
-                    let data = this.data();
-
-                    if (rowId == 0) {
-                        lowestAsk = data.price;
+            sellOrderTable = $('#sell_order_table').DataTable({
+                destroy: true,
+                paging: false,
+                order: [[0, 'asc']],
+                searching: false,
+                info: false,
+                // scrollY: 385,
+                ajax: {
+                    url: '{{ route('exchange.get-orders') }}',
+                    data: {
+                        stock_pair_id: defaultStockPairId,
+                        last_price: null,
+                        exchange_type: exchangeTypeSell,
+                        exchange_category: exchangeCategory
+                    },
+                    dataSrc: function (data) {
+                        let stockItemTotal = data.totalStockOrder.item_total || 0;
+                        $('#total_sell_order_in_item').text(number_format(stockItemTotal));
+                        return data.stockOrders;
                     }
+                },
+                language: {
+                    sLoadingRecords: '<span style="width:100%;"><img src="{{ asset('common/images/loader.svg')}}"></span>'
+                },
+                drawCallback: function () {
+                    let api = this.api();
 
-                    totalStockItem = bcadd(totalStockItem, data.amount);
-                    totalBaseItem = bcmul(totalStockItem, data.price);
+                    let totalStockItem = '0';
+                    let totalBaseItem = '0';
+                    let lowestAsk = 0;
+                    let rowCount = 0;
+                    api.rows().every(function (rowId) {
+                        let data = this.data();
 
-                    data.total_stock_item = number_format(totalStockItem);
-                    data.total_base_item = number_format(totalBaseItem);
-                    this.data(data);
-                    rowCount++;
-                    sellOrderLastPrice = data.price;
-                });
+                        if (rowId == 0) {
+                            lowestAsk = data.price;
+                        }
 
-                $('.lowest_ask').text(number_format(lowestAsk));
-                $('#buy_order_form .price').val(number_format(lowestAsk));
+                        totalStockItem = bcadd(totalStockItem, data.amount);
+                        totalBaseItem = bcmul(totalStockItem, data.price);
 
-                //Load more option
-                if (rowCount > orderBookRowPerPage) {
-                    if ($('#sell_order_load_more').length == 0 && sellOrderTableLoadMore) {
-                        let tbody = '<tbody id="sell_order_load_more">' +
-                            '<tr style="background-color: #a3ddd7">' +
-                            '<td colspan="4"><a onClick="loadMoreData(' + exchangeTypeSell + ')" style="color:#08534c;float:right" href="javascript:;">{{ __('Load :loadCount more',['loadCount' => 50]) }}</a></td>' +
-                            '</tr>' +
-                            '</tbody>';
-                        $('#sell_order_table').append(tbody);
+                        data.total_stock_item = number_format(totalStockItem);
+                        data.total_base_item = number_format(totalBaseItem);
+                        this.data(data);
+                        rowCount++;
+                        sellOrderLastPrice = data.price;
+                    });
+
+                    $('.lowest_ask').text(number_format(lowestAsk));
+                    $('#buy_order_form .price').val(number_format(lowestAsk));
+
+                    //Load more option
+                    if (rowCount > orderBookRowPerPage) {
+                        if ($('#sell_order_load_more').length == 0 && sellOrderTableLoadMore) {
+                            let tbody = '<tbody id="sell_order_load_more">' +
+                                '<tr style="background-color: #a3ddd7">' +
+                                '<td colspan="4"><a onClick="loadMoreData(' + exchangeTypeSell + ')" style="color:#08534c;float:right" href="javascript:;">{{ __('Load :loadCount more',['loadCount' => 50]) }}</a></td>' +
+                                '</tr>' +
+                                '</tbody>';
+                            $('#sell_order_table').append(tbody);
+                        } else {
+                            $('#sell_order_load_more').remove();
+                        }
                     } else {
-                        $('#sell_order_load_more').remove();
+                        if ($('#sell_order_load_more').length == 1) {
+                            $('#sell_order_load_more').remove();
+                        }
                     }
-                } else {
-                    if ($('#sell_order_load_more').length == 1) {
-                        $('#sell_order_load_more').remove();
-                    }
-                }
 
-
-            },
-            createdRow: function (row, data) {
-                $(row).attr('id', hash(data.price));
-            },
-            columns: [
-                {
-                    data: 'price',
-                    orderable: false,
 
                 },
-                {
-                    data: "amount",
-                    orderable: false,
+                createdRow: function (row, data) {
+                    $(row).attr('id', hash(data.price));
                 },
-                {
-                    data: "total",
-                    orderable: false,
-                },
-                {
-                    data: 'total_base_item',
-                    orderable: false,
-                    className: 'min-desktop',
-                    render: function (data) {
-                        return number_format(data, 2);
+                  columns: [
+                    {
+                        data: 'price',
+                        orderable: false,
+                        className: 'all',
+                    },
+                    {
+                        data: "amount",
+                        orderable: false,
+                        className:"all",
+                        sWidth: "100px",
+                        render: function (data) {
+                            return number_format(data, 2);
+                        }
+                    },
+                    // {
+                    //     data: 'total',
+                    //     orderable: false,
+                    //     className:"all",
+                    //     render: function (data) {
+                    //         return number_format(data, 4);
+                    //     }
+                    // },
+                    {
+                        data: 'total_base_item',
+                        orderable: false,
+                        className: 'all',
+                        render: function (data) {
+                            return number_format(data, 6);
+                        }
                     }
-                }
-            ]
-        });
+                ]
 
+            });
+                 $('a[data-toggle="pill"]').on('shown.bs.tab', function(e){
+                   if (e.target.hash == '#sell_orders') {
+                    sellOrderTable.columns.adjust().draw()
+                  }
+            });  
+
+    
     }
 
     function initMyOpenOrderTable() {
@@ -615,7 +638,7 @@
                
                 {
                     data: null,
-                    orderable: true,
+                    orderable: false,
                     className: 'all',
                     render: function (data) {
                         let html = '<td style="color:red; width: 100px;"><a style="color:red">' + data.price + '</a></td>';
@@ -630,19 +653,17 @@
                 },
  
                 {
-                    data: null,
+                    data: "amount",
                     orderable: false,
-                    className: 'all',
-                    render: function (data) {
-                        let html = '<td style="text-align:left;">' + data.amount + '</td>';
-                        return html;
-                    }
+                    className: 'text-center',
                 },
 
                 {
                     data: "date",
                     orderable: false,
-                    className: 'min-desktop'
+                    className: 'none',
+                    type:  'datetime',
+                    format: 'HH:mm:ss',
                 }
             ]
         });
@@ -696,18 +717,16 @@
                     }
                 },
                 {
-                    data: null,
+                    data: "amount",
                     orderable: false,
-                    className: 'all',
-                    render: function (data) {
-                        let html = '<td style="text-align:left;">' + data.amount + '</td>';
-                        return html;
-                    }
+                    className: 'text-center',
                 },
                 {
                     data: "date",
                     orderable: false,
-                    className: 'min-desktop',
+                    className: 'none',
+                    type:  'datetime',
+                    format: 'HH:mm:ss',
                    
                 }
                

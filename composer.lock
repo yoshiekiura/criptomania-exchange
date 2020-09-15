@@ -4,25 +4,25 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "df20c3a3aabf26b7c2ecfe67d41f1c62",
+    "content-hash": "73efd5542c564321cf742bbc3ba887ed",
     "packages": [
         {
             "name": "anhskohbo/no-captcha",
-            "version": "3.2.1",
+            "version": "3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/anhskohbo/no-captcha.git",
-                "reference": "6386365b76cfa6a6043dc2783a2a615c8574faf9"
+                "reference": "f654a4093bd2e9ddbdfad3297bb7aa142a55e611"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/anhskohbo/no-captcha/zipball/6386365b76cfa6a6043dc2783a2a615c8574faf9",
-                "reference": "6386365b76cfa6a6043dc2783a2a615c8574faf9",
+                "url": "https://api.github.com/repos/anhskohbo/no-captcha/zipball/f654a4093bd2e9ddbdfad3297bb7aa142a55e611",
+                "reference": "f654a4093bd2e9ddbdfad3297bb7aa142a55e611",
                 "shasum": ""
             },
             "require": {
                 "guzzlehttp/guzzle": "^6.2|^7.0",
-                "illuminate/support": "^5.0|^6.0|^7.0",
+                "illuminate/support": "^5.0|^6.0|^7.0|^8.0",
                 "php": ">=5.5.5"
             },
             "require-dev": {
@@ -64,7 +64,7 @@
                 "no-captcha",
                 "recaptcha"
             ],
-            "time": "2020-08-06T05:45:09+00:00"
+            "time": "2020-09-10T02:31:52+00:00"
         },
         {
             "name": "asm89/stack-cors",
@@ -508,6 +508,57 @@
                 "symmetric key cryptography"
             ],
             "time": "2018-07-24T23:27:56+00:00"
+        },
+        {
+            "name": "denpa/php-bitcoinrpc",
+            "version": "v2.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/denpamusic/php-bitcoinrpc.git",
+                "reference": "aaaa048d6479e706e3bd1ace538cf8dc30abc858"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/denpamusic/php-bitcoinrpc/zipball/aaaa048d6479e706e3bd1ace538cf8dc30abc858",
+                "reference": "aaaa048d6479e706e3bd1ace538cf8dc30abc858",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.3",
+                "php": ">=7.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.0 | ^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Denpa\\Bitcoin\\": "src"
+                },
+                "files": [
+                    "src/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Denis Paavilainen",
+                    "email": "denpa@netfleet.space",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Bitcoin JSON-RPC client based on GuzzleHttp",
+            "homepage": "https://github.com/denpamusic/php-bitcoinrpc",
+            "keywords": [
+                "Guzzle",
+                "api",
+                "bitcoin",
+                "jsonrpc"
+            ],
+            "time": "2019-12-08T01:35:53+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -3062,16 +3113,16 @@
         },
         {
             "name": "predis/predis",
-            "version": "v1.1.4",
+            "version": "v1.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/predis/predis.git",
-                "reference": "8be2418f0116572f1937083daf5cceb1bddc9f0d"
+                "reference": "9930e933c67446962997b05201c69c2319bf26de"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/predis/predis/zipball/8be2418f0116572f1937083daf5cceb1bddc9f0d",
-                "reference": "8be2418f0116572f1937083daf5cceb1bddc9f0d",
+                "url": "https://api.github.com/repos/predis/predis/zipball/9930e933c67446962997b05201c69c2319bf26de",
+                "reference": "9930e933c67446962997b05201c69c2319bf26de",
                 "shasum": ""
             },
             "require": {
@@ -3133,7 +3184,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-08-29T22:15:08+00:00"
+            "time": "2020-09-11T19:18:05+00:00"
         },
         {
             "name": "psr/container",

@@ -9,6 +9,9 @@ use App\Repositories\User\Admin\Interfaces\TransactionInterface;
 use App\Repositories\User\Interfaces\NotificationInterface;
 use App\Repositories\User\Trader\Interfaces\DepositInterface;
 use App\Repositories\User\Trader\Interfaces\WalletInterface;
+use App\Http\Requests\User\Trader\StruckUploadRequest;
+use App\Services\Core\FileUploadService;
+use App\Repositories\User\Trader\Interfaces\DepositBankInterface;
 use App\Repositories\User\Trader\Interfaces\WithdrawalInterface;
 use App\Services\Api\PaypalRestApi;
 use App\Services\Core\DataListService;
@@ -142,6 +145,30 @@ class WalletService
             SERVICE_RESPONSE_STATUS => false,
             SERVICE_RESPONSE_MESSAGE => __('Deposit service is not available.'),
         ];
+    }
+
+    public function struckUpload(StruckUploadRequest $request, $id)
+    {
+        $struckUpload = app(FileUploadService::class)->upload($request->file('payment_prove'), config('commonconfig.path_struck_upload'), 'payment_prove', 'id', $id, 'public', 300, 300);
+
+        if ($struckUpload) {
+            $parameters = ['payment_prove' => $struckUpload];
+
+            
+                if (app(DepositBankInterface::class)->update($parameters, $id)) {
+                return [
+                    SERVICE_RESPONSE_STATUS => true,
+                    SERVICE_RESPONSE_MESSAGE => __('Struck has been uploaded successfully.')
+                ];
+            }
+            
+        }
+
+        return [
+            SERVICE_RESPONSE_STATUS => false,
+            SERVICE_RESPONSE_MESSAGE => __('Failed to upload Struck.')
+        ];
+
     }
 
     public function completePayment(Request $request)

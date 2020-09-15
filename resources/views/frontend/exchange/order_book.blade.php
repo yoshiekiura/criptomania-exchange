@@ -16,9 +16,9 @@
                     style="width:100%">
                     <thead>
                         <tr>
-                            <th class="all text-center" style="width:100px;">{{ __('PRICE') }}</th>
+                            <th class="all" style="width:200px;">{{ __('PRICE') }}</th>
                             <th class="text-center">{{ __('AMOUNT') }}</th>
-                            <th class="min-desktop">{{ __('DATE') }}</th>
+                            <th class="none">{{ __('DATE') }}</th>
                         </tr>
                     </thead>
                 </table>
@@ -29,9 +29,9 @@
                     style="width:100%">
                     <thead>
                         <tr>
-                            <th class="all" style="width:100px;">{{ __('PRICE') }}</th>
+                            <th class="all" style="width:200px;">{{ __('PRICE') }}</th>
                             <th class="text-center">{{ __('AMOUNT') }}</th>
-                            <th class="min-desktop">{{ __('DATE') }}</th>
+                            <th class="none">{{ __('DATE') }}</th>
                         </tr>
                     </thead>
                 </table>
@@ -64,23 +64,21 @@
                     style="width:100%">
                     <thead>
                         <tr>
-                            <th class="all" style="width:100px;">{{ __('PRICE') }}</th>
-                            <th class="all" style="width:150px;"><span class="stock_item"></span></th>
-                            <th class="text-center" style="width:100px;"><span class="base_item"></span></th>
-                            <th class="min-desktop">{{ __('SUM') }}(<span class="base_item"></span>)</th>
+                            <th class="all" style="width:100px;">{{ __('PRICE') }}(<span class="base_item"></span>)</th>
+                            <th class="text-center">{{ __('AMOUNT') }}(<span class="stock_item"></span>)</th>
+                            <th class="text-center">{{ __('TOTAL') }}(<span class="base_item"></span>)</th>
                         </tr>
                     </thead>
                 </table>
             </div>
             <div class="tab-pane fade show" id="sell_orders" role="tabpanel">
-                <table id="sell_order_table" class="table table-hover table-responsive small exchange-table"
+                <table id="sell_order_table" class="table datatable dt-responsive display nowrap dc-table"
                     style="width:100%">
                     <thead>
                         <tr>
-                            <th>{{ __('PRICE') }}</th>
-                            <th><span class="stock_item"></span></th>
-                            <th><span class="base_item"></span></th>
-                            <th class="hide_in_mobile_small">{{ __('SUM') }}(<span class="base_item"></span>)</th>
+                            <th class="all" style="width:100px;">{{ __('PRICE') }}(<span class="base_item"></span>)</th>
+                            <th class="text-center" style="width:100px;">{{ __('AMOUNT') }}(<span class="stock_item"></span>)</th>
+                            <th class="text-center">{{ __('TOTAL') }}(<span class="base_item"></span>)</th>
                         </tr>
                     </thead>
                 </table>

@@ -27,7 +27,7 @@ use App\Repositories\User\Admin\Interfaces\StockItemInterface;
 use App\Repositories\User\Trader\Interfaces\DepositBankInterface;
 use App\Events\Exchange\BroadcastNotification;
 use \Illuminate\Support\Facades\Route;
-
+use App\Models\User\DepositBankTransfer;
 
 class WalletController extends Controller
 {
