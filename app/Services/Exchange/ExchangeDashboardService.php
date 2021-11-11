@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Backend;
+namespace App\Services\Exchange;
 
 use App\Repositories\User\Admin\Interfaces\StockPairInterface;
 use App\Repositories\User\Trader\Interfaces\StockOrderInterface;

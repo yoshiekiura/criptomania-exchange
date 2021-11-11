@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Exchange;
 use App\Http\Controllers\Controller;
 use App\Repositories\Exchange\Interfaces\StockExchangeInterface;
 use App\Repositories\User\Trader\Interfaces\StockOrderInterface;
-use App\Services\Backend\ExchangeDashboardService;
+use App\Services\Exchange\ExchangeDashboardService;
 use App\Services\Exchange\StockGraphDataService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

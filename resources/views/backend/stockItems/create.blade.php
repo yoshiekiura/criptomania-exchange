@@ -2,7 +2,7 @@
 @section('title', $title)
 @section('content')
 @php
-    $data = DB::table('api_stock_item')->get();
+    $data = DB::table('stock_items')->get();
 @endphp
 <div class="card">
     <div class="card-body">
