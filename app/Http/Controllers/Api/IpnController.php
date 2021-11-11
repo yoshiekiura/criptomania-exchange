@@ -47,23 +47,21 @@ class IpnController extends Controller
         try {
             $bitcoin = new BitcoinApi($currency);
             $listtr = $bitcoin->getListTransactions();
-            foreach ($listtr as $list => $v )
-            {
-            $obj = ['txn_id' => $v['txid']];
-            
-            $bitcoind = $bitcoin->validateIPN($obj, $request->server());
-            var_dump($bitcoind);
-            
+            foreach ($listtr as $list => $v ) {
+                $obj = ['txn_id' => $v['txid']];
+                
+                $bitcoind = $bitcoin->validateIPN($obj, $request->server());
+                
 
-                    if( $bitcoind['error'] == 'ok')
-                    {
-                        app(WalletService::class)->updateTransaction($bitcoind);
-                    }
-                    else{
-                        logs()->error($bitcoind['error']);
+                if( $bitcoind['error'] == 'ok')
+                {
+                    app(WalletService::class)->updateTransaction($bitcoind);
+                }
+                else{
+                    logs()->error($bitcoind['error']);
 
-                        return null;
-                    }
+                    return null;
+                }
             }
         }
         catch (\Exception $exception)

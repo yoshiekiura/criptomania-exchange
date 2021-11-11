@@ -46,16 +46,6 @@ class BitcoinApi extends Bitcoind
             'network_fee' => $rpc->network_fee,
             'ca' => $rpc->cert_ca,
         ]);
-        // [
 
-            // 'scheme' => $rpc->scheme,
-            // 'host' => $rpc->host,
-            // 'port' => $rpc->port,
-            // 'user' => $rpc->rpc_user,
-            // 'password' => $rpc->rpc_password,
-            // 'network_fee' => $rpc->network_fee,
-            // 'ca' => $rpc->cert_ca,
-
-        // ]);
     }
 }
