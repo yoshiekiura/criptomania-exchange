@@ -6,7 +6,7 @@
                     <div class="banner-left">
 
                         <h3 class="mbr-section-title align-center mbr-black pb-3 mbr-bold mbr-fonts-style display-5">
-                            <span class="title-banner">KriptoMania</h3>
+                            <span class="title-banner">{{company_name()}}</h3>
                         <h1 class="mbr-section-title align-center mbr-black pb-3 mbr-bold mbr-fonts-style display-5">
                             <span
                                 class="mbr-section-title align-center mbr-black pb-3 mbr-bold mbr-fonts-style display-5"

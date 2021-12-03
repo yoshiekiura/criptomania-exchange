@@ -13,7 +13,7 @@ class IpnController extends Controller
     public function ipn(Request $request)
     {
         $ipnRequest = $request->all();
-
+        // return $ipnRequest;
         if(env('APP_ENV') != 'production' && env('APP_DEBUG') == true) {
             logs()->info($ipnRequest);
         }
@@ -22,23 +22,25 @@ class IpnController extends Controller
         {
             logs()->error('log: Invalid coinpayment IPN request.');
 
-            return null;
+            return response()->json('log: Invalid coinpayment IPN request.', 500);
         }
 
         $coinpayment = new CoinPaymentApi($ipnRequest['currency']);
         $ipnResponse = $coinpayment->validateIPN($ipnRequest, $request->server());
 
+        
         if( $ipnResponse['error'] == 'ok')
         {
             app(WalletService::class)->updateTransaction($ipnResponse);
 
-            return null;
+            return response()->json($ipnResponse, 200);
+
         }
         else
         {
             logs()->error($ipnResponse['error']);
 
-            return null;
+            return response()->json($ipnResponse, 500);
         }
     }
 

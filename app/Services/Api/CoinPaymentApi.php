@@ -134,6 +134,8 @@ class CoinPaymentApi implements CryptoStockApiInterface
     // send the validateIPN to $request->all(), $request->server()
     public function validateIPN($post_data, $server_data)
     {
+        
+        // return $this->ipnSecret;
         try {
             if (!isset($post_data['ipn_mode'], $post_data['merchant'], $post_data['status'], $post_data['status_text'])) {
                 throw new JobException("Insufficient POST data provided.");

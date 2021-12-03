@@ -15,9 +15,9 @@
                         <div class="box box-solid">
                             <div class="box-body">
                                 @if($user->userInfo->is_id_verified == ID_STATUS_UNVERIFIED)
-                                @include('backend.uploadID._create_form')
+                                    @include('backend.uploadID._create_form')
                                 @else
-                                @include('backend.uploadID._show')
+                                    @include('backend.uploadID._show')
                                 @endif
                             </div>
                         </div>

@@ -68,7 +68,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="pad-tb-20 text-center">
-                            <img src="{{asset('frontend/images/footer.png')}}" alt="" class="img-fluid pad-b-10">
+                            <img src="{{ get_image(admin_settings('company_logo')) }}" alt="" class="img-fluid pad-b-10">
                             <ul class="floated-li-inside clearfix centered">
                                 <li><a href="#"><i class="fa fa-facebook-square font-20"></i></a></li>
                                 <li><a href="#"><i class="fa fa-twitter font-20"></i></a></li>

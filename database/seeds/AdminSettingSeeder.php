@@ -20,7 +20,7 @@ class AdminSettingSeeder extends Seeder
             'default_role_to_register' => 2,
             'signupable_user_roles' => [2],
             'require_email_verification' => ACTIVE_STATUS_ACTIVE,
-            'company_name' => 'Cryptomania',
+            'company_name' => 'Crypto Exchange',
             'company_logo' => 'cryptomania.png',
             'auto_withdrawal_process' => ACTIVE_STATUS_ACTIVE,
             'referral' => ACTIVE_STATUS_INACTIVE,
@@ -32,7 +32,7 @@ class AdminSettingSeeder extends Seeder
             'ico_fee' => 0.1,
             'min_ico_amount_buy' => 1,
             'display_google_captcha' => ACTIVE_STATUS_INACTIVE,
-            'admin_receive_email' => 'support@codemen.org'
+            'admin_receive_email' => 'support@exchange.org'
         ];
 
         $jsonFields = ['signupable_user_roles'];

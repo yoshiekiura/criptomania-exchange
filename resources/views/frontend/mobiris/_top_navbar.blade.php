@@ -10,8 +10,8 @@
             @endif
 
             <span class="navbar-caption-wrap"><a class="navbar-caption text-black display-4"
-                    href="https://mobirisethemes.com/">
-                    KriptoMania</a></span>
+                    href="{{route('home')}}">
+                    {{company_name()}}</a></span>
         </div>
     </div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"

@@ -13,7 +13,6 @@
                     </div>
                 </div>
                 <div class="box-body">
-                    <button class="btn btn-primary submit-btn">Add More Form</button>
 
                     <div class="row">
                         <div class="col-sm-8">
@@ -21,15 +20,6 @@
                             'class'=>'form-horizontal
                             validator']) !!}
                             @include('backend.stockPairs._create_form')
-                            {!! Form::close() !!}
-
-                            <h4>Create Multiple Coin Pair</h4>
-                            {!! Form::open(['route'=>'admin.stock-pairs.multiStore', 'method'=>'post',
-                            'class'=>'form-horizontal
-                            validator', 'id'=>'form2']) !!}
-                            <input type="hidden" name="base_key" value="{{ base_key() }}">
-                            <div id="dynamic-field"></div>
-                            <button class="btn btn-primary test-btn">testing</button>
                             {!! Form::close() !!}
                         </div>
 

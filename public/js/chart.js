@@ -1,25 +1,4 @@
 let eChart;
-const chartProperties = {
-    width: 675,
-    height: 550,
-    timeScale: {
-        timeVisible: true,
-        secondsVisible: false,
-    }
-}
-
-const domElement = document.getElementById('echart');
-const chart = LightweightCharts.createChart(domElement, chartProperties);
-if (screen.width > 1366) {
-    console.log('desktop lebar')
-    chart.resize(760, 550);
-} else if (screen.width <= 700) {
-    console.log('desktop hp')
-    chart.resize(500, 550);
-} else {
-    console.log('desktop saya')
-}
-const candleSeries = chart.addCandlestickSeries();
 
 
 function splitData(rawData) {
@@ -59,13 +38,13 @@ function calculateMACD(data) {
     let dayFirst = 12;
     let daySecond = 26;
     for (let i = 0, len = data.values.length; i < len; i++) {
-        y = i < dayFirst ? i + 1 : dayFirst;
-        z = i < daySecond ? i + 1 : daySecond;
+        y = i < dayFirst ? i+1 :dayFirst;
+        z = i < daySecond ? i+1 :daySecond;
         let sum1 = 0;
         let sum2 = 0;
         for (let j = 0; j < z; j++) {
             sum2 += parseFloat(data.values[i - j][1]);
-            if (j < y) {
+            if(j<y){
                 sum1 += parseFloat(data.values[i - j][1]);
             }
         }
@@ -110,308 +89,277 @@ function calculateZoom() {
 }
 
 function makeChart(element, data) {
-    const cdata = data.map(d => {
-        var date = new Date(d[0]);
-        var milliseconds = date.getTime();
+    let upColor = '#0055cc';
+    let downColor = '#ff5500';
+    let echartData = splitData(data);
+    let zoom = calculateZoom();
+    eChart = echarts.init(element);
 
-        var open = parseFloat(d[1])
-        var high = parseFloat(d[4])
-        var low = parseFloat(d[3])
-        var close = parseFloat(d[2])
+    // specify chart configuration item and data
+    let option = {
+        textStyle: {
+            color: '#00f',
+            fontSize: 10
+        },
+        color: ['#00ff00','#0000ff','#ff0000'],
+        backgroundColor: '#ffffff',
+        animation: false,
+        legend: {
+            data: ['MA12', 'MA40', 'MA200']
+        },
+        tooltip: {
+            trigger: 'axis',
+            triggerOn: 'click',
+            axisPointer: {
+                type: 'cross'
+            },
+            backgroundColor: 'rgba(255, 255, 255, 0.9)',
+            borderWidth: 1,
+            borderColor: '#0099ff',
+            padding: 10,
+            textStyle: {
+                color: '#000',
+                fontSize: 10
+            },
+            position: function (pos, params, el, elRect, size) {
+                let obj = {top: '10.05%'};
+                obj[['left', 'right'][+(pos[0] < size.viewSize[0] / 2)]] = '30';
+                return obj;
+            }
+            // extraCssText: 'width: 170px'
+        },
+        axisPointer: {
+            link: {xAxisIndex: 'all'},
+            label: {
+                backgroundColor: '#777'
+            }
+        },
+        toolbox: {
+            show: false
+        },
+        visualMap: {
+            show: false,
+            seriesIndex: 4,
+            dimension: 2,
+            pieces: [{
+                value: 1,
+                color: upColor
+            }, {
+                value: -1,
+                color: downColor
+            }]
+        },
+        grid: [
+            {
+                left: '7%',
+                right: '0',
+                height: '66%',
+                top: '7%'
+            },
+            {
+                left: '7%',
+                right: '0',
+                top: '78%',
+                height: '13%'
+            }
+        ],
+        xAxis: [
+            {
+                type: 'category',
+                data: echartData.categoryData,
+                scale: true,
+                boundaryGap: true,
+                axisLine: {
+                    lineStyle: {
+                        color: '#08f',
+                        type: 'dotted'
+                    }
+                },
+                splitLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#0df',
+                        type: 'dotted'
+                    }
+                },
+                splitNumber: 10,
+                /*min: 'dataMin',
+                        max: 'dataMax',*/
+                axisPointer: {
+                    z: 100
+                }
+            },
+            {
+                type: 'category',
+                gridIndex: 1,
+                data: echartData.categoryData,
+                scale: true,
+                boundaryGap: true,
+                axisLine: {
+                    show: false
+                },
+                axisTick: {show: false},
+                splitLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#08f',
+                        opacity: 0.4,
+                        type: 'dotted'
+                    }
+                },
+                axisLabel: {show: false},
+                splitNumber: 1/*,
+                            min: 'dataMin',
+                            max: 'dataMax'*/
+            }
+        ],
+        yAxis: [
+            {
+                axisLine: {
+                    lineStyle: {
+                        color: '#08f',
+                        type: 'dotted'
+                    }
+                },
+                scale: true,
+                splitLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#0df',
+                        type: 'dotted'
+                    }
+                },
+                splitNumber: 5,
+                axisLabel: {
+                    fontSize: 10
+                }
+            },
+            {
+                type: 'value',
+                scale: true,
+                gridIndex: 1,
+                splitNumber: 1,
+                splitLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#54e1cb',
+                        opacity: 0.4,
+                        type: 'dotted'
+                    }
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: '#54e1cb',
+                        opacity: 0.4,
+                        type: 'dotted'
+                    }
+                },
+                axisTick: {show: false},
+                splitArea: {
+                    show: true,
+                    areaStyle: {
+                        color: '#a6ffeb',
+                        opacity: 0.4
+                    }
+                },
+                axisLabel: {show: false}
+            }
+        ],
+        dataZoom: [
+            {
+                // type: 'inside',ph
+                xAxisIndex: [0, 1],
+                start: zoom,
+                end: 100
+            },
+            {
+                show: true,
+                xAxisIndex: [0, 1],
+                type: 'slider',
+                top: '92%',
+                start: zoom,
+                end: 100
+            }
+        ],
+        series: [
+            {
+                name: 'Chart Data',
+                type: 'candlestick',
+                data: echartData.values,
+                itemStyle: {
+                    normal: {
+                        color: upColor,
+                        color0: downColor,
+                        borderColor: upColor,
+                        borderColor0: downColor
+                    }
+                },
+                tooltip: {
+                    formatter: function (param) {
+                        param = param[0];
+                        return [
+                            'Date: ' + param.name + '<hr size=1 style="margin: 3px 0">',
+                            'Open: ' + param.data[0] + '<br/>',
+                            'Close: ' + param.data[1] + '<br/>',
+                            'Lowest: ' + param.data[2] + '<br/>',
+                            'Highest: ' + param.data[3] + '<br/>'
+                        ].join('');
+                    }
+                }
+            },
+            {
+                name: 'MA12',
+                type: 'line',
+                data: calculateMA(12, echartData),
+                smooth: true,
+                showSymbol: false,
+                lineStyle: {
+                    normal: {
+                        opacity: 0.5,
+                        width: 1,
+                        color: '#00ff00'
+                    }
+                }
+            },
+            {
+                name: 'MA40',
+                type: 'line',
+                data: calculateMA(40, echartData),
+                smooth: true,
+                showSymbol: false,
+                lineStyle: {
+                    normal: {
+                        opacity: 0.5,
+                        width: 1,
+                        color: '#0000ff'
+                    }
+                }
+            },
+            {
+                name: 'MA200',
+                type: 'line',
+                data: calculateMA(200, echartData),
+                smooth: true,
+                showSymbol: false,
+                lineStyle: {
+                    normal: {
+                        opacity: 0.5,
+                        width: 1,
+                        color: '#ff0000'
+                    }
+                }
+            },
+            {
+                name: 'Change',
+                type: 'bar',
+                barWidth: '55%',
+                xAxisIndex: 1,
+                yAxisIndex: 1,
+                data: calculateMACD(echartData)
+            }
+        ]
+    };
 
-        if (open > 0 && high > 0 && low > 0 && close > 0) {
-            return {
-                time: milliseconds / 1000,
-                open: parseFloat(d[1]),
-                high: parseFloat(d[4]),
-                low: parseFloat(d[3]),
-                close: parseFloat(d[2])
-            }
-        } else {
-            return {
-                time: milliseconds / 1000,
-            }
-        }
-    });
-    console.log(cdata)
-    candleSeries.setData(cdata);
+    // use configuration item and data specified to show chart
+    eChart.setOption(option);
 }
-
-// function makeChart(element, data) {
-//     // warna chart
-//     // up color = ijo
-//     let upColor = '#02C076';
-//     // down color = merah
-//     let downColor = '#D9304E';
-//     let echartData = splitData(data);
-//     let zoom = calculateZoom();
-//     eChart = echarts.init(element);
-
-//     // specify chart configuration item and data
-//     let option = {
-//         textStyle: {
-//             color: '#00f',
-//             fontSize: 10
-//         },
-//         color: ['#00ff00','#0000ff','#ff0000'],
-//         backgroundColor: '#ffffff',
-//         animation: false,
-//         legend: {
-//             data: ['MA12', 'MA40', 'MA200']
-//         },
-//         tooltip: {
-//             trigger: 'axis',
-//             triggerOn: 'click',
-//             axisPointer: {
-//                 type: 'cross'
-//             },
-//             backgroundColor: 'rgba(255, 255, 255, 0.9)',
-//             borderWidth: 1,
-//             borderColor: '#0099ff',
-//             padding: 10,
-//             textStyle: {
-//                 color: '#000',
-//                 fontSize: 10
-//             },
-//             position: function (pos, params, el, elRect, size) {
-//                 let obj = {top: '10.05%'};
-//                 obj[['left', 'right'][+(pos[0] < size.viewSize[0] / 2)]] = '30';
-//                 return obj;
-//             }
-//             // extraCssText: 'width: 170px'
-//         },
-//         axisPointer: {
-//             link: {xAxisIndex: 'all'},
-//             label: {
-//                 backgroundColor: '#777'
-//             }
-//         },
-//         toolbox: {
-//             show: false
-//         },
-//         visualMap: {
-//             show: false,
-//             seriesIndex: 4,
-//             dimension: 2,
-//             pieces: [{
-//                 value: 1,
-//                 color: upColor
-//             }, {
-//                 value: -1,
-//                 color: downColor
-//             }]
-//         },
-//         grid: [
-//             {
-//                 left: '7%',
-//                 right: '0',
-//                 height: '66%',
-//                 top: '7%'
-//             },
-//             {
-//                 left: '7%',
-//                 right: '0',
-//                 top: '78%',
-//                 height: '13%'
-//             }
-//         ],
-//         xAxis: [
-//             {
-//                 type: 'category',
-//                 data: echartData.categoryData,
-//                 scale: true,
-//                 boundaryGap: true,
-//                 axisLine: {
-//                     lineStyle: {
-//                         color: '#08f',
-//                         type: 'dotted'
-//                     }
-//                 },
-//                 splitLine: {
-//                     show: true,
-//                     lineStyle: {
-//                         color: '#0df',
-//                         type: 'dotted'
-//                     }
-//                 },
-//                 splitNumber: 10,
-//                 /*min: 'dataMin',
-//                         max: 'dataMax',*/
-//                 axisPointer: {
-//                     z: 100
-//                 }
-//             },
-//             {
-//                 type: 'category',
-//                 gridIndex: 1,
-//                 data: echartData.categoryData,
-//                 scale: true,
-//                 boundaryGap: true,
-//                 axisLine: {
-//                     show: false
-//                 },
-//                 axisTick: {show: false},
-//                 splitLine: {
-//                     show: true,
-//                     lineStyle: {
-//                         color: '#08f',
-//                         opacity: 0.4,
-//                         type: 'dotted'
-//                     }
-//                 },
-//                 axisLabel: {show: false},
-//                 splitNumber: 1/*,
-//                             min: 'dataMin',
-//                             max: 'dataMax'*/
-//             }
-//         ],
-//         yAxis: [
-//             {
-//                 axisLine: {
-//                     lineStyle: {
-//                         color: '#08f',
-//                         type: 'dotted'
-//                     }
-//                 },
-//                 scale: true,
-//                 splitLine: {
-//                     show: true,
-//                     lineStyle: {
-//                         color: '#0df',
-//                         type: 'dotted'
-//                     }
-//                 },
-//                 splitNumber: 5,
-//                 axisLabel: {
-//                     fontSize: 10
-//                 }
-//             },
-//             {
-//                 type: 'value',
-//                 scale: true,
-//                 gridIndex: 1,
-//                 splitNumber: 1,
-//                 splitLine: {
-//                     show: true,
-//                     lineStyle: {
-//                         color: '#54e1cb',
-//                         opacity: 0.4,
-//                         type: 'dotted'
-//                     }
-//                 },
-//                 axisLine: {
-//                     lineStyle: {
-//                         color: '#54e1cb',
-//                         opacity: 0.4,
-//                         type: 'dotted'
-//                     }
-//                 },
-//                 axisTick: {show: false},
-//                 splitArea: {
-//                     show: true,
-//                     areaStyle: {
-//                         color: '#a6ffeb',
-//                         opacity: 0.4
-//                     }
-//                 },
-//                 axisLabel: {show: false}
-//             }
-//         ],
-//         dataZoom: [
-//             {
-//                 // type: 'inside',ph
-//                 xAxisIndex: [0, 1],
-//                 start: zoom,
-//                 end: 100
-//             },
-//             {
-//                 show: true,
-//                 xAxisIndex: [0, 1],
-//                 type: 'slider',
-//                 top: '92%',
-//                 start: zoom,
-//                 end: 100
-//             }
-//         ],
-//         series: [
-//             {
-//                 name: 'Chart Data',
-//                 type: 'candlestick',
-//                 data: echartData.values,
-//                 itemStyle: {
-//                     normal: {
-//                         color: upColor,
-//                         color0: downColor,
-//                         borderColor: upColor,
-//                         borderColor0: downColor
-//                     }
-//                 },
-//                 tooltip: {
-//                     formatter: function (param) {
-//                         param = param[0];
-//                         return [
-//                             'Date: ' + param.name + '<hr size=1 style="margin: 3px 0">',
-//                             'Open: ' + param.data[0] + '<br/>',
-//                             'Close: ' + param.data[1] + '<br/>',
-//                             'Lowest: ' + param.data[2] + '<br/>',
-//                             'Highest: ' + param.data[3] + '<br/>'
-//                         ].join('');
-//                     }
-//                 }
-//             },
-//             {
-//                 name: 'MA12',
-//                 type: 'line',
-//                 data: calculateMA(12, echartData),
-//                 smooth: true,
-//                 showSymbol: false,
-//                 lineStyle: {
-//                     normal: {
-//                         opacity: 0.5,
-//                         width: 1,
-//                         color: '#00ff00'
-//                     }
-//                 }
-//             },
-//             {
-//                 name: 'MA40',
-//                 type: 'line',
-//                 data: calculateMA(40, echartData),
-//                 smooth: true,
-//                 showSymbol: false,
-//                 lineStyle: {
-//                     normal: {
-//                         opacity: 0.5,
-//                         width: 1,
-//                         color: '#0000ff'
-//                     }
-//                 }
-//             },
-//             {
-//                 name: 'MA200',
-//                 type: 'line',
-//                 data: calculateMA(200, echartData),
-//                 smooth: true,
-//                 showSymbol: false,
-//                 lineStyle: {
-//                     normal: {
-//                         opacity: 0.5,
-//                         width: 1,
-//                         color: '#ff0000'
-//                     }
-//                 }
-//             },
-//             {
-//                 name: 'Change',
-//                 type: 'bar',
-//                 barWidth: '55%',
-//                 xAxisIndex: 1,
-//                 yAxisIndex: 1,
-//                 data: calculateMACD(echartData)
-//             }
-//         ]
-//     };
-
-//     // use configuration item and data specified to show chart
-//     eChart.setOption(option);
-// }

@@ -65,6 +65,8 @@ class WalletService
 
         if (!is_null($stockApiService)) {
             $stockApiServiceResponse = $stockApiService->generateAddress();
+            // dd($stockApiServiceResponse);
+
 
             if (!empty($stockApiServiceResponse) && $stockApiServiceResponse['error'] == 'ok') {
                 $address = $stockApiServiceResponse['result']['address'];
